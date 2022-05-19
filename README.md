@@ -203,7 +203,8 @@ use Cyrtolat\Money\Money;
 
 Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 15023, ...]
 ```
-or
+
+or with an integer serializer
 
 ```php
 'serializer' => \Cyrtolat\Money\Serializers\MoneyDecimalSerializer::class,
