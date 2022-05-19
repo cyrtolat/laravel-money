@@ -204,7 +204,7 @@ use Cyrtolat\Money\Money;
 Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 15023, ...]
 ```
 
-or with an integer serializer
+or with a decimal serializer
 
 ```php
 'serializer' => \Cyrtolat\Money\Serializers\MoneyDecimalSerializer::class,
