@@ -195,6 +195,19 @@ The Serializer classes are responsible for how laravel will convert Money to arr
 configs\money.php:
 
 ```php
+/*
+ |--------------------------------------------------------------------------
+ | Money Serializer class
+ |--------------------------------------------------------------------------
+ |
+ | The money serializer class determine how the instance of Money class will
+ | be converted to array and json. This is necessary, for example, in the
+ | API Resources classes. Specify here the class of one of the ready-made
+ | serializers or write your own. But remember that a custom serializer
+ | must implement MoneySerializerContract of this package.
+ |
+ */
+     
 'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class,
 ```
 
