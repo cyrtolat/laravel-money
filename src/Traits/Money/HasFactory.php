@@ -17,7 +17,7 @@ trait HasFactory
      * @param mixed $currency The Currency instance or 3-letter uppercase code.
      * @return Money
      */
-    public static function ofMinor(int $amount, mixed $currency): Money
+    public static function ofMinor(int $amount, $currency): Money
     {
         if ($currency instanceof Currency) {
             return new Money($amount, $currency);
@@ -38,7 +38,7 @@ trait HasFactory
      * @param integer $roundingMode An optional RoundingMode constant.
      * @return Money
      */
-    public static function ofMajor(mixed $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_EVEN): Money
+    public static function ofMajor($amount, $currency, int $roundingMode = PHP_ROUND_HALF_EVEN): Money
     {
         if (! is_numeric($amount)) {
             throw new \InvalidArgumentException("The given amount must be a numeric value.");

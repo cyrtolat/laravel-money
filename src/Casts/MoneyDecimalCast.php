@@ -55,6 +55,6 @@ class MoneyDecimalCast extends MoneyCast
             return [$key => $value->getMinorAmount()];
         }
 
-        throw new MoneyCastException("Invalid data provided. The given value must be an integer or instance of Money class.");
+        throw new MoneyCastException("Invalid data provided. The given value must be a decimal or instance of Money class.");
     }
 }

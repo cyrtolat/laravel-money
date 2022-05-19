@@ -2,14 +2,14 @@
 
 namespace Cyrtolat\Money\Formatters;
 
+use NumberFormatter;
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Contracts\MoneyFormatterContract;
-use NumberFormatter;
 
 /**
- * Formats the Money object in the style of a localized currency.
+ * Formats the Money object in the style of a decimal string with currency code.
  */
-class MoneyLocalizedFormatter implements MoneyFormatterContract
+class MoneyDefaultFormatter implements MoneyFormatterContract
 {
     /** @var NumberFormatter */
     private NumberFormatter $formatter;
@@ -22,7 +22,7 @@ class MoneyLocalizedFormatter implements MoneyFormatterContract
         $locale = config('money.locale', 'en_US');
 
         $this->formatter = new NumberFormatter(
-            $locale, NumberFormatter::CURRENCY ,
+            $locale, NumberFormatter::DECIMAL,
         );
     }
 
@@ -31,7 +31,12 @@ class MoneyLocalizedFormatter implements MoneyFormatterContract
     {
         $amount = $money->getMajorAmount();
         $currency = $money->getCurrency();
+        $decimals = $currency->getFractionDigits();
+        $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
 
-        return $this->formatter->formatCurrency($amount, $currency);
+        return sprintf("%s %s",
+            $this->formatter->format($amount),
+            $currency->getAlphabeticCode()
+        );
     }
 }

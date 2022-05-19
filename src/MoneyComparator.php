@@ -20,10 +20,7 @@ final class MoneyComparator
      */
     public static function compare(Money $first, Money $second) : int
     {
-        $firstCurrency = $first->getCurrency();
-        $secondCurrency = $second->getCurrency();
-
-        if ($firstCurrency->notEqualTo($secondCurrency)) {
+        if ($first->isNotSameCurrency($second)) {
             throw new ComparatorException('Impossible to compare monies with different currencies.');
         }
 

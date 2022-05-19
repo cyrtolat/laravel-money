@@ -12,10 +12,10 @@ final class Money implements Arrayable, Jsonable
 {
     use Traits\Money\HasFactory,
         Traits\Money\HasRounding,
+        Traits\Money\HasComparing,
         Traits\Money\HasFormatting,
-        Traits\Money\HasSerialization,
-        Traits\Money\HasComparisons,
-        Traits\Money\HasCalculations;
+        Traits\Money\HasCalculations,
+        Traits\Money\HasSerialization;
 
     /**
      * The monetary amount in a minor currency value.

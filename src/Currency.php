@@ -144,7 +144,7 @@ final class Currency implements Arrayable, Jsonable
      * @param mixed $currency The Currency class instance, alphabetical code or numerical code.
      * @return bool
      */
-    public function equalTo(mixed $currency): bool
+    public function equals($currency): bool
     {
         if ($currency instanceof Currency) {
             return $this->alphabeticCode === $currency->alphabeticCode;
@@ -167,9 +167,9 @@ final class Currency implements Arrayable, Jsonable
      * @param mixed $currency The Currency class instance, alphabetical code or numerical code.
      * @return bool
      */
-    public function notEqualTo(mixed $currency): bool
+    public function notEquals($currency): bool
     {
-        return !$this->equalTo($currency);
+        return !$this->equals($currency);
     }
 
     /**

@@ -24,7 +24,7 @@ final class MoneyCalculator
 
         foreach ($addends as $addend)
         {
-            if ($currency->notEqualTo($addend->getCurrency()))
+            if ($currency->notEquals($addend->getCurrency()))
             {
                 throw new CalculatorException('Currency of addend monies must be identical to summand.');
             }
@@ -50,7 +50,7 @@ final class MoneyCalculator
 
         foreach ($subtrahends as $subtrahend)
         {
-            if ($currency->notEqualTo($subtrahend->getCurrency()))
+            if ($currency->notEquals($subtrahend->getCurrency()))
             {
                 throw new CalculatorException('Currencies of subtrahend monies must be identical to minuend.');
             }
@@ -70,7 +70,7 @@ final class MoneyCalculator
      * @param int $roundingMode   An optional RoundingMode constant.
      * @return Money
      */
-    public static function getMultiplicationOf(Money $multiplicand, mixed $multiplier, int $roundingMode): Money
+    public static function getMultiplicationOf(Money $multiplicand, $multiplier, int $roundingMode): Money
     {
         if (! is_numeric($multiplier))
         {
@@ -92,7 +92,7 @@ final class MoneyCalculator
      * @param int $roundingMode An optional RoundingMode constant.
      * @return Money
      */
-    public static function getDivisionOf(Money $dividend, mixed $divisor, int $roundingMode): Money
+    public static function getDivisionOf(Money $dividend, $divisor, int $roundingMode): Money
     {
         if (! is_numeric($divisor))
         {

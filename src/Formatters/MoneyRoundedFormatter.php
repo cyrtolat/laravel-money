@@ -7,7 +7,8 @@ use Cyrtolat\Money\Contracts\MoneyFormatterContract;
 use NumberFormatter;
 
 /**
- * Formats the Money object in the style of an integer string.
+ * Formats the Money object in the style of an integer
+ * with fraction rounding and with currency code.
  */
 class MoneyRoundedFormatter implements MoneyFormatterContract
 {
