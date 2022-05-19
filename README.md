@@ -1,7 +1,6 @@
 # Laravel Money
 
 ## Installation
-_________________
 
 Run the following command from you terminal:
 
@@ -16,7 +15,6 @@ php artisan vendor:publish --provider="Cyrtolat\Money\MoneyServiceProvider"
 ```
 
 ## Usage
-_________________
 
 Money is an immutable class. All operations on a Money return a new instance.
 
@@ -239,7 +237,6 @@ protected $casts = [
 ```
 
 ## Testing
-_________________
 
 Phpunit is used to test this library. To start testing run the command:
 
@@ -248,7 +245,6 @@ composer test
 ```
 
 ## Planned
-_________________
 
 The following updates will be implemented:
 
@@ -257,11 +253,9 @@ The following updates will be implemented:
 - validation rules
 
 ## Changelog
-_________________
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## License
-_________________
 
 The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.
