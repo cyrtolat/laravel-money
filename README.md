@@ -248,9 +248,9 @@ composer test
 
 The following updates will be implemented:
 
-- adding cryptocurrencies by default
-- currency exchanger with the ability to write drivers
-- validation rules
+- [ ] adding cryptocurrencies by default
+- [ ] currency exchanger with the ability to write drivers
+- [ ] validation rules
 
 ## Changelog
 
