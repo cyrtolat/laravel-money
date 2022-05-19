@@ -217,7 +217,7 @@ use Cyrtolat\Money\Money;
 Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 15023, ...]
 ```
 
-or with a decimal serializer
+or with a decimal serializer:
 
 ```php
 'serializer' => \Cyrtolat\Money\Serializers\MoneyDecimalSerializer::class,
@@ -229,7 +229,7 @@ use Cyrtolat\Money\Money;
 Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 150.23, ...]
 ```
 
-You can also create your own serilizers. And by analogy with formatters, they should inherit ```Cyrtolat\Money\Contracts\MoneySerializerContract```.
+You can also create your own serilizers. They should inherit ```Cyrtolat\Money\Contracts\MoneySerializerContract```.
 
 ### Casts
 
@@ -244,9 +244,12 @@ use Cyrtolat\Money\Casts\MoneyDecimalCast;
 use Cyrtolat\Money\Casts\MoneyIntegerCast;
 
 protected $casts = [
-    'money' => MoneyIntegerCast::class . ':RUB',
+    // this cast writes a minor amount in database as an integer
+    'money' => MoneyIntegerCast::class . ':RUB', 
+    // this cast writes a major amount in database as a decimal
     'money' => MoneyDecimalCast::class . ':USD',
-    'money' => MoneyDecimalCast::class . ':attribute_with_currency'
+    // this cast using the currency code that defined in the model attribute 
+    'money' => MoneyDecimalCast::class . ':attribute_name'
 ];
 ```
 
@@ -262,9 +265,9 @@ composer test
 
 The following updates will be implemented:
 
-- [ ] adding cryptocurrencies by default
-- [ ] currency exchanger with the ability to write drivers
-- [ ] validation rules
+- [ ] To add cryptocurrencies by default
+- [ ] To add currency exchanger with the ability to write drivers
+- [ ] To add validation rules
 
 ## Changelog
 
