@@ -104,13 +104,11 @@ If you need to compare instances of Money with each other, then you can do it in
 - ```isZero()``` Returns the result of a comparison an amount with zero
 - ```isPositive()``` Returns true if an amount is greater than zero
 - ```isNegative()``` Returns true if an amount is less than zero
-- ```isSameCurrency() ``` Returns true if monies has the same currency
-- ```isNotSameCurrency() ``` Returns true if monies has not the same currency
+- ```hasSameCurrency() ``` Returns true if monies has the same currency
 
 The next methods require that the currencies of the Money be the same
 
 - ```equals() ``` Returns true if this instance is equal to another
-- ```notEquals() ``` Returns true if this instance is not equal to another
 - ```gt(Money)``` Returns true if this instance is greater than a given
 - ```gte(Money)``` Returns true if this instance is greater than or equal to a given
 - ```lt(Money)``` Returns true if this instance is less than a given
@@ -119,14 +117,13 @@ The next methods require that the currencies of the Money be the same
 ```php
 use Cyrtolat\Money\Money;
 
-$money_1 = Money::ofMajor(100, "RUB");
-$money_2 = Money::ofMajor(200, "RUB");
+$money = Money::ofMajor(100, "RUB");
 
-echo $money_1->equalTo($money_2); // false
-echo $money_1->notEqualTo($money_2); // true
+echo $money->equals(Money::ofMajor(100, "RUB")); // true
+echo $money->equals(Money::ofMajor(200, "RUB")); // false
 
-echo $money_1->gt($money_2); // false
-echo $money_1->lt($money_2); // true
+echo $money->gt(Money::ofMajor(200, "RUB")); // false
+echo $money->lt(Money::ofMajor(200, "RUB")); // true
 ```
 
 ### Custom currency
@@ -180,9 +177,9 @@ $decimalFormatter = new MoneyDecimalFormatter();
 $roundedFormatter = new MoneyRoundedFormatter();
 $localizedFormatter = new MoneyLocalizedFormatter();
 
-echo $money->format($defaultFormatter); // 150,55 RUB
-echo $money->format($decimalFormatter); // 150,55
-echo $money->format($roundedFormatter); // 151 RUB
+echo $money->format($defaultFormatter);   // 150,55 RUB
+echo $money->format($decimalFormatter);   // 150,55
+echo $money->format($roundedFormatter);   // 151 RUB
 echo $money->format($localizedFormatter); // 150,00 ₽
 ```
 
