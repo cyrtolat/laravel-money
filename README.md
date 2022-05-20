@@ -113,6 +113,7 @@ echo $money->minus(...$monies); // 415,00 RUB
 ```
 
 In the `multiplyBy()` and `divideBy()` methods, the rounding mode can be set by the third parameter:
+
 ```php
 use Cyrtolat\Money\Money;
 
@@ -312,12 +313,14 @@ protected $casts = [
 When we pass the model attribute holding the currency, such attribute is updated as well when setting money:
 
 ```php
+use Cyrtolat\Money\Money;
+
+$model->money = Money::ofMajor(150.23, "RUB");
 echo $model->money; // 150.23 RUB
 echo $model->currency; // RUB
 
-$model->money = Money::ofMajor(100.23, "USD");
-
-echo $model->money; // 100.23 USD
+$model->money = Money::ofMajor(60.46, "USD");
+echo $model->money; // 60.46 USD
 echo $model->currency; // USD
 ```
 
