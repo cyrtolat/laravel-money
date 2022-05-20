@@ -27,7 +27,6 @@ final class MoneyComparator
         $firstAmount = $first->getMinorAmount();
         $secondAmount = $second->getMinorAmount();
 
-
         if ($firstAmount > $secondAmount) {
             return 1;
         }
