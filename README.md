@@ -149,10 +149,10 @@ If you need to compare instances of Money with each other, then you can do it in
 The next methods require that the currencies of the Money be the same
 
 - `equals()`  Returns true if this instance is equal to another
-- `gt(Money)` Returns true if this instance is greater than a given
-- `gte(Money)` Returns true if this instance is greater than or equal to a given
-- `lt(Money)` Returns true if this instance is less than a given
-- `lte(Money)` Returns true if this instance is less than or equal to a given
+- `gt()` Returns true if this instance is greater than a given
+- `gte()` Returns true if this instance is greater than or equal to a given
+- `lt()` Returns true if this instance is less than a given
+- `lte()` Returns true if this instance is less than or equal to a given
 
 ```php
 use Cyrtolat\Money\Money;
