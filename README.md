@@ -22,15 +22,15 @@ Package configuration starts with publishing the configuration file. You can do 
 php artisan vendor:publish --provider="Cyrtolat\Money\MoneyServiceProvider"
 ```
 
-This adds a ```money.php``` file to your ```config/``` directory.
+This adds a `money.php` file to your `config/` directory.
 
 ### Default settings
 
 The current version of the package has 3 default parameters:
 
-- ```locale``` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- setting of a Money localization;
-- ```serializer``` - setting of a Money serialization;
-- ```formatter```  &nbsp;&nbsp;- setting of a Money default formatting.
+- `locale` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- setting of a Money localization;
+- `serializer` - setting of a Money serialization;
+- `formatter`  &nbsp;&nbsp;- setting of a Money default formatting.
 
 **Locale**
 
@@ -62,7 +62,7 @@ Money is an immutable class. All operations on a Money return a new instance.
 
 ### Creating a Money
 
-To create an instance of Money call the ```ofMinor()``` or the ```ofMajor()``` factory methods:
+To create an instance of Money call the `ofMinor()` or the `ofMajor()` factory methods:
 
 ```php
 use Cyrtolat\Money\Money;
@@ -112,7 +112,7 @@ echo $money->plus(...$monies); // 585,00 RUB
 echo $money->minus(...$monies); // 415,00 RUB
 ```
 
-In the ```multiplyBy()``` and ```divideBy()``` methods, the rounding mode can be set by the third parameter:
+In the `multiplyBy()` and `divideBy()` methods, the rounding mode can be set by the third parameter:
 ```php
 use Cyrtolat\Money\Money;
 
@@ -140,18 +140,18 @@ echo $money->round(0, PHP_ROUND_HALF_DOWN); // 100,00 RUB
 
 If you need to compare instances of Money with each other, then you can do it in one of the following ways:
 
-- ```isZero()``` Returns the result of a comparison an amount with zero
-- ```isPositive()``` Returns true if an amount is greater than zero
-- ```isNegative()``` Returns true if an amount is less than zero
-- ```hasSameCurrency() ``` Returns true if monies has the same currency
+- `isZero()` Returns the result of a comparison an amount with zero
+- `isPositive()` Returns true if an amount is greater than zero
+- `isNegative()` Returns true if an amount is less than zero
+- `hasSameCurrency() ` Returns true if monies has the same currency
 
 The next methods require that the currencies of the Money be the same
 
-- ```equals() ``` Returns true if this instance is equal to another
-- ```gt(Money)``` Returns true if this instance is greater than a given
-- ```gte(Money)``` Returns true if this instance is greater than or equal to a given
-- ```lt(Money)``` Returns true if this instance is less than a given
-- ```lte(Money)``` Returns true if this instance is less than or equal to a given
+- `equals()`  Returns true if this instance is equal to another
+- `gt(Money)` Returns true if this instance is greater than a given
+- `gte(Money)` Returns true if this instance is greater than or equal to a given
+- `lt(Money)` Returns true if this instance is less than a given
+- `lte(Money)` Returns true if this instance is less than or equal to a given
 
 ```php
 use Cyrtolat\Money\Money;
@@ -190,7 +190,7 @@ echo Money::ofMinor(150, "MCC"); // 1,50 MCC
 
 ## Formatting
 
-To format your Money, you need to call the ```format()``` method:
+To format your Money you need to call the method `format()`, which is also implicitly called via the magic method `__toString()`
 
 ```php
 use Cyrtolat\Money\Money;
@@ -198,28 +198,28 @@ use Cyrtolat\Money\Money;
 $money = Money::ofMajor(150, "RUB");
 
 echo $money->format(); // 1,50 RUB
+echo $money; // 1,50 RUB
 ```
 
-This method formats the money according to the default formatter that is set in the configs. If you need to format money in another way, then you need to create an instance of the formatter and give it Money object:
+It formats money by default formatter that is set in the configs. If you need to format money in another style, then you need to create an instance of the formatter and give it Money object:
+
 ```php
 use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Formatters\MoneyDefaultFormatter;
-use Cyrtolat\Money\Formatters\MoneyDecimalFormatter;
-use Cyrtolat\Money\Formatters\MoneyRoundedFormatter;
 use Cyrtolat\Money\Formatters\MoneyLocalizedFormatter;
 
 $money = Money::ofMajor(150.55, "RUB");
 
-$defaultFormatter = new MoneyDefaultFormatter();
-$decimalFormatter = new MoneyDecimalFormatter();
-$roundedFormatter = new MoneyRoundedFormatter();
 $localizedFormatter = new MoneyLocalizedFormatter();
 
-echo $defaultFormatter->format($money);   // 150,55 RUB
-echo $decimalFormatter->format($money);   // 150,55
-echo $roundedFormatter->format($money);   // 151 RUB
-echo $localizedFormatter->format($money); // 150,00 ₽
+echo $localizedFormatter->format($money); // 150,55 ₽
 ```
+
+Initially, the package includes 4 formatters:
+
+- `Cyrtolat\Money\Formatters\MoneyDefaultFormatter`
+- `Cyrtolat\Money\Formatters\MoneyDecimalFormatter`
+- `Cyrtolat\Money\Formatters\MoneyRoundedFormatter`
+- `Cyrtolat\Money\Formatters\MoneyLocalizedFormatter`
 
 You can create your own formatter. It should implement the following interface of this package:
 
@@ -244,42 +244,50 @@ interface MoneyFormatterContract
 }
 ```
 
-### Serialization
+## Serialization
 
-A serializer is an object responsible for serializing instances of Money into an array and JSON. For example, if you want Money values to be converted to minor unit in your API Resources, you should specify the appropriate serializer in the config:
+The Money class implements Laravel Arrayable and Jsonable contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
 
-
-
-
-
-
-
-
-
-
-
+According to the implementation of contracts, serialization to array and to JSON is called by the methods `toArray()` and `toJSON`:
 
 ```php
 use Cyrtolat\Money\Money;
 
-Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 15023, ...]
+Money::ofMajor(150.23, "RUB")->toArray(); // (array) [...]
+Money::ofMajor(150.23, "RUB")->toJson(); // (string) {...}
 ```
 
-or with a decimal serializer:
+Internally, they refer to the Serializer class specified in the config, so once you set the class, you specify the serialization style for all the Money objects of your application.
+
+Initially, the package contains two serializer classes:
+
+- `Cyrtolat\Money\Serializers\MoneyIntegerSerializer`
+- `Cyrtolat\Money\Serializers\MoneyDecimalSerializer`
+
+You can also create your own serilizers. It should implement the following interface of this package:
 
 ```php
-'serializer' => \Cyrtolat\Money\Serializers\MoneyDecimalSerializer::class,
-```
+namespace Cyrtolat\Money\Contracts;
 
-```php
 use Cyrtolat\Money\Money;
 
-Money::ofMajor(150.23, "RUB")->toArray(); // ["amount" => 150.23, ...]
+/**
+ * Serializes Money objects.
+ */
+interface MoneySerializerContract
+{
+    /**
+     * Returns an array representation of an instance of Money class.
+     *
+     * @param Money $money The Money class instance.
+     * @param array $params The array of params to formatting.
+     * @return array
+     */
+    public function toArray(Money $money, array $params = []): array;
+}
 ```
 
-You can also create your own serilizers. They should inherit ```Cyrtolat\Money\Contracts\MoneySerializerContract```.
-
-### Casts
+## Casts
 
 The package contains several casts:
 - ```Cyrtolat\Money\Casts\MoneyDecimalCast```
@@ -299,6 +307,18 @@ protected $casts = [
     // this cast using the currency code that defined in the model attribute 
     'money' => MoneyDecimalCast::class . ':attribute_name'
 ];
+```
+
+When we pass the model attribute holding the currency, such attribute is updated as well when setting money:
+
+```php
+echo $model->money; // 150.23 RUB
+echo $model->currency; // RUB
+
+$model->money = Money::ofMajor(100.23, "USD");
+
+echo $model->money; // 100.23 USD
+echo $model->currency; // USD
 ```
 
 ## Testing

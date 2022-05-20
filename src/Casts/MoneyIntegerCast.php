@@ -48,10 +48,17 @@ class MoneyIntegerCast extends MoneyCast
             return [$key => $value];
         }
 
-        if ($value instanceof Money) {
-            $currency = $this->getCurrency($attributes);
-            $this->validateCurrency($value, $currency);
+        if (array_key_exists($this->currency, $attributes)) {
+            return [
+                $key => $value->getMinorAmount(),
+                $this->currency => $value->getCurrency()->getAlphabeticCode()
+            ];
+        }
 
+        $currency = $this->getCurrency($attributes);
+        $this->validateCurrency($value, $currency);
+
+        if ($value instanceof Money) {
             return [$key => $value->getMinorAmount()];
         }
 
