@@ -166,30 +166,7 @@ echo $money->gt(Money::ofMajor(200, "RUB")); // false
 echo $money->lt(Money::ofMajor(200, "RUB")); // true
 ```
 
-### Custom currency
-
-Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
-
-```php
-use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Providers\CurrencyProvider;
-
-$provider = CurrencyProvider::getInstance();
-$currency = new Currency(
-  "MCC",                // alphabetic code
-  "My Custom Currency", // currency name
-  "0",                  // numeric code
-  2                     // fraction digits
-);
-$provider->registerCurrency($currency);
-
-echo Money::ofMinor(150, "MCC"); // 1,50 MCC
-```
-
->**Note:** If the currency doesn't have a numeric code, then specify it as zero.
-
-## Formatting
+### Formatting
 
 To format your Money you need to call the method `format()`, which is also implicitly called via the magic method `__toString()`
 
@@ -245,7 +222,7 @@ interface MoneyFormatterContract
 }
 ```
 
-## Serialization
+### Serialization
 
 The Money class implements Laravel `Arrayable` and `Jsonable` contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
 
@@ -288,7 +265,7 @@ interface MoneySerializerContract
 }
 ```
 
-## Casts
+### Casts
 
 The package contains several casts:
 - ```Cyrtolat\Money\Casts\MoneyDecimalCast```
@@ -323,6 +300,29 @@ $model->money = Money::ofMajor(60.46, "USD");
 echo $model->money; // 60.46 USD
 echo $model->currency; // USD
 ```
+
+### Custom currency
+
+Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
+
+```php
+use Cyrtolat\Money\Money;
+use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Providers\CurrencyProvider;
+
+$provider = CurrencyProvider::getInstance();
+$currency = new Currency(
+  "MCC",                // alphabetic code
+  "My Custom Currency", // currency name
+  "0",                  // numeric code
+  2                     // fraction digits
+);
+$provider->registerCurrency($currency);
+
+echo Money::ofMinor(150, "MCC"); // 1,50 MCC
+```
+
+>**Note:** If the currency doesn't have a numeric code, then specify it as zero.
 
 ## Testing
 
