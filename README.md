@@ -29,8 +29,8 @@ This adds a `money.php` file to your `config/` directory.
 The current version of the package has 3 default parameters:
 
 - `locale` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- setting of a Money localization;
-- `serializer` - setting of a Money serialization;
-- `formatter`  &nbsp;&nbsp;- setting of a Money default formatting.
+- `serializer` - setting of a Money serialization style;
+- `formatter`  &nbsp;&nbsp;- setting of a Money formatting style.
 
 **Locale**
 
