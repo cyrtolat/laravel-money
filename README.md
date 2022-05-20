@@ -1,5 +1,7 @@
 # Laravel Money
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 ## Installation
 
 Run the following command from you terminal:
@@ -8,11 +10,51 @@ Run the following command from you terminal:
 composer require cyrtolat/laravel-money
 ```
 
-Then publish the config file with this command:
+## Configuration
+
+Like most packages for large frameworks, this package allows you to customize some behavior parameters according to your needs. To better understand why they are needed, please read this section. This is important because some settings may conflict with your application.
+
+### Publish command
+
+Package configuration starts with publishing the configuration file. You can do this by running the following command in the terminal:
 
 ```bash
 php artisan vendor:publish --provider="Cyrtolat\Money\MoneyServiceProvider"
 ```
+
+This adds a ```money.php``` file to your ```config/``` directory.
+
+### Default settings
+
+The current version of the package has 3 default parameters:
+
+- ```locale``` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- setting of a Money localization;
+- ```serializer``` - setting of a Money serialization;
+- ```formatter```  &nbsp;&nbsp;- setting of a Money default formatting.
+
+#### Locale
+
+```php
+'locale' => config('app.locale', 'en_US')
+```
+
+The first parameter "locale" is responsible for the localization of the currency. In particular, it is used when formatting Money into a string by some Formatters classes. As you can see, by default, "locale" refers to the localization setting of your laravel application, but if desired, it can be set to any.
+
+#### Serializer
+
+```php
+'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class
+```
+
+A serializer is an object responsible for serializing instances of Money into an array and JSON. This setting contains a class that will convert your Money by default. Read more about serializers in the serialization chapter.
+
+#### Formatter
+
+```php
+'formatter' => \Cyrtolat\Money\Formatters\MoneyDefaultFormatter::class
+```
+
+Formatters are the classes responsible for converting Money into a string. This setting contains a formatter that formats Money instances by default. Read more about formatters in the formatting chapter.
 
 ## Usage
 
