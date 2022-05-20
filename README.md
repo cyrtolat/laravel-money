@@ -72,7 +72,7 @@ $money = Money::ofMajor(150, "RUB"); // 150,00 RUB
 $money = Money::ofMajor(150.23, "RUB"); // 150,23 RUB
 ```
 
-If a decimal value is called when creating an instance using the `of Major()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
+If a decimal value is called when creating an instance using the `ofMajor()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
 If necessary, you can set the rounding mode using the third parameter.
 
 ```php
