@@ -9,10 +9,8 @@ use Cyrtolat\Money\Providers\MoneySerializerProvider;
  */
 trait HasSerialization
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    /** {@inheritdoc} */
+    public function toArray(): array
     {
         $provider = MoneySerializerProvider::getInstance();
         $serializer = $provider->getSerializer();
@@ -20,11 +18,8 @@ trait HasSerialization
         return $serializer->toArray($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toJson($options = 0)
-    {
+    /** {@inheritDoc} */
+    public function toJson($options = 0) {
         return json_encode($this->toArray(), $options);
     }
 }

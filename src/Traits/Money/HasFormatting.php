@@ -2,7 +2,6 @@
 
 namespace Cyrtolat\Money\Traits\Money;
 
-use Cyrtolat\Money\Contracts\MoneyFormatterContract;
 use Cyrtolat\Money\Providers\MoneyFormatterProvider;
 
 /**
@@ -13,15 +12,10 @@ trait HasFormatting
     /**
      * Returns a string representation of this instance of the Money class.
      *
-     * @param MoneyFormatterContract|null $formatter The Money Formatter instance or nothing to use default formatter.
      * @return string
      */
-    public function format(MoneyFormatterContract $formatter = null): string
+    public function format(): string
     {
-        if ($formatter instanceof MoneyFormatterContract) {
-            return $formatter->format($this);
-        }
-
         $provider = MoneyFormatterProvider::getInstance();
         $formatter = $provider->getFormatter();
 

@@ -62,7 +62,7 @@ Money is an immutable class. All operations on a Money return a new instance.
 
 ### Creating a Money
 
-To create an instance of Money, call the ```ofMinor()``` or ```ofMajor()``` factory methods:
+To create an instance of Money call the ```ofMinor()``` or the ```ofMajor()``` factory methods:
 
 ```php
 use Cyrtolat\Money\Money;
@@ -72,20 +72,14 @@ $money = Money::ofMajor(150, "RUB"); // 150,00 RUB
 $money = Money::ofMajor(150.23, "RUB"); // 150,23 RUB
 ```
 
-If, when creating an instance, a decimal value is called by the ```ofMajor()``` method, the number of decimal places of which exceeds that of the currency, then the value will be rounded.
+If a decimal value is called when creating an instance using the `of Major()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
+If necessary, you can set the rounding mode using the third parameter.
 
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(150.235, "RUB"); // 150,24 RUB
-```
-
-If desired, you can give the rounding mode with the third parameter.
-
-```php
-use Cyrtolat\Money\Money;
-
-Money::ofMajor(150.235, "RUB", PHP_ROUND_HALF_DOWN); // 150,23 RUB
+echo Money::ofMajor(150.235, "RUB"); // 150,24 RUB
+echo Money::ofMajor(150.235, "RUB", PHP_ROUND_HALF_DOWN); // 150,23 RUB
 ```
 
 ### Basic operations
@@ -101,24 +95,24 @@ echo $money->multiplyBy(5); // 500,00 RUB
 echo $money->divideBy(5); // 3,00 RUB
 ```
 
-Several arguments can be given to the ```plus()``` and ```minus()``` methods:
+The `plus()` and `minus()` methods can be given several arguments:
 
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(150, "RUB");
+$money = Money::ofMajor(500, "RUB");
 
 $monies = [
-  Money::ofMajor(200, "RUB"),
-  Money::ofMajor(100, "RUB"),
-  Money::ofMajor(50, "RUB")
+  Money::ofMajor(50, "RUB"),
+  Money::ofMajor(25, "RUB"),
+  Money::ofMajor(10, "RUB")
 ];
 
-echo $money->plus(...$monies); // 500,00 RUB
+echo $money->plus(...$monies); // 585,00 RUB
+echo $money->minus(...$monies); // 415,00 RUB
 ```
 
-In the multiplication and division methods, the rounding mode can be given by the third parameter:
-
+In the ```multiplyBy()``` and ```divideBy()``` methods, the rounding mode can be set by the third parameter:
 ```php
 use Cyrtolat\Money\Money;
 
@@ -126,6 +120,9 @@ $money = Money::ofMajor(100, "RUB");
 
 echo $money->multiplyBy(5.00015); // 500,02 RUB
 echo $money->multiplyBy(5.00015, PHP_ROUND_HALF_DOWN); // 500,01 RUB
+
+echo $money->divideBy(5.00015); // 20,00 RUB
+echo $money->divideBy(5.00015, PHP_ROUND_HALF_DOWN); // 19,99 RUB
 ```
 
 Rounding can also be called outside the context of division and multiplication:
@@ -191,7 +188,7 @@ echo Money::ofMinor(150, "MCC"); // 1,50 MCC
 
 >**Note:** If the currency doesn't have a numeric code, then specify it as zero.
 
-### Formatting
+## Formatting
 
 To format your Money, you need to call the ```format()``` method:
 
@@ -203,8 +200,7 @@ $money = Money::ofMajor(150, "RUB");
 echo $money->format(); // 1,50 RUB
 ```
 
-This method formats Money according to Formatters - special formatting classes. They are responsible for exactly how the Money will be displayed. By default, a class from the configuration is used for formatting. The package includes several formatters:
-
+This method formats the money according to the default formatter that is set in the configs. If you need to format money in another way, then you need to create an instance of the formatter and give it Money object:
 ```php
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Formatters\MoneyDefaultFormatter;
@@ -219,36 +215,49 @@ $decimalFormatter = new MoneyDecimalFormatter();
 $roundedFormatter = new MoneyRoundedFormatter();
 $localizedFormatter = new MoneyLocalizedFormatter();
 
-echo $money->format($defaultFormatter);   // 150,55 RUB
-echo $money->format($decimalFormatter);   // 150,55
-echo $money->format($roundedFormatter);   // 151 RUB
-echo $money->format($localizedFormatter); // 150,00 ₽
+echo $defaultFormatter->format($money);   // 150,55 RUB
+echo $decimalFormatter->format($money);   // 150,55
+echo $roundedFormatter->format($money);   // 151 RUB
+echo $localizedFormatter->format($money); // 150,00 ₽
 ```
 
-You can create your own Formatter. It must implement ```Cyrtolat\Money\Contracts\MoneyFormatterContract``` of this package.
+You can create your own formatter. It should implement the following interface of this package:
+
+```php
+namespace Cyrtolat\Money\Contracts;
+
+use Cyrtolat\Money\Money;
+
+/**
+ * Formatters Money objects.
+ */
+interface MoneyFormatterContract
+{
+    /**
+     * Formats a Money object as a string.
+     *
+     * @param Money $money The instance of Money class.
+     * @param array $params The array of params to formatting.
+     * @return string
+     */
+    public function format(Money $money, array $params = []): string;
+}
+```
 
 ### Serialization
 
-The Serializer classes are responsible for how laravel will convert Money to array and JSON. For example, if you want Money values to be converted to minor unit in your API Resources, you should specify the appropriate serializer in the config:
+A serializer is an object responsible for serializing instances of Money into an array and JSON. For example, if you want Money values to be converted to minor unit in your API Resources, you should specify the appropriate serializer in the config:
 
-configs\money.php:
 
-```php
-/*
- |--------------------------------------------------------------------------
- | Money Serializer class
- |--------------------------------------------------------------------------
- |
- | The money serializer class determine how the instance of Money class will
- | be converted to array and json. This is necessary, for example, in the
- | API Resources classes. Specify here the class of one of the ready-made
- | serializers or write your own. But remember that a custom serializer
- | must implement MoneySerializerContract of this package.
- |
- */
-     
-'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class,
-```
+
+
+
+
+
+
+
+
+
 
 ```php
 use Cyrtolat\Money\Money;
