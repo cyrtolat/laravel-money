@@ -39,7 +39,7 @@ class CurrencyTest extends TestCase
         $rub = new Currency("RUB", "Russian Ruble", "643", 2);
         $usd = new Currency("USD", "US Dollar", "840", 2);
 
-        $this->assertTrue($rub->notEquals($usd));
+        $this->assertTrue($rub->equals($rub));
         $this->assertFalse($rub->equals($usd));
     }
 

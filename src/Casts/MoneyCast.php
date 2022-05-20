@@ -54,7 +54,7 @@ abstract class MoneyCast implements CastsAttributes
      */
     protected function validateCurrency(Money $money, Currency $currency): void
     {
-        if ($money->getCurrency()->notEqualTo($currency)) {
+        if (! $money->getCurrency()->equals($currency)) {
             throw new MoneyCastException("Invalid data provided. The currency of given monies must be equal to the currency of the attribute.");
         }
     }

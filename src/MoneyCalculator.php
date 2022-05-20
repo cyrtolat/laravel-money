@@ -19,20 +19,18 @@ final class MoneyCalculator
      */
     public static function getAdditionOf(Money $summand, array $addends): Money
     {
-        $currency = $summand->getCurrency();
         $amount = $summand->getMinorAmount();
 
         foreach ($addends as $addend)
         {
-            if ($currency->notEquals($addend->getCurrency()))
-            {
+            if (! $summand->hasSameCurrency($addend)) {
                 throw new CalculatorException('Currency of addend monies must be identical to summand.');
             }
 
             $amount += $addend->getMinorAmount();
         }
 
-        return new Money($amount, $currency);
+        return new Money($amount, $summand->getCurrency());
     }
 
     /**
@@ -45,20 +43,18 @@ final class MoneyCalculator
      */
     public static function getSubtractionOf(Money $minuend, array $subtrahends): Money
     {
-        $currency = $minuend->getCurrency();
         $amount = $minuend->getMinorAmount();
 
         foreach ($subtrahends as $subtrahend)
         {
-            if ($currency->notEquals($subtrahend->getCurrency()))
-            {
+            if (! $minuend->hasSameCurrency($subtrahend)) {
                 throw new CalculatorException('Currencies of subtrahend monies must be identical to minuend.');
             }
 
             $amount -= $subtrahend->getMinorAmount();
         }
 
-        return new Money($amount, $currency);
+        return new Money($amount, $minuend->getCurrency());
     }
 
     /**
@@ -72,8 +68,7 @@ final class MoneyCalculator
      */
     public static function getMultiplicationOf(Money $multiplicand, $multiplier, int $roundingMode): Money
     {
-        if (! is_numeric($multiplier))
-        {
+        if (! is_numeric($multiplier)) {
             throw new CalculatorException('The multiplier must be a number.');
         }
 
@@ -94,8 +89,7 @@ final class MoneyCalculator
      */
     public static function getDivisionOf(Money $dividend, $divisor, int $roundingMode): Money
     {
-        if (! is_numeric($divisor))
-        {
+        if (! is_numeric($divisor)) {
             throw new CalculatorException('The divisor must be a number.');
         }
 

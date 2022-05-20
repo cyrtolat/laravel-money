@@ -47,20 +47,9 @@ trait HasComparing
      * @param Money $other The money with which compare.
      * @return bool
      */
-    public function isSameCurrency(Money $other): bool
+    public function hasSameCurrency(Money $other): bool
     {
         return $this->currency->equals($other->currency);
-    }
-
-    /**
-     * Returns true if monies has not the same currency
-     *
-     * @param Money $other The money with which compare.
-     * @return bool
-     */
-    public function isNotSameCurrency(Money $other): bool
-    {
-        return $this->currency->notEquals($other->currency);
     }
 
     /**
@@ -75,20 +64,6 @@ trait HasComparing
         $result = MoneyComparator::compare($this, $other);
 
         return $result == 0;
-    }
-
-    /**
-     * Returns true if this instance is not equal to a given.
-     *
-     * @param Money $other The money with which compare.
-     * @return bool
-     * @throws ComparatorException
-     */
-    public function notEquals(Money $other): bool
-    {
-        $result = MoneyComparator::compare($this, $other);
-
-        return $result != 0;
     }
 
     /**

@@ -36,8 +36,8 @@ class MoneyTest extends TestCase
         $rub = new Money(15600, Currency::of("RUB"));
         $usd = new Money(15600, Currency::of("USD"));
 
-        $this->assertTrue($rub->isNotSameCurrency($usd));
-        $this->assertFalse($rub->isSameCurrency($usd));
+        $this->assertTrue($rub->hasSameCurrency($rub));
+        $this->assertFalse($rub->hasSameCurrency($usd));
 
         $positive = new Money(100, Currency::of("RUB"));
         $negative = new Money(-100, Currency::of("RUB"));
@@ -53,13 +53,7 @@ class MoneyTest extends TestCase
         $monies_4 = new Money(15600, Currency::of("RUB"));
 
         $this->assertTrue($monies_1->equals($monies_2));
-        $this->assertFalse($monies_1->notEquals($monies_2));
-
-        $this->assertTrue($monies_1->notEquals($monies_3));
         $this->assertFalse($monies_1->equals($monies_3));
-
-        $this->assertTrue($monies_1->notEquals($monies_4));
-        $this->assertFalse($monies_1->equals($monies_4));
 
         $this->assertTrue($monies_1->lt($monies_3));
         $this->assertFalse($monies_3->lt($monies_1));

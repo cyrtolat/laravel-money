@@ -162,17 +162,6 @@ final class Currency implements Arrayable, Jsonable
     }
 
     /**
-     * Returns whether this currency is not equal to the given currency.
-     *
-     * @param mixed $currency The Currency class instance, alphabetical code or numerical code.
-     * @return bool
-     */
-    public function notEquals($currency): bool
-    {
-        return !$this->equals($currency);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray()
