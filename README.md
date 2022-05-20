@@ -141,7 +141,7 @@ echo $money->round(0, PHP_ROUND_HALF_DOWN); // 100,00 RUB
 
 If you need to compare instances of Money with each other, then you can do it in one of the following ways:
 
-- `isZero()` Returns the result of a comparison an amount with zero
+- `isZero()` Returns true if an amount is zero
 - `isPositive()` Returns true if an amount is greater than zero
 - `isNegative()` Returns true if an amount is less than zero
 - `hasSameCurrency() ` Returns true if monies has the same currency
