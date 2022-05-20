@@ -18,7 +18,7 @@ final class MoneyComparator
      * @return int -1 if first < second, 0 if first == second and 1 if first > second.
      * @throws ComparatorException
      */
-    public static function compare(Money $first, Money $second) : int
+    public static function compare(Money $first, Money $second): int
     {
         if (! $first->hasSameCurrency($second)) {
             throw new ComparatorException('Impossible to compare monies with different currencies.');
@@ -27,9 +27,6 @@ final class MoneyComparator
         $firstAmount = $first->getMinorAmount();
         $secondAmount = $second->getMinorAmount();
 
-        if ($firstAmount == $secondAmount) {
-            return 0;
-        }
 
         if ($firstAmount > $secondAmount) {
             return 1;
@@ -38,5 +35,7 @@ final class MoneyComparator
         if ($firstAmount < $secondAmount) {
             return -1;
         }
+
+        return 0;
     }
 }
