@@ -32,7 +32,7 @@ The current version of the package has 3 default parameters:
 - ```serializer``` - setting of a Money serialization;
 - ```formatter```  &nbsp;&nbsp;- setting of a Money default formatting.
 
-#### Locale
+**Locale**
 
 ```php
 'locale' => config('app.locale', 'en_US')
@@ -40,7 +40,7 @@ The current version of the package has 3 default parameters:
 
 The first parameter "locale" is responsible for the localization of the currency. In particular, it is used when formatting Money into a string by some Formatters classes. As you can see, by default, "locale" refers to the localization setting of your laravel application, but if desired, it can be set to any.
 
-#### Serializer
+**Serializer**
 
 ```php
 'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class
@@ -48,7 +48,7 @@ The first parameter "locale" is responsible for the localization of the currency
 
 A serializer is an object responsible for serializing instances of Money into an array and JSON. This setting contains a class that will convert your Money by default. Read more about serializers in the serialization chapter.
 
-#### Formatter
+**Formatter**
 
 ```php
 'formatter' => \Cyrtolat\Money\Formatters\MoneyDefaultFormatter::class
