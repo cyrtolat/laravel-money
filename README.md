@@ -247,7 +247,7 @@ interface MoneyFormatterContract
 
 ## Serialization
 
-The Money class implements Laravel Arrayable and Jsonable contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
+The Money class implements Laravel `Arrayable` and `Jsonable` contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
 
 According to the implementation of contracts, serialization to array and to JSON is called by the methods `toArray()` and `toJSON`:
 
