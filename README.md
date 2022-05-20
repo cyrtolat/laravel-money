@@ -183,7 +183,7 @@ echo $money->format($roundedFormatter);   // 151 RUB
 echo $money->format($localizedFormatter); // 150,00 ₽
 ```
 
-You can create your own Formatter. It must implement class ```Cyrtolat\Money\Contracts\MoneyFormatterContract``` of this package.
+You can create your own Formatter. It must implement ```Cyrtolat\Money\Contracts\MoneyFormatterContract``` of this package.
 
 ### Serialization
 

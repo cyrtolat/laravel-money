@@ -18,7 +18,7 @@ final class Money implements Arrayable, Jsonable
         Traits\Money\HasSerialization;
 
     /**
-     * The monetary amount in a minor currency value.
+     * The monetary amount in a minor unit.
      *
      * @var integer
      */

@@ -52,7 +52,7 @@ class MoneyDecimalCast extends MoneyCast
             $currency = $this->getCurrency($attributes);
             $this->validateCurrency($value, $currency);
 
-            return [$key => $value->getMinorAmount()];
+            return [$key => $value->getMajorAmount()];
         }
 
         throw new MoneyCastException("Invalid data provided. The given value must be a decimal or instance of Money class.");
