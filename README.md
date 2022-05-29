@@ -173,8 +173,8 @@ use Cyrtolat\Money\Money;
 
 $money = Money::of(150, "RUB");
 
-echo $money->format(); // 1,50 RUB
-echo $money; // 1,50 RUB
+echo $money->format(); // 150 RUB
+echo $money; // 150 RUB
 ```
 
 It formats money by default formatter that is set in the configs. If you need to format money in another style, then you need to create an instance of the formatter and give it Money object:
@@ -230,7 +230,7 @@ According to the implementation of contracts, serialization to array and to JSON
 use Cyrtolat\Money\Money;
 
 Money::of(150.23, "RUB")->toArray(); // (array) [...]
-Money::of(150.23, "RUB")->toJson(); // (string) {...}
+Money::of(150.23, "RUB")->toJson(); // (string) "{...}"
 ```
 
 Internally, they refer to the Serializer class specified in the config, so once you set the class, you specify the serialization style for all the Money objects of your application.
