@@ -1,7 +1,5 @@
 # Laravel Money
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
 ## Installation
 
 Run the following command from you terminal:
@@ -331,14 +329,6 @@ Phpunit is used to test this library. To start testing run the command:
 ```bash
 composer test
 ```
-
-## Planned
-
-The following updates will be implemented:
-
-- [ ] To add cryptocurrencies by default
-- [ ] To add currency exchanger with the ability to write drivers
-- [ ] To add validation rules
 
 ## Changelog
 
