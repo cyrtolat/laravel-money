@@ -60,7 +60,7 @@ Money is an immutable class. All operations on a Money return a new instance. Re
 
 ### Creating a Money
 
-To create an instance of Money call the `ofMinor()` or the `of()` factory methods:
+To create an instance of Money call the `of()` or the `ofMinor()` factory methods:
 
 ```php
 use Cyrtolat\Money\Money;
@@ -69,6 +69,8 @@ $money = Money::of(150, "RUB"); // 150,00 RUB
 $money = Money::of(150.23, "RUB"); // 150,23 RUB
 $money = Money::ofMinor(150, "RUB"); // 1,50 RUB
 ```
+
+>**Note:** The `ofMinor()` method gets only an integer value.
 
 If a decimal value is called when creating an instance using the `of()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
 If necessary, you can set the rounding mode using the third parameter.
