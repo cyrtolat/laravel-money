@@ -86,7 +86,7 @@ class MoneyTest extends TestCase
 
         $rub_1 = new Money($minorAmount, $currency);
         $rub_2 = Money::ofMinor($minorAmount, $currency);
-        $rub_3 = Money::ofMajor($majorAmount, $currency);
+        $rub_3 = Money::of($majorAmount, $currency);
 
         $this->assertTrue($rub_1->equals($rub_2));
         $this->assertTrue($rub_1->equals($rub_3));
@@ -100,11 +100,11 @@ class MoneyTest extends TestCase
      */
     public function testRounding()
     {
-        $rub_154_23 = Money::ofMajor(154.23, "RUB");
-        $rub_154_20 = Money::ofMajor(154.20, "RUB");
-        $rub_154_00 = Money::ofMajor(154.00, "RUB");
-        $rub_150_00 = Money::ofMajor(150.00, "RUB");
-        $rub_200_00 = Money::ofMajor(200.00, "RUB");
+        $rub_154_23 = Money::of(154.23, "RUB");
+        $rub_154_20 = Money::of(154.20, "RUB");
+        $rub_154_00 = Money::of(154.00, "RUB");
+        $rub_150_00 = Money::of(150.00, "RUB");
+        $rub_200_00 = Money::of(200.00, "RUB");
 
         $this->assertTrue($rub_154_23->round(-2)->equals($rub_200_00));
         $this->assertTrue($rub_154_23->round(-1)->equals($rub_150_00));
@@ -122,31 +122,31 @@ class MoneyTest extends TestCase
     public function testCalculations()
     {
         $this->assertTrue(
-            Money::ofMajor(15.00, "RUB")->plus(
-            Money::ofMajor(15.01, "RUB"),
-            Money::ofMajor(15.02, "RUB"),
-            Money::ofMajor(15.03, "RUB")
+            Money::of(15.00, "RUB")->plus(
+            Money::of(15.01, "RUB"),
+            Money::of(15.02, "RUB"),
+            Money::of(15.03, "RUB")
         )->equals(
-            Money::ofMajor(60.06, "RUB")
+            Money::of(60.06, "RUB")
         ));
 
         $this->assertTrue(
-            Money::ofMajor(60.00, "RUB")->minus(
-            Money::ofMajor(15.01, "RUB"),
-            Money::ofMajor(15.02, "RUB"),
-            Money::ofMajor(15.03, "RUB")
+            Money::of(60.00, "RUB")->minus(
+            Money::of(15.01, "RUB"),
+            Money::of(15.02, "RUB"),
+            Money::of(15.03, "RUB")
         )->equals(
-            Money::ofMajor(14.94, "RUB")
+            Money::of(14.94, "RUB")
         ));
 
         $this->assertTrue(
-            Money::ofMajor(60.00, "RUB")->multiplyBy(3)->equals(
-            Money::ofMajor(180.0, "RUB")
+            Money::of(60.00, "RUB")->multiplyBy(3)->equals(
+            Money::of(180.0, "RUB")
         ));
 
         $this->assertTrue(
-            Money::ofMajor(60.00, "RUB")->divideBy(3)->equals(
-            Money::ofMajor(20.0, "RUB")
+            Money::of(60.00, "RUB")->divideBy(3)->equals(
+            Money::of(20.0, "RUB")
         ));
     }
 }

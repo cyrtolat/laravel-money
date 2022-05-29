@@ -56,28 +56,28 @@ Formatters are the classes responsible for converting Money into a string. This 
 
 ## Usage
 
-Money is an immutable class. All operations on a Money return a new instance.
+Money is an immutable class. All operations on a Money return a new instance. Remember this and don't be afraid to work with your Money objects.
 
 ### Creating a Money
 
-To create an instance of Money call the `ofMinor()` or the `ofMajor()` factory methods:
+To create an instance of Money call the `ofMinor()` or the `of()` factory methods:
 
 ```php
 use Cyrtolat\Money\Money;
 
+$money = Money::of(150, "RUB"); // 150,00 RUB
+$money = Money::of(150.23, "RUB"); // 150,23 RUB
 $money = Money::ofMinor(150, "RUB"); // 1,50 RUB
-$money = Money::ofMajor(150, "RUB"); // 150,00 RUB
-$money = Money::ofMajor(150.23, "RUB"); // 150,23 RUB
 ```
 
-If a decimal value is called when creating an instance using the `ofMajor()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
+If a decimal value is called when creating an instance using the `of()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
 If necessary, you can set the rounding mode using the third parameter.
 
 ```php
 use Cyrtolat\Money\Money;
 
-echo Money::ofMajor(150.235, "RUB"); // 150,24 RUB
-echo Money::ofMajor(150.235, "RUB", PHP_ROUND_HALF_DOWN); // 150,23 RUB
+echo Money::of(150.235, "RUB"); // 150,24 RUB
+echo Money::of(150.235, "RUB", PHP_ROUND_HALF_DOWN); // 150,23 RUB
 ```
 
 ### Basic operations
@@ -85,10 +85,10 @@ echo Money::ofMajor(150.235, "RUB", PHP_ROUND_HALF_DOWN); // 150,23 RUB
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(150, "RUB");
+$money = Money::of(150, "RUB");
 
-echo $money->plus(Money::ofMajor(200, "RUB")); // 350,00 RUB
-echo $money->minus(Money::ofMajor(500, "RUB")); // 100,00 RUB
+echo $money->plus(Money::of(200, "RUB")); // 350,00 RUB
+echo $money->minus(Money::of(500, "RUB")); // 100,00 RUB
 echo $money->multiplyBy(5); // 500,00 RUB
 echo $money->divideBy(5); // 3,00 RUB
 ```
@@ -98,12 +98,12 @@ The `plus()` and `minus()` methods can be given several arguments:
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(500, "RUB");
+$money = Money::of(500, "RUB");
 
 $monies = [
-  Money::ofMajor(50, "RUB"),
-  Money::ofMajor(25, "RUB"),
-  Money::ofMajor(10, "RUB")
+  Money::of(50, "RUB"),
+  Money::of(25, "RUB"),
+  Money::of(10, "RUB")
 ];
 
 echo $money->plus(...$monies); // 585,00 RUB
@@ -115,7 +115,7 @@ In the `multiplyBy()` and `divideBy()` methods, the rounding mode can be set by 
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(100, "RUB");
+$money = Money::of(100, "RUB");
 
 echo $money->multiplyBy(5.00015); // 500,02 RUB
 echo $money->multiplyBy(5.00015, PHP_ROUND_HALF_DOWN); // 500,01 RUB
@@ -129,7 +129,7 @@ Rounding can also be called outside the context of division and multiplication:
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(100.5, "RUB");
+$money = Money::of(100.5, "RUB");
 
 echo $money->round(); // 101,00 RUB
 echo $money->round(0, PHP_ROUND_HALF_DOWN); // 100,00 RUB
@@ -155,13 +155,13 @@ The next methods require that the currencies of the Money be the same
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(100, "RUB");
+$money = Money::of(100, "RUB");
 
-echo $money->equals(Money::ofMajor(100, "RUB")); // true
-echo $money->equals(Money::ofMajor(200, "RUB")); // false
+echo $money->equals(Money::of(100, "RUB")); // true
+echo $money->equals(Money::of(200, "RUB")); // false
 
-echo $money->gt(Money::ofMajor(200, "RUB")); // false
-echo $money->lt(Money::ofMajor(200, "RUB")); // true
+echo $money->gt(Money::of(200, "RUB")); // false
+echo $money->lt(Money::of(200, "RUB")); // true
 ```
 
 ### Formatting
@@ -171,7 +171,7 @@ To format your Money you need to call the method `format()`, which is also impli
 ```php
 use Cyrtolat\Money\Money;
 
-$money = Money::ofMajor(150, "RUB");
+$money = Money::of(150, "RUB");
 
 echo $money->format(); // 1,50 RUB
 echo $money; // 1,50 RUB
@@ -183,7 +183,7 @@ It formats money by default formatter that is set in the configs. If you need to
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Formatters\MoneyLocalizedFormatter;
 
-$money = Money::ofMajor(150.55, "RUB");
+$money = Money::of(150.55, "RUB");
 
 $localizedFormatter = new MoneyLocalizedFormatter();
 
@@ -229,8 +229,8 @@ According to the implementation of contracts, serialization to array and to JSON
 ```php
 use Cyrtolat\Money\Money;
 
-Money::ofMajor(150.23, "RUB")->toArray(); // (array) [...]
-Money::ofMajor(150.23, "RUB")->toJson(); // (string) {...}
+Money::of(150.23, "RUB")->toArray(); // (array) [...]
+Money::of(150.23, "RUB")->toJson(); // (string) {...}
 ```
 
 Internally, they refer to the Serializer class specified in the config, so once you set the class, you specify the serialization style for all the Money objects of your application.
@@ -290,11 +290,11 @@ When we pass the model attribute holding the currency, such attribute is updated
 ```php
 use Cyrtolat\Money\Money;
 
-$model->money = Money::ofMajor(150.23, "RUB");
+$model->money = Money::of(150.23, "RUB");
 echo $model->money; // 150.23 RUB
 echo $model->currency; // RUB
 
-$model->money = Money::ofMajor(60.46, "USD");
+$model->money = Money::of(60.46, "USD");
 echo $model->money; // 60.46 USD
 echo $model->currency; // USD
 ```

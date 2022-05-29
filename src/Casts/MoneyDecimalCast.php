@@ -24,7 +24,7 @@ class MoneyDecimalCast extends MoneyCast
 
         $currency = $this->getCurrency($attributes);
 
-        return Money::ofMajor($value, $currency);
+        return Money::of($value, $currency);
     }
 
     /**

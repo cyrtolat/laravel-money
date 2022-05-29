@@ -19,6 +19,6 @@ trait HasRounding
      */
     public function round(int $precision = 0, $mode = PHP_ROUND_HALF_UP): Money
     {
-        return Money::ofMajor(round($this->getMajorAmount(), $precision, $mode), $this->getCurrency());
+        return Money::of(round($this->getMajorAmount(), $precision, $mode), $this->getCurrency());
     }
 }
