@@ -2,6 +2,7 @@
 
 namespace Cyrtolat\Money\Serializers;
 
+use NumberFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializerContract;
 use Cyrtolat\Money\Money;
 
@@ -10,11 +11,31 @@ use Cyrtolat\Money\Money;
  */
 class MoneyDecimalSerializer implements MoneySerializerContract
 {
+    /** @var NumberFormatter */
+    private NumberFormatter $formatter;
+
+    /**
+     * The class constructor.
+     */
+    public function __construct()
+    {
+        $locale = config('money.locale', 'en_US');
+
+        $this->formatter = new NumberFormatter(
+            $locale, NumberFormatter::IGNORE, "#.#"
+        );
+    }
+
     /** {@inheritdoc} */
     public function toArray(Money $money, array $params = []): array
     {
+        $amount = $money->getMajorAmount();
+        $currency = $money->getCurrency();
+        $decimals = $currency->getFractionDigits();
+        $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
+
         return [
-            'amount' => $money->getMajorAmount(),
+            'amount' => $this->formatter->format($amount),
             'currency' => $money->getCurrency()->getAlphabeticCode()
         ];
     }
