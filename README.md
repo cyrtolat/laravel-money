@@ -1,5 +1,8 @@
 # Laravel Money
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
+[![License](https://img.shields.io/github/license/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
+
 ## Installation
 
 Run the following command from you terminal:
