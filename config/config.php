@@ -44,6 +44,6 @@ return [
      |
      */
 
-    'formatter' => \Cyrtolat\Money\Formatters\MoneyDefaultFormatter::class,
+    'formatter' => \Cyrtolat\Money\Formatters\MoneyDecimalFormatter::class,
 
 ];

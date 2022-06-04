@@ -7,7 +7,7 @@ use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Contracts\MoneyFormatterContract;
 
 /**
- * Formats the Money object in the style of a decimal.
+ * Formats the Money object in the style of a decimal string with currency code.
  */
 class MoneyDecimalFormatter implements MoneyFormatterContract
 {
@@ -34,6 +34,9 @@ class MoneyDecimalFormatter implements MoneyFormatterContract
         $decimals = $currency->getFractionDigits();
         $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
 
-        return  $this->formatter->format($amount);
+        return sprintf("%s %s",
+            $this->formatter->format($amount),
+            $currency->getAlphabeticCode()
+        );
     }
 }

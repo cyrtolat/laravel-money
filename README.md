@@ -3,6 +3,20 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
 [![License](https://img.shields.io/github/license/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
 
+## Contents
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#Usage)
+    - [Creating a money](#creating-a-money)
+    - [Basic operations](#basic-operations)
+    - [Custom currency](#custom-currency)
+    - [Formatting](#formatting)
+    - [Serialization](#serialization)
+    - [Casts](#casts)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [License](#license)
+
 ## Installation
 
 Run the following command from you terminal:
@@ -13,21 +27,15 @@ composer require cyrtolat/laravel-money
 
 ## Configuration
 
-Like most packages for large frameworks, this package allows you to customize some behavior parameters according to your needs. To better understand why they are needed, please read this section. This is important because some settings may conflict with your application.
-
-### Publish command
-
 Package configuration starts with publishing the configuration file. You can do this by running the following command in the terminal:
 
 ```bash
 php artisan vendor:publish --provider="Cyrtolat\Money\MoneyServiceProvider"
 ```
 
-This adds a `money.php` file to your `config/` directory.
+After executing the command, `money.php ` file will be added to your `config` directory. Then you need to configure the parameters. This is a very important stage, as some settings, if selected incorrectly, can break your application.
 
-### Default settings
-
-The current version of the package has 3 default parameters:
+The current version of the package has 3 configuration options:
 
 - `locale` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- setting of a Money localization;
 - `serializer` - setting of a Money serialization style;
@@ -47,21 +55,21 @@ The first parameter "locale" is responsible for the localization of the currency
 'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class
 ```
 
-A serializer is an object responsible for serializing instances of Money into an array and JSON. This setting contains a class that will convert your Money by default. Read more about serializers in the serialization chapter.
+A serializer is an entity responsible for serializing instances of Money into an array and JSON. This setting contains a class that will convert your Money by default. Read more about serializers in the [Serialization](#serialization) chapter.
 
 **Formatter**
 
 ```php
-'formatter' => \Cyrtolat\Money\Formatters\MoneyDefaultFormatter::class
+'formatter' => \Cyrtolat\Money\Formatters\MoneyDecimalFormatter::class
 ```
 
-Formatters are the classes responsible for converting Money into a string. This setting contains a formatter that formats Money instances by default. Read more about formatters in the formatting chapter.
+Formatter is an entity responsible for converting Money into a string. This setting contains a formatter that formats Money instances by default. Read more about formatters in the [Formatting](#formatting) chapter.
 
 ## Usage
 
 Money is an immutable class. All operations on a Money return a new instance. Remember this and don't be afraid to work with your Money objects.
 
-### Creating a Money
+### Creating a money
 
 To create an instance of Money call the `of()` or the `ofMinor()` factory methods:
 
@@ -169,6 +177,29 @@ echo $money->gt(Money::of(200, "RUB")); // false
 echo $money->lt(Money::of(200, "RUB")); // true
 ```
 
+### Custom currency
+
+Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
+
+```php
+use Cyrtolat\Money\Money;
+use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Providers\CurrencyProvider;
+
+$provider = CurrencyProvider::getInstance();
+$currency = new Currency(
+  "MCC",                // alphabetic code
+  "My Custom Currency", // currency name
+  "0",                  // numeric code
+  2                     // fraction digits
+);
+$provider->registerCurrency($currency);
+
+echo Money::ofMinor(150, "MCC"); // 1,50 MCC
+```
+
+>**Note:** If the currency doesn't have a numeric code, then specify it as zero.
+
 ### Formatting
 
 To format your Money you need to call the method `format()`, which is also implicitly called via the magic method `__toString()`
@@ -197,10 +228,12 @@ echo $localizedFormatter->format($money); // 150,55 ₽
 
 Initially, the package includes 4 formatters:
 
-- `Cyrtolat\Money\Formatters\MoneyDefaultFormatter`
-- `Cyrtolat\Money\Formatters\MoneyDecimalFormatter`
-- `Cyrtolat\Money\Formatters\MoneyRoundedFormatter`
-- `Cyrtolat\Money\Formatters\MoneyLocalizedFormatter`
+name | class | example
+:----:|:-------:|:-------:
+Decimal | `Cyrtolat\Money\Formatters\MoneyDecimalFormatter` | 150,55 RUB
+Numeric | `Cyrtolat\Money\Formatters\MoneyNumericFormatter` | 150,55
+Rounded | `Cyrtolat\Money\Formatters\MoneyRoundedFormatter` | 151 RUB
+Localized | `Cyrtolat\Money\Formatters\MoneyLocalizedFormatter` | 150,55 ₽
 
 You can create your own formatter. It should implement the following interface of this package:
 
@@ -242,8 +275,10 @@ Internally, they refer to the Serializer class specified in the config, so once 
 
 Initially, the package contains two serializer classes:
 
-- `Cyrtolat\Money\Serializers\MoneyIntegerSerializer`
-- `Cyrtolat\Money\Serializers\MoneyDecimalSerializer`
+name | class | example
+:----:|:-------:|:-------:
+Integer | `Cyrtolat\Money\Serializers\MoneyIntegerSerializer` | `{"amount":15055,"currency":"RUB"}`
+Decimal | `Cyrtolat\Money\Serializers\MoneyDecimalSerializer` | `{"amount":"150.55","currency":"RUB"}`
 
 You can also create your own serilizers. It should implement the following interface of this package:
 
@@ -271,8 +306,12 @@ interface MoneySerializerContract
 ### Casts
 
 The package contains several casts:
-- ```Cyrtolat\Money\Casts\MoneyDecimalCast```
-- ```Cyrtolat\Money\Casts\MoneyIntegerCast```
+
+name | class | example
+:----:|:-------:|:-------:
+Integer | `Cyrtolat\Money\Casts\MoneyIntegerCast` | 15055
+Decimal | `Cyrtolat\Money\Casts\MoneyDecimalCast` | 150.55
+
 
 When using them, it is necessary to specify the currency or attribute containing it:
 
@@ -304,35 +343,12 @@ echo $model->money; // 60.46 USD
 echo $model->currency; // USD
 ```
 
-### Custom currency
-
-Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
-
-```php
-use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Providers\CurrencyProvider;
-
-$provider = CurrencyProvider::getInstance();
-$currency = new Currency(
-  "MCC",                // alphabetic code
-  "My Custom Currency", // currency name
-  "0",                  // numeric code
-  2                     // fraction digits
-);
-$provider->registerCurrency($currency);
-
-echo Money::ofMinor(150, "MCC"); // 1,50 MCC
-```
-
->**Note:** If the currency doesn't have a numeric code, then specify it as zero.
-
 ## Testing
 
 Phpunit is used to test this library. To start testing run the command:
 
 ```bash
-composer test
+$ composer test
 ```
 
 ## Changelog
