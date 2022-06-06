@@ -81,7 +81,7 @@ $money = Money::of(150.23, "RUB"); // 150,23 RUB
 $money = Money::ofMinor(150, "RUB"); // 1,50 RUB
 ```
 
->**Note:** The `ofMinor()` method gets only an integer value.
+>**_Note:_** The `ofMinor()` method gets only an integer value.
 
 If a decimal value is called when creating an instance using the `of()` method, the number of decimal places in which exceeds the number of decimal places in the currency, the value will be rounded.
 If necessary, you can set the rounding mode using the third parameter.
@@ -148,7 +148,7 @@ echo $money->round(); // 101,00 RUB
 echo $money->round(0, PHP_ROUND_HALF_DOWN); // 100,00 RUB
 ```
 
->**Note:** It is important that all mathematical actions require that the currency of monies be the same. Otherwise, an exception will be thrown.
+>**_Note:_** It is important that all mathematical actions require that the currency of monies be the same. Otherwise, an exception will be thrown.
 
 If you need to compare instances of Money with each other, then you can do it in one of the following ways:
 
@@ -198,7 +198,7 @@ $provider->registerCurrency($currency);
 echo Money::ofMinor(150, "MCC"); // 1,50 MCC
 ```
 
->**Note:** If the currency doesn't have a numeric code, then specify it as zero.
+>**_Note:_** If the currency doesn't have a numeric code, then specify it as zero.
 
 ### Formatting
 
