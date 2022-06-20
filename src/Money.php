@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Jsonable;
 /**
  * A Money class.
  */
-final class Money implements Arrayable, Jsonable
+final class Money implements Arrayable, Jsonable, \JsonSerializable
 {
     use Traits\Money\HasFactory,
         Traits\Money\HasRounding,

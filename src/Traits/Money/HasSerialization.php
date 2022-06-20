@@ -23,4 +23,10 @@ trait HasSerialization
     {
         return json_encode($this->toArray(), $options);
     }
+
+    /** {@inheritDoc} */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
 }
