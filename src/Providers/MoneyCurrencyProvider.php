@@ -75,7 +75,7 @@ final class MoneyCurrencyProvider
             return $this->createCurrency($this->isoCurrenciesData[$alphabeticCode]);
         }
 
-        throw new CurrencyException("There is no Currency with such code: $alphabeticCode");
+        throw CurrencyException::alphabeticCodeDoesntExist($alphabeticCode);
     }
 
     /**
@@ -90,15 +90,15 @@ final class MoneyCurrencyProvider
         $numericCode = $currency->getNumericCode();
 
         if (isset($this->isoCurrenciesData[$alphabeticCode])) {
-            throw new CurrencyException("An ISO-currency with such alphabetic code [$alphabeticCode] already exists.");
+            throw CurrencyException::alphabeticCodeAlreadyExists($alphabeticCode);
         }
 
         if (isset($this->isoByNumberData[$numericCode])) {
-            throw new CurrencyException("An ISO-currency with such numeric code [$numericCode] already exists.");
+            throw CurrencyException::numericCodeAlreadyExists($numericCode);
         }
 
         if (isset($this->storedCurrencies[$alphabeticCode])) {
-            throw new CurrencyException("A currency with such alphabetic code [$alphabeticCode] already exists.");
+            throw CurrencyException::currencyAlreadyRegistered($alphabeticCode);
         }
 
         $this->storedCurrencies = array_merge($this->storedCurrencies, [
