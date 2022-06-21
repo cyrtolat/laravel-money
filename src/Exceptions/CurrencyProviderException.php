@@ -2,7 +2,7 @@
 
 namespace Cyrtolat\Money\Exceptions;
 
-class CurrencyException extends MoneyException
+class CurrencyProviderException extends MoneyException
 {
     /**
      * Thrown when the currency with a such alphabetic code doesn't exist.
@@ -22,16 +22,6 @@ class CurrencyException extends MoneyException
     public static function alphabeticCodeAlreadyExists($alphabeticCode): self
     {
         return new static("An ISO-currency with such alphabetic code [$alphabeticCode] already exists.");
-    }
-
-    /**
-     * Thrown when the currency with a such numeric code already exists.
-     *
-     * @return static
-     */
-    public static function numericCodeAlreadyExists($numericCode): self
-    {
-        return new static("An ISO-currency with such numeric code [$numericCode] already exists.");
     }
 
     /**

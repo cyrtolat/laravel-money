@@ -2,7 +2,7 @@
 
 namespace Cyrtolat\Money;
 
-use Cyrtolat\Money\Exceptions\CalculatorException;
+use Cyrtolat\Money\Exceptions\MoneyCalculatorException;
 
 /**
  * The Money calculator class.
@@ -13,9 +13,10 @@ final class MoneyCalculator
      * Returns a new Money instance that represents
      * the sum of given Money instance and an addend values.
      *
-     * @param Money $summand   The summand Money instance.
+     * @param Money $summand The summand Money instance.
      * @param Money[] $addends Addends Money instances.
      * @return Money
+     * @throws MoneyCalculatorException
      */
     public static function getAdditionOf(Money $summand, array $addends): Money
     {
@@ -24,7 +25,7 @@ final class MoneyCalculator
         foreach ($addends as $addend)
         {
             if (! $summand->hasSameCurrency($addend)) {
-                throw new CalculatorException('Currency of addend monies must be identical to summand.');
+                throw MoneyCalculatorException::differentCurrencies();
             }
 
             $amount += $addend->getMinorAmount();
@@ -37,9 +38,10 @@ final class MoneyCalculator
      * Returns a new Money instance that represents the difference
      * of given Money and a subtrahends Money instances.
      *
-     * @param Money $minuend       The minuend Money instance.
+     * @param Money $minuend The minuend Money instance.
      * @param Money[] $subtrahends Subtrahends monies or their minor values.
      * @return Money
+     * @throws MoneyCalculatorException
      */
     public static function getSubtractionOf(Money $minuend, array $subtrahends): Money
     {
@@ -48,7 +50,7 @@ final class MoneyCalculator
         foreach ($subtrahends as $subtrahend)
         {
             if (! $minuend->hasSameCurrency($subtrahend)) {
-                throw new CalculatorException('Currencies of subtrahend monies must be identical to minuend.');
+                throw MoneyCalculatorException::differentCurrencies();
             }
 
             $amount -= $subtrahend->getMinorAmount();
@@ -62,14 +64,14 @@ final class MoneyCalculator
      * the product of given Money instance by the given factor.
      *
      * @param Money $multiplicand The multiplicand.
-     * @param mixed $multiplier   The multiplier.
-     * @param int $roundingMode   An optional RoundingMode constant.
+     * @param mixed $multiplier The multiplier.
+     * @param int $roundingMode An optional RoundingMode constant.
      * @return Money
      */
     public static function getMultiplicationOf(Money $multiplicand, $multiplier, int $roundingMode): Money
     {
         if (! is_numeric($multiplier)) {
-            throw new CalculatorException('The multiplier must be a number.');
+            throw new \InvalidArgumentException('The multiplier must be a number.');
         }
 
         $amount = $multiplicand->getMinorAmount() * $multiplier;
@@ -82,15 +84,15 @@ final class MoneyCalculator
      * Returns a new Money instance that represents
      * the quotient of given Money instance by the given factor.
      *
-     * @param Money $dividend   The multiplicand.
-     * @param mixed $divisor    The divisor.
+     * @param Money $dividend The multiplicand.
+     * @param mixed $divisor The divisor.
      * @param int $roundingMode An optional RoundingMode constant.
      * @return Money
      */
     public static function getDivisionOf(Money $dividend, $divisor, int $roundingMode): Money
     {
         if (! is_numeric($divisor)) {
-            throw new CalculatorException('The divisor must be a number.');
+            throw new \InvalidArgumentException('The divisor must be a number.');
         }
 
         $amount = $dividend->getMinorAmount() / $divisor;

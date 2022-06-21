@@ -3,7 +3,7 @@
 namespace Cyrtolat\Money\Tests;
 
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Exceptions\CurrencyException;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 use Cyrtolat\Money\Providers\MoneyCurrencyProvider;
 
 class CurrencyDomainTest extends TestCase

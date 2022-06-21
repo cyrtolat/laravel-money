@@ -3,7 +3,7 @@
 namespace Cyrtolat\Money\Providers;
 
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Exceptions\CurrencyException;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 
 /**
  * The Currency provider
@@ -23,11 +23,11 @@ final class MoneyCurrencyProvider
     private $isoCurrenciesData = [];
 
     /**
-     * The ISO currencies by their numeric code.
+     * The cryptocurrencies data.
      *
-     * @var array<string, string>
+     * @var array<string, array>
      */
-    private $isoByNumberData = [];
+    private $cryptoCurrenciesData = [];
 
     /**
      * The previously created currencies.
@@ -63,7 +63,7 @@ final class MoneyCurrencyProvider
      *
      * @param string $alphabeticCode The 3-letter uppercase ISO 4217 currency code.
      * @return Currency
-     * @throws CurrencyException If the currency code is unknown.
+     * @throws CurrencyProviderException If the currency code is unknown.
      */
     public function getCurrency(string $alphabeticCode): Currency
     {
@@ -75,30 +75,33 @@ final class MoneyCurrencyProvider
             return $this->createCurrency($this->isoCurrenciesData[$alphabeticCode]);
         }
 
-        throw CurrencyException::alphabeticCodeDoesntExist($alphabeticCode);
+        if (isset($this->cryptoCurrenciesData[$alphabeticCode])) {
+            return $this->createCurrency($this->cryptoCurrenciesData[$alphabeticCode]);
+        }
+
+        throw CurrencyProviderException::alphabeticCodeDoesntExist($alphabeticCode);
     }
 
     /**
      * Registers a custom currency.
      *
      * @param Currency $currency The custom Currency object.
-     * @throws CurrencyException If currency already exists.
+     * @throws CurrencyProviderException If currency already exists.
      */
     public function registerCurrency(Currency $currency): void
     {
         $alphabeticCode = $currency->getAlphabeticCode();
-        $numericCode = $currency->getNumericCode();
 
         if (isset($this->isoCurrenciesData[$alphabeticCode])) {
-            throw CurrencyException::alphabeticCodeAlreadyExists($alphabeticCode);
+            throw CurrencyProviderException::alphabeticCodeAlreadyExists($alphabeticCode);
         }
 
-        if (isset($this->isoByNumberData[$numericCode])) {
-            throw CurrencyException::numericCodeAlreadyExists($numericCode);
+        if (isset($this->cryptoCurrenciesData[$alphabeticCode])) {
+            throw CurrencyProviderException::alphabeticCodeAlreadyExists($alphabeticCode);
         }
 
         if (isset($this->storedCurrencies[$alphabeticCode])) {
-            throw CurrencyException::currencyAlreadyRegistered($alphabeticCode);
+            throw CurrencyProviderException::currencyAlreadyRegistered($alphabeticCode);
         }
 
         $this->storedCurrencies = array_merge($this->storedCurrencies, [
@@ -112,7 +115,6 @@ final class MoneyCurrencyProvider
      *
      * @param array $data The array with currency params.
      * @return Currency
-     * @throws CurrencyException If the currency code is unknown.
      */
     private function createCurrency(array $data): Currency
     {
@@ -131,22 +133,22 @@ final class MoneyCurrencyProvider
     }
 
     /**
-     * Loading the currencies data from package resources.
+     * Loading the currencies' data from package resources.
      */
     private function uploadCurrencies(): void
     {
         $isoCurrenciesPath = __DIR__ . '/../../resources/iso-currencies.php';
-        $isoByNumberPath = __DIR__ . '/../../resources/iso-by-number.php';
+        $cryptoCurrenciesPath = __DIR__ . '/../../resources/crypto-currencies.php';
 
         if (! is_file($isoCurrenciesPath)) {
             throw new \RuntimeException('Failed to load ISO currencies data.');
         }
 
-        if (! is_file($isoByNumberPath)) {
-            throw new \RuntimeException('Failed to load ISO currencies codes by their number.');
+        if (! is_file($cryptoCurrenciesPath)) {
+            throw new \RuntimeException('Failed to load crypto currencies data.');
         }
 
         $this->isoCurrenciesData = require $isoCurrenciesPath;
-        $this->isoByNumberData = require $isoByNumberPath;
+        $this->cryptoCurrenciesData = require $cryptoCurrenciesPath;
     }
 }

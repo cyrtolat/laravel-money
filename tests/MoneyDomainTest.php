@@ -5,7 +5,7 @@ namespace Cyrtolat\Money\Tests;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 
-class MoneyTest extends TestCase
+class MoneyDomainTest extends TestCase
 {
     /**
      * Testing a basement of Money class.

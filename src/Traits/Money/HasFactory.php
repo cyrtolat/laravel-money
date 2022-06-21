@@ -21,7 +21,8 @@ trait HasFactory
     public static function of($amount, $currency, int $roundingMode = PHP_ROUND_HALF_EVEN): Money
     {
         if (! is_numeric($amount)) {
-            throw new \InvalidArgumentException("The given amount must be a numeric value.");
+            throw new \InvalidArgumentException(
+                "The given amount must be a numeric value.");
         }
 
         if ($currency instanceof Currency) {
@@ -37,7 +38,8 @@ trait HasFactory
             return new Money($amount, $currency);
         }
 
-        throw new \InvalidArgumentException("The given Currency must be an instance of Currency class or 3-letter uppercase code");
+        throw new \InvalidArgumentException(
+            "The given Currency must be an instance of Currency class or 3-letter uppercase code");
     }
 
     /**
@@ -57,6 +59,7 @@ trait HasFactory
             return new Money($amount, Currency::of($currency));
         }
 
-        throw new \InvalidArgumentException("The given Currency must be an instance of Currency class or 3-letter uppercase code");
+        throw new \InvalidArgumentException(
+            "The given Currency must be an instance of Currency class or 3-letter uppercase code");
     }
 }

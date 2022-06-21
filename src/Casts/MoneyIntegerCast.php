@@ -3,18 +3,18 @@
 namespace Cyrtolat\Money\Casts;
 
 use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Exceptions\MoneyCastException;
+use Illuminate\Database\Eloquent\Model;
 
 class MoneyIntegerCast extends MoneyCast
 {
     /**
      * Transform the attribute from the underlying model values.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
-     * @return \Cyrtolat\Money\Money|null
+     * @return Money|null
      */
     public function get($model, string $key, $value, array $attributes)
     {
@@ -30,13 +30,11 @@ class MoneyIntegerCast extends MoneyCast
     /**
      * Transform the attribute to its underlying model values.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
+     * @param Model $model
+     * @param string $key
+     * @param mixed $value
+     * @param array $attributes
      * @return array
-     *
-     * @throws \InvalidArgumentException
      */
     public function set($model, string $key, $value, array $attributes)
     {
@@ -62,6 +60,7 @@ class MoneyIntegerCast extends MoneyCast
             return [$key => $value->getMinorAmount()];
         }
 
-        throw new MoneyCastException("Invalid data provided. The given value must be an integer or instance of Money class.");
+        throw new \InvalidArgumentException(
+            "The given value must be an integer or instance of Money class.");
     }
 }

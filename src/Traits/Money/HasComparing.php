@@ -4,7 +4,7 @@ namespace Cyrtolat\Money\Traits\Money;
 
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\MoneyComparator;
-use Cyrtolat\Money\Exceptions\ComparatorException;
+use Cyrtolat\Money\Exceptions\MoneyComparatorException;
 
 /**
  * The Money comparing trait.
@@ -57,7 +57,7 @@ trait HasComparing
      *
      * @param Money $other The money with which compare.
      * @return bool
-     * @throws ComparatorException
+     * @throws MoneyComparatorException
      */
     public function equals(Money $other): bool
     {
@@ -71,7 +71,7 @@ trait HasComparing
      *
      * @param Money $other The money with which compare.
      * @return bool
-     * @throws ComparatorException
+     * @throws MoneyComparatorException
      */
     public function gt(Money $other): bool
     {
@@ -85,7 +85,7 @@ trait HasComparing
      *
      * @param Money $other The money with which compare.
      * @return bool
-     * @throws ComparatorException
+     * @throws MoneyComparatorException
      */
     public function gte(Money $other): bool
     {
@@ -99,7 +99,7 @@ trait HasComparing
      *
      * @param Money $other The money with which compare.
      * @return bool
-     * @throws ComparatorException
+     * @throws MoneyComparatorException
      */
     public function lt(Money $other): bool
     {
@@ -113,7 +113,7 @@ trait HasComparing
      *
      * @param Money $other The money with which compare.
      * @return bool
-     * @throws ComparatorException
+     * @throws MoneyComparatorException
      */
     public function lte(Money $other): bool
     {

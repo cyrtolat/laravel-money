@@ -3,6 +3,7 @@
 namespace Cyrtolat\Money\Traits\Currency;
 
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 use Cyrtolat\Money\Providers\MoneyCurrencyProvider;
 
 /**
@@ -14,7 +15,8 @@ trait HasFactory
      * Returns the Currency instance.
      *
      * @param string $code The alphabetical currency code.
-     * @return \Cyrtolat\Money\Currency
+     * @return Currency
+     * @throws CurrencyProviderException
      */
     public static function of(string $code): Currency
     {

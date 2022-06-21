@@ -4,6 +4,7 @@ namespace Cyrtolat\Money\Traits\Money;
 
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\MoneyCalculator;
+use Cyrtolat\Money\Exceptions\MoneyCalculatorException;
 
 /**
  * The Money calculating trait.
@@ -16,6 +17,7 @@ trait HasCalculations
      *
      * @param Money ...$addends Addends monies.
      * @return Money
+     * @throws MoneyCalculatorException
      */
     public function plus(Money ...$addends): Money
     {
@@ -28,6 +30,7 @@ trait HasCalculations
      *
      * @param Money ...$subtrahends Subtrahends monies.
      * @return Money
+     * @throws MoneyCalculatorException
      */
     public function minus(Money ...$subtrahends): Money
     {
