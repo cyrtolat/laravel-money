@@ -9,7 +9,7 @@
 - [Usage](#Usage)
     - [Creating a money](#creating-a-money)
     - [Basic operations](#basic-operations)
-    - [Database queries](#database-querues)
+    - [Database queries](#database-queries)
     - [Custom currency](#custom-currency)
     - [Serialization](#serialization)
     - [Formatting](#formatting)
