@@ -9,9 +9,10 @@
 - [Usage](#Usage)
     - [Creating a money](#creating-a-money)
     - [Basic operations](#basic-operations)
+    - [Database queries](#database-querues)
     - [Custom currency](#custom-currency)
-    - [Formatting](#formatting)
     - [Serialization](#serialization)
+    - [Formatting](#formatting)
     - [Casts](#casts)
 - [Testing](#testing)
 - [Changelog](#changelog)
@@ -177,6 +178,46 @@ echo $money->gt(Money::of(200, "RUB")); // false
 echo $money->lt(Money::of(200, "RUB")); // true
 ```
 
+### Database queries
+
+If you need to search a column with cast, you can use scope `whereMoney()` that is a wrapper over the standard `where()` method of the model.
+```php
+use Cyrtolat\Money\Money;
+use App\Models\Payment;
+
+$money = Money::of(150, 'RUB');
+$payment = Payment::whereMoney('sum', '=', $money)->get();
+$payment = Payment::whereMoney('sum', '<', $money)->get();
+$payment = Payment::whereMoney('sum', '>', $money)->get();
+
+// ...
+```
+
+Its main property is that it transforms the given Money object according to the model cast. It is added to the model with the `HasMoney` trait. I advise you not to use this method outside of the model, but to wrap it in scope.
+
+```php 
+use Illuminate\Database\Eloquent\Model;
+use Cyrtolat\Money\Casts\MoneyDecimalCast;
+use Cyrtolat\Money\HasMoney;
+use Cyrtolat\Money\Money;
+
+class Payment extends Model
+{
+    use HasMoney;
+    
+    /** ... */
+    protected $casts = [
+        'sum' => MoneyDecimalCast::class . ':RUB',
+    ];
+    
+    /** ... */
+    public function scopeWhereSum(Builder $query, Money $money): Builder
+    {
+        return $query->whereMoney('sum', '=', $money);
+    }
+}
+```
+
 ### Custom currency
 
 Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
@@ -199,6 +240,52 @@ echo Money::ofMinor(150, "MCC"); // 1,50 MCC
 ```
 
 >**_Note:_** If the currency doesn't have a numeric code, then specify it as zero.
+
+
+### Serialization
+
+The Money class implements Laravel `Arrayable` and `Jsonable` contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
+
+According to the implementation of contracts, serialization to array and to JSON is called by the methods `toArray()` and `toJSON`:
+
+```php
+use Cyrtolat\Money\Money;
+
+Money::of(150.23, "RUB")->toArray(); // (array) [...]
+Money::of(150.23, "RUB")->toJson(); // (string) "{...}"
+```
+
+Internally, they refer to the Serializer class specified in the config, so once you set the class, you specify the serialization style for all the Money objects of your application.
+
+Initially, the package contains two serializer classes:
+
+name | class | example
+:----:|:-------:|:-------:
+Integer | `Cyrtolat\Money\Serializers\MoneyIntegerSerializer` | `{"amount":15055,"currency":"RUB"}`
+Decimal | `Cyrtolat\Money\Serializers\MoneyDecimalSerializer` | `{"amount":"150.55","currency":"RUB"}`
+
+You can also create your own serilizers. It should implement the following interface of this package:
+
+```php
+namespace Cyrtolat\Money\Contracts;
+
+use Cyrtolat\Money\Money;
+
+/**
+ * Serializes Money objects.
+ */
+interface MoneySerializerContract
+{
+    /**
+     * Returns an array representation of an instance of Money class.
+     *
+     * @param Money $money The Money class instance.
+     * @param array $params The array of params to formatting.
+     * @return array
+     */
+    public function toArray(Money $money, array $params = []): array;
+}
+```
 
 ### Formatting
 
@@ -255,51 +342,6 @@ interface MoneyFormatterContract
      * @return string
      */
     public function format(Money $money, array $params = []): string;
-}
-```
-
-### Serialization
-
-The Money class implements Laravel `Arrayable` and `Jsonable` contracts, and therefore the money attributes contained in the models do not need to be processed wherever the transformation takes place. The package will do it itself. You only need to choose one of the provided serializers or write your own.
-
-According to the implementation of contracts, serialization to array and to JSON is called by the methods `toArray()` and `toJSON`:
-
-```php
-use Cyrtolat\Money\Money;
-
-Money::of(150.23, "RUB")->toArray(); // (array) [...]
-Money::of(150.23, "RUB")->toJson(); // (string) "{...}"
-```
-
-Internally, they refer to the Serializer class specified in the config, so once you set the class, you specify the serialization style for all the Money objects of your application.
-
-Initially, the package contains two serializer classes:
-
-name | class | example
-:----:|:-------:|:-------:
-Integer | `Cyrtolat\Money\Serializers\MoneyIntegerSerializer` | `{"amount":15055,"currency":"RUB"}`
-Decimal | `Cyrtolat\Money\Serializers\MoneyDecimalSerializer` | `{"amount":"150.55","currency":"RUB"}`
-
-You can also create your own serilizers. It should implement the following interface of this package:
-
-```php
-namespace Cyrtolat\Money\Contracts;
-
-use Cyrtolat\Money\Money;
-
-/**
- * Serializes Money objects.
- */
-interface MoneySerializerContract
-{
-    /**
-     * Returns an array representation of an instance of Money class.
-     *
-     * @param Money $money The Money class instance.
-     * @param array $params The array of params to formatting.
-     * @return array
-     */
-    public function toArray(Money $money, array $params = []): array;
 }
 ```
 
