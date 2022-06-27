@@ -44,25 +44,25 @@ final class Money implements Arrayable, Jsonable, \JsonSerializable
     }
 
     /**
-     * Returns the monetary amount in a minor currency value.
+     * Returns the monetary amount in a major currency style.
+     *
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        $subunit = pow(10, $this->currency->getFractionDigits());
+
+        return $this->amount / $subunit;
+    }
+
+    /**
+     * Returns the monetary amount in a minor currency style.
      *
      * @return integer
      */
     public function getMinorAmount(): int
     {
         return $this->amount;
-    }
-
-    /**
-     * Returns the monetary amount in a major currency value.
-     *
-     * @return float
-     */
-    public function getMajorAmount(): float
-    {
-        $subunit = pow(10, $this->currency->getFractionDigits());
-
-        return $this->amount / $subunit;
     }
 
     /**

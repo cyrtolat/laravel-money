@@ -29,7 +29,7 @@ class MoneyLocalizedFormatter implements MoneyFormatterContract
     /** {@inheritdoc} */
     public function format(Money $money, array $params = []): string
     {
-        $amount = $money->getMajorAmount();
+        $amount = $money->getAmount();
         $currency = $money->getCurrency();
 
         return $this->formatter->formatCurrency($amount, $currency);

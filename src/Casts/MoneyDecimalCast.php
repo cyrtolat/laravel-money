@@ -48,7 +48,7 @@ class MoneyDecimalCast extends MoneyCast
 
         if (array_key_exists($this->currency, $attributes)) {
             return [
-                $key => $value->getMajorAmount(),
+                $key => $value->getAmount(),
                 $this->currency => $value->getCurrency()->getAlphabeticCode()
             ];
         }
@@ -57,7 +57,7 @@ class MoneyDecimalCast extends MoneyCast
         $this->validateCurrency($value, $currency);
 
         if ($value instanceof Money) {
-            return [$key => $value->getMajorAmount()];
+            return [$key => $value->getAmount()];
         }
 
         throw new \InvalidArgumentException(

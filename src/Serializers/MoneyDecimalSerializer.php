@@ -29,7 +29,7 @@ class MoneyDecimalSerializer implements MoneySerializerContract
     /** {@inheritdoc} */
     public function toArray(Money $money, array $params = []): array
     {
-        $amount = $money->getMajorAmount();
+        $amount = $money->getAmount();
         $currency = $money->getCurrency();
         $decimals = $currency->getFractionDigits();
         $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);

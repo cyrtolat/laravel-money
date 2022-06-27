@@ -29,7 +29,7 @@ class MoneyNumericFormatter implements MoneyFormatterContract
     /** {@inheritdoc} */
     public function format(Money $money, array $params = []): string
     {
-        $amount = $money->getMajorAmount();
+        $amount = $money->getAmount();
         $currency = $money->getCurrency();
         $decimals = $currency->getFractionDigits();
         $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);

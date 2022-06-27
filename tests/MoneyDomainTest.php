@@ -21,7 +21,7 @@ class MoneyDomainTest extends TestCase
         $money = new Money($minorAmount, $currency);
 
         $this->assertTrue($money->getMinorAmount() === $minorAmount);
-        $this->assertTrue($money->getMajorAmount() === $majorAmount);
+        $this->assertTrue($money->getAmount() === $majorAmount);
         $this->assertTrue($money->getCurrency() === $currency);
     }
 

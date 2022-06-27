@@ -30,7 +30,7 @@ class MoneyRoundedFormatter implements MoneyFormatterContract
     /** {@inheritdoc} */
     public function format(Money $money, array $params = []): string
     {
-        $amount = $money->getMajorAmount();
+        $amount = $money->getAmount();
         $currency = $money->getCurrency();
 
         return sprintf("%s %s",
