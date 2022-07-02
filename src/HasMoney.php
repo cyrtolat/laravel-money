@@ -29,4 +29,24 @@ trait HasMoney
 
         return $builder->where($column, $operator, $value[$column]);
     }
+
+    /**
+     * Returns a sum of specified money field.
+     *
+     * @param Builder $builder
+     * @param string $column
+     * @return Money
+     */
+    public function scopeSumOfMoney(Builder $builder, string $column): Money
+    {
+        $sum = $builder->sum($column);
+
+        if (! $this->hasCast($column)) {
+            return $sum;
+        }
+
+        $caster = $this->resolveCasterClass($column);
+
+        return $caster->get($this, $column, $sum, $this->attributes);
+    }
 }

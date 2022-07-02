@@ -180,17 +180,19 @@ echo $money->lt(Money::of(200, "RUB")); // true
 
 ### Database queries
 
-If you need to search a column with cast, you can use scope `whereMoney()` that is a wrapper over the standard `where()` method of the model.
+If you need to search a column with cast, you can use the forward scopes:
+
 ```php
 use Cyrtolat\Money\Money;
 use App\Models\Payment;
 
 $money = Money::of(150, 'RUB');
-$payment = Payment::whereMoney('sum', '=', $money)->get();
-$payment = Payment::whereMoney('sum', '<', $money)->get();
-$payment = Payment::whereMoney('sum', '>', $money)->get();
 
-// ...
+// To search by money field
+$payment = Payment::whereMoney('sum', '=', $money)->get();
+
+// Get a sum of money fields
+$total = Payment::sumOfMoney('sum'); // Money class
 ```
 
 Its main property is that it transforms the given Money object according to the model cast. It is added to the model with the `HasMoney` trait. I advise you not to use this method outside of the model, but to wrap it in scope.
@@ -214,6 +216,12 @@ class Payment extends Model
     public function scopeWhereSum(Builder $query, Money $money): Builder
     {
         return $query->whereMoney('sum', '=', $money);
+    }
+    
+    /** ... */
+    public function scopeTotalSum(Builder $query, Money $money): Money
+    {
+        return $query->sumOfMoney('sum');
     }
 }
 ```
