@@ -219,7 +219,7 @@ class Payment extends Model
     }
     
     /** ... */
-    public function scopeTotalSum(Builder $query, Money $money): Money
+    public function scopeTotalSum(Builder $query): Money
     {
         return $query->sumOfMoney('sum');
     }
