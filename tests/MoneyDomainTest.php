@@ -2,8 +2,11 @@
 
 namespace Cyrtolat\Money\Tests;
 
-use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
+use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
+use Cyrtolat\Money\Exceptions\MoneyCalculatorException;
+use Cyrtolat\Money\Exceptions\MoneyComparatorException;
 
 class MoneyDomainTest extends TestCase
 {
@@ -12,6 +15,7 @@ class MoneyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws CurrencyProviderException
      */
     public function testBasement()
     {
@@ -30,6 +34,8 @@ class MoneyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws CurrencyProviderException
+     * @throws MoneyComparatorException
      */
     public function testComparing()
     {
@@ -77,6 +83,8 @@ class MoneyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws CurrencyProviderException
+     * @throws MoneyComparatorException
      */
     public function testFactory()
     {
@@ -97,6 +105,7 @@ class MoneyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws MoneyComparatorException
      */
     public function testRounding()
     {
@@ -118,6 +127,8 @@ class MoneyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws MoneyComparatorException
+     * @throws MoneyCalculatorException
      */
     public function testCalculations()
     {

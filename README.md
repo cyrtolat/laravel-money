@@ -10,7 +10,6 @@
     - [Creating a money](#creating-a-money)
     - [Basic operations](#basic-operations)
     - [Database queries](#database-queries)
-    - [Custom currency](#custom-currency)
     - [Serialization](#serialization)
     - [Formatting](#formatting)
     - [Casts](#casts)
@@ -192,7 +191,7 @@ $money = Money::of(150, 'RUB');
 $payment = Payment::whereMoney('sum', '=', $money)->get();
 
 // Get a sum of money fields
-$total = Payment::sumOfMoney('sum'); // Money class
+$total = Payment::moneySum('sum'); // Money class
 ```
 
 Its main property is that it transforms the given Money object according to the model cast. It is added to the model with the `HasMoney` trait. I advise you not to use this method outside of the model, but to wrap it in scope.
@@ -225,30 +224,6 @@ class Payment extends Model
     }
 }
 ```
-
-### Custom currency
-
-Some applications require custom currencies. This package supports the addition of such. To do this, you need to create an instance of the Сurrency and register it. Then it will be available in the currency factory. Write this in your service provider:
-
-```php
-use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Providers\CurrencyProvider;
-
-$provider = CurrencyProvider::getInstance();
-$currency = new Currency(
-  "MCC",                // alphabetic code
-  "My Custom Currency", // currency name
-  "0",                  // numeric code
-  2                     // fraction digits
-);
-$provider->registerCurrency($currency);
-
-echo Money::ofMinor(150, "MCC"); // 1,50 MCC
-```
-
->**_Note:_** If the currency doesn't have a numeric code, then specify it as zero.
-
 
 ### Serialization
 

@@ -20,46 +20,4 @@ class CurrencyProviderTest extends TestCase
 
         $currency = Currency::of("UNK");
     }
-
-    /**
-     * Testing the exception when alphabetic already exists.
-     *
-     * @return void
-     * @test
-     */
-    public function testAlphabeticCodeAlreadyExists()
-    {
-        $this->expectException(CurrencyProviderException::class);
-
-        $provider = MoneyCurrencyProvider::getInstance();
-        $currency = new Currency(
-            "RUB",
-            "My custom currency",
-            "0",
-            2
-        );
-
-        $provider->registerCurrency($currency);
-    }
-
-    /**
-     * Testing the exception when alphabetic already exists.
-     *
-     * @return void
-     * @test
-     */
-    public function testCurrencyAlreadyRegistered()
-    {
-        $this->expectException(CurrencyProviderException::class);
-
-        $provider = MoneyCurrencyProvider::getInstance();
-        $currency = new Currency(
-            "MCC",
-            "My custom currency new",
-            "0",
-            2
-        );
-
-        $provider->registerCurrency($currency);
-    }
 }

@@ -37,7 +37,7 @@ trait HasMoney
      * @param string $column
      * @return Money
      */
-    public function scopeSumOfMoney(Builder $builder, string $column): Money
+    public function scopeMoneySum(Builder $builder, string $column): Money
     {
         $sum = $builder->sum($column);
 

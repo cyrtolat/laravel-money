@@ -49,6 +49,7 @@ class CurrencyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws CurrencyProviderException
      */
     public function testFactory()
     {
@@ -63,6 +64,7 @@ class CurrencyDomainTest extends TestCase
      *
      * @return void
      * @test
+     * @throws CurrencyProviderException
      */
     public function testProviding()
     {
@@ -71,22 +73,5 @@ class CurrencyDomainTest extends TestCase
         $rub = new Currency("RUB", "Russian Ruble", "643", 2);
 
         $this->assertTrue($rub->equals($provider->getCurrency("RUB")));
-    }
-
-    /**
-     * Testing a registration of custom Currency.
-     *
-     * @return void
-     * @test
-     */
-    public function testRegistration()
-    {
-        $provider = MoneyCurrencyProvider::getInstance();
-
-        $mcc = new Currency("MCC", "My Custom Currency", "0", 4);
-
-        $provider->registerCurrency($mcc);
-
-        $this->assertTrue($mcc->equals($provider->getCurrency("MCC")));
     }
 }

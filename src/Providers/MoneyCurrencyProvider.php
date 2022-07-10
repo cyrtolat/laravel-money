@@ -83,33 +83,6 @@ final class MoneyCurrencyProvider
     }
 
     /**
-     * Registers a custom currency.
-     *
-     * @param Currency $currency The custom Currency object.
-     * @throws CurrencyProviderException If currency already exists.
-     */
-    public function registerCurrency(Currency $currency): void
-    {
-        $alphabeticCode = $currency->getAlphabeticCode();
-
-        if (isset($this->isoCurrenciesData[$alphabeticCode])) {
-            throw CurrencyProviderException::alphabeticCodeAlreadyExists($alphabeticCode);
-        }
-
-        if (isset($this->cryptoCurrenciesData[$alphabeticCode])) {
-            throw CurrencyProviderException::alphabeticCodeAlreadyExists($alphabeticCode);
-        }
-
-        if (isset($this->storedCurrencies[$alphabeticCode])) {
-            throw CurrencyProviderException::currencyAlreadyRegistered($alphabeticCode);
-        }
-
-        $this->storedCurrencies = array_merge($this->storedCurrencies, [
-            $alphabeticCode => $currency
-        ]);
-    }
-
-    /**
      * Returns new Currency object by given data and store it
      * in previously created array.
      *
