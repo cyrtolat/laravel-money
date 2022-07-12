@@ -2,6 +2,7 @@
 
 namespace Cyrtolat\Money\Traits\Money;
 
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 use Cyrtolat\Money\Money;
 
 /**
@@ -16,8 +17,9 @@ trait HasRounding
      * @param integer $precision The optional number of decimal digits to round to.
      * @param integer $mode One of PHP_ROUND_HALF_UP, PHP_ROUND_HALF_DOWN, PHP_ROUND_HALF_EVEN, or PHP_ROUND_HALF_ODD.
      * @return Money
+     * @throws CurrencyProviderException
      */
-    public function round(int $precision = 0, $mode = PHP_ROUND_HALF_UP): Money
+    public function round(int $precision = 0, int $mode = PHP_ROUND_HALF_UP): Money
     {
         return Money::of(round($this->getAmount(), $precision, $mode), $this->getCurrency());
     }

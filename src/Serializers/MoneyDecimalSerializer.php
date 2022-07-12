@@ -32,7 +32,8 @@ class MoneyDecimalSerializer implements MoneySerializerContract
         $amount = $money->getAmount();
         $currency = $money->getCurrency();
         $decimals = $currency->getFractionDigits();
-        $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
+        $this->formatter->setAttribute(
+            NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
 
         return [
             'amount' => $this->formatter->format($amount),

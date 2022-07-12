@@ -4,6 +4,7 @@ namespace Cyrtolat\Money;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use InvalidArgumentException;
 
 /**
  * A Currency class.
@@ -69,15 +70,15 @@ final class Currency implements Arrayable, Jsonable
         int    $fractionDigits
     ) {
         if (strlen($alphabeticCode) != 3 || strtoupper($alphabeticCode) != $alphabeticCode) {
-            throw new \InvalidArgumentException('The alphabetic code must consist of 3 letters in uppercase.');
+            throw new InvalidArgumentException('The alphabetic code must consist of 3 letters in uppercase.');
         }
 
         if ($fractionDigits < 0) {
-            throw new \InvalidArgumentException('The fraction digits must be greater than zero.');
+            throw new InvalidArgumentException('The fraction digits must be greater than zero.');
         }
 
         if (!is_numeric($numericCode) || $numericCode != (int) $numericCode || $numericCode < 0) {
-            throw new \InvalidArgumentException('The numeric code must be a non-negative integer in string format.');
+            throw new InvalidArgumentException('The numeric code must be a non-negative integer in string format.');
         }
 
         $this->alphabeticCode = $alphabeticCode;
@@ -158,7 +159,7 @@ final class Currency implements Arrayable, Jsonable
             return $this->alphabeticCode == $currency;
         }
 
-        throw new \InvalidArgumentException("Unknown param type is given.");
+        throw new InvalidArgumentException("Unknown param type is given.");
     }
 
     /**

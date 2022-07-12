@@ -32,7 +32,8 @@ class MoneyNumericFormatter implements MoneyFormatterContract
         $amount = $money->getAmount();
         $currency = $money->getCurrency();
         $decimals = $currency->getFractionDigits();
-        $this->formatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
+        $this->formatter->setAttribute(
+            NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
 
         return  $this->formatter->format($amount);
     }

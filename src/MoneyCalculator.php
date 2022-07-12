@@ -3,6 +3,7 @@
 namespace Cyrtolat\Money;
 
 use Cyrtolat\Money\Exceptions\MoneyCalculatorException;
+use InvalidArgumentException;
 
 /**
  * The Money calculator class.
@@ -71,7 +72,7 @@ final class MoneyCalculator
     public static function getMultiplicationOf(Money $multiplicand, $multiplier, int $roundingMode): Money
     {
         if (! is_numeric($multiplier)) {
-            throw new \InvalidArgumentException('The multiplier must be a number.');
+            throw new InvalidArgumentException('The multiplier must be a number.');
         }
 
         $amount = $multiplicand->getMinorAmount() * $multiplier;
@@ -92,7 +93,7 @@ final class MoneyCalculator
     public static function getDivisionOf(Money $dividend, $divisor, int $roundingMode): Money
     {
         if (! is_numeric($divisor)) {
-            throw new \InvalidArgumentException('The divisor must be a number.');
+            throw new InvalidArgumentException('The divisor must be a number.');
         }
 
         $amount = $dividend->getMinorAmount() / $divisor;

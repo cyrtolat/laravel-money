@@ -4,6 +4,7 @@ namespace Cyrtolat\Money\Providers;
 
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Exceptions\CurrencyProviderException;
+use RuntimeException;
 
 /**
  * The Currency provider
@@ -114,11 +115,13 @@ final class MoneyCurrencyProvider
         $cryptoCurrenciesPath = __DIR__ . '/../../resources/crypto-currencies.php';
 
         if (! is_file($isoCurrenciesPath)) {
-            throw new \RuntimeException('Failed to load ISO currencies data.');
+            throw new RuntimeException(
+                'Failed to load ISO currencies data.');
         }
 
         if (! is_file($cryptoCurrenciesPath)) {
-            throw new \RuntimeException('Failed to load crypto currencies data.');
+            throw new RuntimeException(
+                'Failed to load crypto currencies data.');
         }
 
         $this->isoCurrenciesData = require $isoCurrenciesPath;

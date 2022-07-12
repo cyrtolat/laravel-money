@@ -4,7 +4,9 @@ namespace Cyrtolat\Money\Casts;
 
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use InvalidArgumentException;
 
 abstract class MoneyCast implements CastsAttributes
 {
@@ -23,7 +25,7 @@ abstract class MoneyCast implements CastsAttributes
     public function __construct(string $currency = null)
     {
         if ($currency === null) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Invalid data provided. The currency must be specified.");
         }
 
@@ -33,10 +35,11 @@ abstract class MoneyCast implements CastsAttributes
     /**
      * Get the currency from an attribute value or cast parameter.
      *
-     * @param  array  $attributes
+     * @param array $attributes
      * @return Currency
+     * @throws CurrencyProviderException
      */
-    protected function getCurrency(array $attributes)
+    protected function getCurrency(array $attributes): Currency
     {
         if (isset($attributes[$this->currency])) {
             return Currency::of($attributes[$this->currency]);
@@ -54,7 +57,7 @@ abstract class MoneyCast implements CastsAttributes
     protected function validateCurrency(Money $money, Currency $currency): void
     {
         if (! $money->getCurrency()->equals($currency)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "The currency of given monies must be equal to the currency of the attribute.");
         }
     }

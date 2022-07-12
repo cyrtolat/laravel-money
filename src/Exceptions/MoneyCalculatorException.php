@@ -11,6 +11,7 @@ class MoneyCalculatorException extends MoneyException
      */
     public static function differentCurrencies(): self
     {
-        return new static("It is impossible to perform mathematical operations with monies with different currencies.");
+        return new static(
+            "It is impossible to perform mathematical operations with monies with different currencies.");
     }
 }

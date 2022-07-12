@@ -3,7 +3,9 @@
 namespace Cyrtolat\Money\Traits\Money;
 
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
 use Cyrtolat\Money\Money;
+use InvalidArgumentException;
 
 /**
  * Money Factory trait.
@@ -17,11 +19,12 @@ trait HasFactory
      * @param mixed $currency The Currency instance or 3-letter uppercase code.
      * @param integer $roundingMode An optional RoundingMode constant.
      * @return Money
+     * @throws CurrencyProviderException
      */
     public static function of($amount, $currency, int $roundingMode = PHP_ROUND_HALF_EVEN): Money
     {
         if (! is_numeric($amount)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "The given amount must be a numeric value.");
         }
 
@@ -38,7 +41,7 @@ trait HasFactory
             return new Money($amount, $currency);
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             "The given Currency must be an instance of Currency class or 3-letter uppercase code");
     }
 
@@ -48,6 +51,7 @@ trait HasFactory
      * @param integer $amount The money amount in minor value.
      * @param mixed $currency The Currency instance or 3-letter uppercase code.
      * @return Money
+     * @throws CurrencyProviderException
      */
     public static function ofMinor(int $amount, $currency): Money
     {
@@ -59,7 +63,7 @@ trait HasFactory
             return new Money($amount, Currency::of($currency));
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             "The given Currency must be an instance of Currency class or 3-letter uppercase code");
     }
 }

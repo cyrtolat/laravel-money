@@ -4,22 +4,25 @@ namespace Cyrtolat\Money\Casts;
 
 use Cyrtolat\Money\Money;
 use Illuminate\Database\Eloquent\Model;
+use Cyrtolat\Money\Exceptions\CurrencyProviderException;
+use InvalidArgumentException;
 
 class MoneyIntegerCast extends MoneyCast
 {
     /**
      * Transform the attribute from the underlying model values.
      *
-     * @param  Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
+     * @param Model $model
+     * @param string $key
+     * @param mixed $value
+     * @param array $attributes
      * @return Money|null
+     * @throws CurrencyProviderException
      */
-    public function get($model, string $key, $value, array $attributes)
+    public function get($model, string $key, $value, array $attributes): ?Money
     {
         if ($value === null) {
-            return $value;
+            return null;
         }
 
         $currency = $this->getCurrency($attributes);
@@ -35,8 +38,9 @@ class MoneyIntegerCast extends MoneyCast
      * @param mixed $value
      * @param array $attributes
      * @return array
+     * @throws CurrencyProviderException
      */
-    public function set($model, string $key, $value, array $attributes)
+    public function set($model, string $key, $value, array $attributes): array
     {
         if ($value === null) {
             return [$key => $value];
@@ -60,7 +64,7 @@ class MoneyIntegerCast extends MoneyCast
             return [$key => $value->getMinorAmount()];
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             "The given value must be an integer or instance of Money class.");
     }
 }
