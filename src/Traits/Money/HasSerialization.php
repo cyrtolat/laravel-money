@@ -19,7 +19,7 @@ trait HasSerialization
     }
 
     /** {@inheritDoc} */
-    public function toJson($options = 0): string
+    public function toJson($options = 0)
     {
         return json_encode($this->toArray(), $options);
     }
