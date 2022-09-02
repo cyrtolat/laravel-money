@@ -2,14 +2,12 @@
 
 namespace Cyrtolat\Money\Formatters;
 
-use NumberFormatter;
+use Cyrtolat\Money\Contracts\MoneyFormatter;
+use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Contracts\MoneyFormatterContract;
+use NumberFormatter;
 
-/**
- * Formats the Money object in the style of a decimal string with currency code.
- */
-class MoneyDecimalFormatter implements MoneyFormatterContract
+class DefaultFormatter implements MoneyFormatter
 {
     /** @var NumberFormatter */
     private NumberFormatter $formatter;
@@ -27,13 +25,13 @@ class MoneyDecimalFormatter implements MoneyFormatterContract
     }
 
     /** {@inheritdoc} */
-    public function format(Money $money, array $params = []): string
+    public function format(Money $money, Currency $currency): string
     {
-        $amount = $money->getAmount();
-        $currency = $money->getCurrency();
-        $decimals = $currency->getFractionDigits();
+        $minorUnit = $currency->getMinorUnit();
+        $amount = $money->getAmount() / pow(10, $minorUnit);
+
         $this->formatter->setAttribute(
-            NumberFormatter::MIN_FRACTION_DIGITS, $decimals);
+            NumberFormatter::MIN_FRACTION_DIGITS, $minorUnit);
 
         return sprintf("%s %s",
             $this->formatter->format($amount),
