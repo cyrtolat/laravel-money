@@ -72,7 +72,7 @@ final class MoneyService
     {
         if (is_string($currency)) {
             $currency = $this->getCurrencyBy($currency);
-        } if (! $currency instanceof Currency) {
+        } else if (! $currency instanceof Currency) {
             throw new \InvalidArgumentException(
                 "The currency prop type should be a string or a Currency instance.");
         }
