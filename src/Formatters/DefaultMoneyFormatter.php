@@ -7,9 +7,11 @@ use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 use NumberFormatter;
 
-class DefaultFormatter implements MoneyFormatter
+final class DefaultMoneyFormatter implements MoneyFormatter
 {
-    /** @var NumberFormatter */
+    /**
+     * @var NumberFormatter
+     */
     private NumberFormatter $formatter;
 
     /**
@@ -24,7 +26,9 @@ class DefaultFormatter implements MoneyFormatter
         );
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function format(Money $money, Currency $currency): string
     {
         $minorUnit = $currency->getMinorUnit();

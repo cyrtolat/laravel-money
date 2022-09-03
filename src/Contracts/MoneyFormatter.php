@@ -12,7 +12,7 @@ interface MoneyFormatter
      *
      * @param Money $money
      * @param Currency $currency
-     * @return mixed
+     * @return string
      */
     public function format(Money $money, Currency $currency): string;
 }

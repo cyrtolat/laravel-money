@@ -2,10 +2,13 @@
 
 namespace Cyrtolat\Money;
 
-/**
- * A Money class.
- */
-final class Money
+use Closure;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Cyrtolat\Money\Exceptions\MoneyMismatchException;
+use Illuminate\Contracts\Support\Renderable;
+
+final class Money implements Arrayable, Jsonable, Renderable
 {
     /**
      * The monetary amount.
@@ -20,6 +23,20 @@ final class Money
      * @var string
      */
     private string $currency;
+
+    /**
+     * Formatter callback
+     *
+     * @var Closure
+     */
+    private static ?Closure $renderCallback;
+
+    /**
+     * Serialization callback
+     *
+     * @var Closure
+     */
+    private static ?Closure $serializeCallback;
 
     /**
      * The class constructor.
@@ -51,6 +68,26 @@ final class Money
     public function getCurrency(): string
     {
         return $this->currency;
+    }
+
+    /**
+     * Set the render callback.
+     *
+     * @param  Closure  $callback
+     */
+    public static function setRenderCallback(Closure $callback): void
+    {
+        self::$renderCallback = $callback;
+    }
+
+    /**
+     * Set the serializer callback.
+     *
+     * @param  Closure  $callback
+     */
+    public static function setSerializeCallback(Closure $callback): void
+    {
+        self::$serializeCallback = $callback;
     }
 
     /**
@@ -99,7 +136,7 @@ final class Money
      * @param Money $money Required Money instance for comparison
      * @param Money ...$other An optional group of other monies to compare
      * @return bool True if all given monies equal to this
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function equals(Money $money, Money ...$other): bool
     {
@@ -107,8 +144,7 @@ final class Money
 
         foreach ($other as $money) {
             if (! $this->hasSameCurrency($money)) {
-                throw Exceptions\MoneyMismatchException
-                    ::hasNotSameCurrency();
+                throw MoneyMismatchException::hasNotSameCurrency();
             }
             if (! $this->hasSameAmount($money)) {
                 return false;
@@ -139,7 +175,7 @@ final class Money
      * @param Money $addend Required Money instance to add
      * @param Money ...$addends An optional group of other monies to add
      * @return Money New Money instance
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function plus(Money $addend, Money ...$addends): Money
     {
@@ -148,8 +184,7 @@ final class Money
 
         foreach ($addends as $addend) {
             if (! $this->hasSameCurrency($addend)) {
-                throw Exceptions\MoneyMismatchException
-                    ::hasNotSameCurrency();
+                throw MoneyMismatchException::hasNotSameCurrency();
             }
 
             $result += $addend->amount;
@@ -165,7 +200,7 @@ final class Money
      * @param Money $subtrahend Required Money instance to subtract
      * @param Money ...$subtrahends An optional group of other monies to subtract
      * @return Money New Money instance
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function minus(Money $subtrahend, Money ...$subtrahends): Money
     {
@@ -174,8 +209,7 @@ final class Money
 
         foreach ($subtrahends as $subtrahend) {
             if (! $this->hasSameCurrency($subtrahend)) {
-                throw Exceptions\MoneyMismatchException
-                    ::hasNotSameCurrency();
+                throw MoneyMismatchException::hasNotSameCurrency();
             }
 
             $result -= $subtrahend->amount;
@@ -219,13 +253,12 @@ final class Money
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than a given
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function gt(Money $money): bool
     {
         if (! $this->hasSameCurrency($money)) {
-            throw Exceptions\MoneyMismatchException
-                ::hasNotSameCurrency();
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
 
         return $this->amount > $money->amount;
@@ -236,13 +269,12 @@ final class Money
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than or equal to a given
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function gte(Money $money): bool
     {
         if (! $this->hasSameCurrency($money)) {
-            throw Exceptions\MoneyMismatchException
-                ::hasNotSameCurrency();
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
 
         return $this->amount >= $money->amount;
@@ -253,13 +285,12 @@ final class Money
      *
      * @param Money $money The money with which compare.
      * @return bool True if is less than a given
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function lt(Money $money): bool
     {
         if (! $this->hasSameCurrency($money)) {
-            throw Exceptions\MoneyMismatchException
-                ::hasNotSameCurrency();
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
 
         return $this->amount < $money->amount;
@@ -270,29 +301,50 @@ final class Money
      *
      * @param Money $money The money with which compare
      * @return bool True if is less than or equal to a given
-     * @throws Exceptions\MoneyMismatchException
+     * @throws MoneyMismatchException
      */
     public function lte(Money $money): bool
     {
         if (! $this->hasSameCurrency($money)) {
-            throw Exceptions\MoneyMismatchException
-                ::hasNotSameCurrency();
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
 
         return $this->amount <= $money->amount;
     }
 
     /**
-     * Returns a simple string representation
-     * of this Money instance.
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function __toString(): string
+    public function toArray()
     {
+        if (isset(self::$serializeCallback)) {
+            return call_user_func(self::$serializeCallback, $this);
+        }
+
+        return [
+            'amount' => $this->amount,
+            'currency' => $this->currency
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+        if (isset(self::$renderCallback)) {
+            return call_user_func(self::$renderCallback, $this);
+        }
+
         return sprintf('%s %s',
-            $this->amount,
-            $this->currency
-        );
+            $this->amount, $this->currency);
     }
 }

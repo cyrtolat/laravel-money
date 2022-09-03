@@ -11,7 +11,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class MoneyIntegerCast implements CastsAttributes
+class MinorMoneyCast implements CastsAttributes
 {
     /**
      * Currency code or a model attribute

@@ -4,10 +4,7 @@ namespace Cyrtolat\Money;
 
 use InvalidArgumentException;
 
-/**
- * An abstract Currency class.
- */
-final class Currency
+final class Currency implements \jsonSerializable
 {
     /**
      * The currency alphabetic code.
@@ -154,5 +151,24 @@ final class Currency
         }
 
         return $this->alphabeticCode == $currency->alphabeticCode;
+    }
+
+    /**
+     * Returns a simple string representation
+     * of this Money instance.
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->alphabeticCode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->alphabeticCode;
     }
 }

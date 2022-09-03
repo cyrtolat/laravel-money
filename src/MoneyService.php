@@ -4,6 +4,7 @@ namespace Cyrtolat\Money;
 
 use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
+use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\MoneyServiceException;
 
 final class MoneyService
@@ -14,6 +15,11 @@ final class MoneyService
     private CurrencyStorage $currencyStorage;
 
     /**
+     * @var MoneySerializer
+     */
+    private MoneySerializer $moneySerializer;
+
+    /**
      * @var MoneyFormatter
      */
     private MoneyFormatter $moneyFormatter;
@@ -21,15 +27,16 @@ final class MoneyService
     /**
      * The class constructor.
      *
-     * @param CurrencyStorage $currencyStorage
-     * @param MoneyFormatter $moneyFormatter
+     * @param array $config
      */
-    public function __construct(
-        CurrencyStorage $currencyStorage,
-        MoneyFormatter $moneyFormatter,
-    ) {
-        $this->currencyStorage = $currencyStorage;
-        $this->moneyFormatter = $moneyFormatter;
+    public function __construct(array $config)
+    {
+        $this->currencyStorage = new $config['storage'];
+        $this->moneySerializer = new $config['serializer'];
+        $this->moneyFormatter = new $config['formatter'];
+
+        $this->setMoneyRenderCallback();
+        $this->setMoneySerializeCallback();
     }
 
     /**
@@ -74,7 +81,7 @@ final class MoneyService
     }
 
     /**
-     * Returns a new instance of the Currency class.
+     * Returns a new Currency instance by the given code.
      *
      * @param string $code The alphabetic currency code
      * @return Currency New Currency class instance
@@ -92,16 +99,28 @@ final class MoneyService
     }
 
     /**
-     * Returns a string representation of Money.
+     * Todo desc..
      *
-     * @param Money $money
-     * @return string
-     * @throws MoneyServiceException
+     * @return void
      */
-    public function format(Money $money): string
+    private function setMoneyRenderCallback(): void
     {
-        $currency = $this->getCurrencyBy($money->getCurrency());
+        Money::setRenderCallback(function (Money $money) {
+            $currency = $this->getCurrencyBy($money->getCurrency());
+            return $this->moneyFormatter->format($money, $currency);
+        });
+    }
 
-        return $this->moneyFormatter->format($money, $currency);
+    /**
+     * Todo desc..
+     *
+     * @return void
+     */
+    private function setMoneySerializeCallback(): void
+    {
+        Money::setSerializeCallback(function (Money $money) {
+            $currency = $this->getCurrencyBy($money->getCurrency());
+            return $this->moneySerializer->toArray($money, $currency);
+        });
     }
 }
