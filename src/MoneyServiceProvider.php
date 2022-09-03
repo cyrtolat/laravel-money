@@ -22,24 +22,8 @@ class MoneyServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'money');
 
-        $this->app->bind(CurrencyStorage::class, function () {
-            return new DefaultMoneyStorage();
-        });
-
-        $this->app->bind(MoneyFormatter::class, function () {
-            return new DefaultMoneyFormatter();
-        });
-
-        $this->app->bind(MoneySerializer::class, function () {
-            return new MajorMoneySerializer();
-        });
-
-        $this->app->singleton(MoneyService::class, function ($app) {
-            return new MoneyService(
-                $app->make(CurrencyStorage::class),
-                $app->make(MoneySerializer::class),
-                $app->make(MoneyFormatter::class)
-            );
+        $this->app->singleton(MoneyService::class, function () {
+            return new MoneyService(config('money'));
         });
     }
 

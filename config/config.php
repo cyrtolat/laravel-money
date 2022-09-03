@@ -13,4 +13,37 @@ return [
 
     'locale' => config('app.locale', 'en'),
 
+    /*
+     |--------------------------------------------------------------------------
+     | Currency Storage
+     |--------------------------------------------------------------------------
+     |
+     | Todo desc..
+     |
+     */
+
+    'storage' => \Cyrtolat\Money\Storages\DefaultMoneyStorage::class,
+
+    /*
+     |--------------------------------------------------------------------------
+     | Money Serializer
+     |--------------------------------------------------------------------------
+     |
+     | Todo desc..
+     |
+     */
+
+    'serializer' => \Cyrtolat\Money\Serializers\MajorMoneySerializer::class,
+
+    /*
+     |--------------------------------------------------------------------------
+     | Money Formatter
+     |--------------------------------------------------------------------------
+     |
+     | Todo desc..
+     |
+     */
+
+    'formatter' => \Cyrtolat\Money\Formatters\DefaultMoneyFormatter::class,
+
 ];

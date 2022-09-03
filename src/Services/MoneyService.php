@@ -29,18 +29,21 @@ final class MoneyService
     /**
      * The class constructor.
      *
-     * @param CurrencyStorage $currencyStorage
-     * @param MoneySerializer $moneySerializer
-     * @param MoneyFormatter $moneyFormatter
+     * @param array $config
      */
-    public function __construct(
-        CurrencyStorage $currencyStorage,
-        MoneySerializer $moneySerializer,
-        MoneyFormatter $moneyFormatter,
-    ) {
-        $this->currencyStorage = $currencyStorage;
-        $this->moneySerializer = $moneySerializer;
-        $this->moneyFormatter = $moneyFormatter;
+    public function __construct(array $config)
+    {
+        $this->currencyStorage = $this->resolve(
+            $config['storage'], CurrencyStorage::class
+        );
+
+        $this->moneySerializer = $this->resolve(
+            $config['serializer'], MoneySerializer::class
+        );
+
+        $this->moneyFormatter = $this->resolve(
+            $config['formatter'], MoneyFormatter::class
+        );
 
         $this->setMoneyRenderCallback();
         $this->setMoneySerializeCallback();
@@ -129,5 +132,21 @@ final class MoneyService
             $currency = $this->getCurrencyBy($money->getCurrency());
             return $this->moneySerializer->toArray($money, $currency);
         });
+    }
+
+    /**
+     * Todo desc..
+     *
+     * @param string $class
+     * @param string $contract
+     * @return mixed
+     */
+    private function resolve(string $class, string $contract)
+    {
+        if (! class_exists($class) || ! is_subclass_of($class, $contract)) {
+            throw new \RuntimeException("Class $class doesn't implement $contract interface.");
+        }
+
+        return new $class;
     }
 }
