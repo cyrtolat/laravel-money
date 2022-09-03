@@ -64,8 +64,8 @@ final class DefaultMoneyStorage implements CurrencyStorage
      */
     private function uploadResources(): void
     {
-        $isoCurrenciesPath = __DIR__ . "../../../resources/iso-currencies.php";
-        $cryptocurrenciesPath = __DIR__ . "../../../resources/cryptocurrencies.php";
+        $isoCurrenciesPath = __DIR__ . "../../../library/iso-currencies.php";
+        $cryptocurrenciesPath = __DIR__ . "../../../library/cryptocurrencies.php";
 
         if (! is_file($isoCurrenciesPath)) {
             throw new RuntimeException(

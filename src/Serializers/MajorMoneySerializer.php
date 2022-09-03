@@ -8,15 +8,22 @@ use Cyrtolat\Money\Money;
 
 final class MajorMoneySerializer implements MoneySerializer
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function toArray(Money $money, Currency $currency): array
     {
         $amount = $money->getAmount();
         $degree = $currency->getMinorUnit();
 
         return [
-            'amount' => $amount / pow(10, $degree),
+            'amount' => $this->getMajorAmount($amount, $degree),
             'currency' => $money->getCurrency()
         ];
+    }
+
+    private function getMajorAmount(int $amount, int $degree): float
+    {
+        return $amount / pow(10, $degree);
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
-namespace Cyrtolat\Money;
+namespace Cyrtolat\Money\Services;
 
+use Cyrtolat\Money\Money;
+use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
@@ -27,13 +29,18 @@ final class MoneyService
     /**
      * The class constructor.
      *
-     * @param array $config
+     * @param CurrencyStorage $currencyStorage
+     * @param MoneySerializer $moneySerializer
+     * @param MoneyFormatter $moneyFormatter
      */
-    public function __construct(array $config)
-    {
-        $this->currencyStorage = new $config['storage'];
-        $this->moneySerializer = new $config['serializer'];
-        $this->moneyFormatter = new $config['formatter'];
+    public function __construct(
+        CurrencyStorage $currencyStorage,
+        MoneySerializer $moneySerializer,
+        MoneyFormatter $moneyFormatter,
+    ) {
+        $this->currencyStorage = $currencyStorage;
+        $this->moneySerializer = $moneySerializer;
+        $this->moneyFormatter = $moneyFormatter;
 
         $this->setMoneyRenderCallback();
         $this->setMoneySerializeCallback();
@@ -85,7 +92,7 @@ final class MoneyService
      *
      * @param string $code The alphabetic currency code
      * @return Currency New Currency class instance
-     * @throws Exceptions\MoneyServiceException
+     * @throws MoneyServiceException
      */
     public function getCurrencyBy(string $code): Currency
     {

@@ -2,7 +2,13 @@
 
 namespace Cyrtolat\Money;
 
-use Illuminate\Support\Facades\Log;
+use Cyrtolat\Money\Contracts\CurrencyStorage;
+use Cyrtolat\Money\Contracts\MoneyFormatter;
+use Cyrtolat\Money\Contracts\MoneySerializer;
+use Cyrtolat\Money\Formatters\DefaultMoneyFormatter;
+use Cyrtolat\Money\Serializers\MajorMoneySerializer;
+use Cyrtolat\Money\Services\MoneyService;
+use Cyrtolat\Money\Storages\DefaultMoneyStorage;
 use Illuminate\Support\ServiceProvider;
 
 class MoneyServiceProvider extends ServiceProvider
@@ -16,8 +22,24 @@ class MoneyServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'money');
 
-        $this->app->singleton(MoneyService::class, function () {
-            return new MoneyService(config('money'));
+        $this->app->bind(CurrencyStorage::class, function () {
+            return new DefaultMoneyStorage();
+        });
+
+        $this->app->bind(MoneyFormatter::class, function () {
+            return new DefaultMoneyFormatter();
+        });
+
+        $this->app->bind(MoneySerializer::class, function () {
+            return new MajorMoneySerializer();
+        });
+
+        $this->app->singleton(MoneyService::class, function ($app) {
+            return new MoneyService(
+                $app->make(CurrencyStorage::class),
+                $app->make(MoneySerializer::class),
+                $app->make(MoneyFormatter::class)
+            );
         });
     }
 
