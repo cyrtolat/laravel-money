@@ -143,7 +143,11 @@ final class MoneyService
      */
     private function resolve(string $class, string $contract)
     {
-        if (! class_exists($class) || ! is_subclass_of($class, $contract)) {
+        if (! class_exists($class)) {
+            throw new \RuntimeException("The configuration file does not specify a $contract class.");
+        }
+
+        if (! is_subclass_of($class, $contract)) {
             throw new \RuntimeException("Class $class doesn't implement $contract interface.");
         }
 
