@@ -17,6 +17,42 @@
 
 ## Usage
 
+```php
+
+use \Cyrtolat\Money\Facades\Money::class;
+
+// Создание экземпляров
+$money = Money::ofMajor(150.23, 'RUB'); // 150.23 RUB
+$money = Money::ofMinor(15023, 'RUB'); // 150.23 RUB
+
+$currency = Money::getCurrencyBy('RUB');
+$money = Money::ofMajor(150.23, $currency);
+$money = Money::ofMinor(15023, $currency);
+
+// Сериализация и рендинг. См. конфигурацию
+$money->toArray(); 
+$money->toJson();
+$money->render();
+
+// Базовая математика
+$money = $money->plus($money, $money, $money);
+$money = $money->minus($money, $money, $money);
+$money = $money->multiplyBy(5);
+$money = $money->divideBy(2);
+$money = $money->round();
+
+// Сравнение экземпляров
+$money->hasSameCurrency($money); // Сравнивает только по валюте
+$money->hasSameAmount($money); // Сравнивает только по сумме
+$money->equals($money); // Проверяет эквивалентность
+$money->gt($money); // >
+$money->gte($money); // >=
+$money->lt($money); // <
+$money->lte($money); // <=
+
+
+```
+
 ## Testing
 
 Phpunit is used to test this library. To start testing run the command:
