@@ -59,7 +59,7 @@ final class MoneyService
      * @return Money New Money class instance
      * @throws MoneyServiceException
      */
-    public function ofMajor(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
+    public function of(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
     {
         $this->validateCurrencyType($currency);
 

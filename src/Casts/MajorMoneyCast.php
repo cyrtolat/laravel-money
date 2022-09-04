@@ -83,7 +83,7 @@ class MajorMoneyCast implements CastsAttributes
 
         $currency = $this->getCurrency($attributes);
 
-        return $this->moneyService->ofMajor($value, $currency);
+        return $this->moneyService->of($value, $currency);
     }
 
     /**

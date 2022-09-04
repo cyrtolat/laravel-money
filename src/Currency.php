@@ -4,8 +4,9 @@ namespace Cyrtolat\Money;
 
 use Cyrtolat\Money\Exceptions\CurrencyValidationException;
 use InvalidArgumentException;
+use jsonSerializable;
 
-final class Currency implements \jsonSerializable
+final class Currency implements jsonSerializable
 {
     /**
      * The currency alphabetic code.

@@ -1,6 +1,6 @@
 {
     "name": "cyrtolat/laravel-money",
-    "description": "A library of Money and Currency for the Laravel framework",
+    "description": "Money value-objects for the Laravel framework",
     "homepage": "https://github.com/cyrtolat/laravel-money",
     "keywords": [
         "laravel",
