@@ -5,6 +5,7 @@ namespace Cyrtolat\Money\Formatters;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
+use Cyrtolat\Money\Support\AmountHelper;
 use NumberFormatter;
 
 final class DefaultMoneyFormatter implements MoneyFormatter
@@ -31,9 +32,8 @@ final class DefaultMoneyFormatter implements MoneyFormatter
      */
     public function format(Money $money, Currency $currency): string
     {
-        $majorAmount = $this->getMajorAmount($money, $currency);
-
-        $this->formatter->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $currency->getMinorUnit());
+        $this->setMinFractionDigits($currency->getMinorUnit());
+        $majorAmount = AmountHelper::calcMajorAmount($money->getAmount(), $currency);
 
         return sprintf("%s %s",
             $this->formatter->format($majorAmount),
@@ -42,14 +42,10 @@ final class DefaultMoneyFormatter implements MoneyFormatter
     }
 
     /**
-     * Todo desc..
-     *
-     * @param Money $money
-     * @param Currency $currency
-     * @return float
+     * @param int $minFractionDigits
      */
-    private function getMajorAmount(Money $money, Currency $currency): float
+    private function setMinFractionDigits(int $value): void
     {
-        return $money->getAmount() / pow(10, $currency->getMinorUnit());
+        $this->formatter->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $value);
     }
 }

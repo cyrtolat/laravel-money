@@ -16,8 +16,9 @@
 ## Usage
 
 ```php
+The docs in development.. 
 
-use \Cyrtolat\Money\Facades\Money::class;
+use \Cyrtolat\Money\Facades\Money;
 
 // Создание экземпляров
 $money = Money::ofMajor(150.23, 'RUB'); // 150.23 RUB

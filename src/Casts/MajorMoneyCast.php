@@ -4,6 +4,7 @@ namespace Cyrtolat\Money\Casts;
 
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Support\AmountHelper;
 use Cyrtolat\Money\Services\MoneyService;
 use Cyrtolat\Money\Exceptions\MoneyCastException;
 use Cyrtolat\Money\Exceptions\MoneyServiceException;
@@ -65,18 +66,6 @@ class MajorMoneyCast implements CastsAttributes
     }
 
     /**
-     * Return the major-style amount by the given money and currency.
-     *
-     * @param Money $money
-     * @param Currency $currency
-     * @return float
-     */
-    protected function getDecAmount(Money $money, Currency $currency): float
-    {
-        return $money->getAmount() / pow(10, $currency->getMinorUnit());
-    }
-
-    /**
      * Transform the attribute from the underlying model values.
      *
      * @param Model $model
@@ -125,7 +114,7 @@ class MajorMoneyCast implements CastsAttributes
         $currency = $this->getCurrency($attributes);
 
         // Creating a resulted array with a major-style amount
-        $result = [$key => $this->getDecAmount($value, $currency)];
+        $result = [$key => AmountHelper::calcMajorAmount($value->getAmount(), $currency)];
 
         // Add a new currency to the resulting array
         // when it is specified in the attributes

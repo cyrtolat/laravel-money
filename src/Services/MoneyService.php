@@ -8,6 +8,7 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\MoneyServiceException;
+use Cyrtolat\Money\Support\AmountHelper;
 
 final class MoneyService
 {
@@ -60,12 +61,13 @@ final class MoneyService
      */
     public function ofMajor(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
     {
+        $this->validateCurrencyType($currency);
+
         if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyBy($currency);
         }
 
-        $subunit = pow(10, $currency->getMinorUnit());
-        $amount = round($amount * $subunit, 0, $roundingMode);
+        $amount = AmountHelper::calcMinorAmount($amount, $currency, $roundingMode);
 
         return new Money($amount, $currency->getAlphabeticCode());
     }
@@ -80,11 +82,10 @@ final class MoneyService
      */
     public function ofMinor(int $amount, mixed $currency): Money
     {
-        if (is_string($currency)) {
+        $this->validateCurrencyType($currency);
+
+        if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyBy($currency);
-        } else if (! $currency instanceof Currency) {
-            throw new \InvalidArgumentException(
-                "The currency prop type should be a string or a Currency instance.");
         }
 
         return new Money($amount, $currency->getAlphabeticCode());
@@ -132,6 +133,19 @@ final class MoneyService
             $currency = $this->getCurrencyBy($money->getCurrency());
             return $this->moneySerializer->toArray($money, $currency);
         });
+    }
+
+    /**
+     * Todo desc..
+     *
+     * @param mixed $currency
+     */
+    private function validateCurrencyType(mixed $currency): void
+    {
+        if (! $currency instanceof Currency && ! is_string($currency)) {
+            throw new \InvalidArgumentException(
+                "The currency prop should be a string or a Currency instance.");
+        }
     }
 
     /**
