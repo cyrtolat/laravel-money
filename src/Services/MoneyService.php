@@ -46,7 +46,7 @@ final class MoneyService
             $config['formatter'], MoneyFormatter::class
         );
 
-        $this->setMoneyRenderCallback();
+        $this->setMoneyFormatterCallback();
         $this->setMoneySerializeCallback();
     }
 
@@ -114,7 +114,7 @@ final class MoneyService
      *
      * @return void
      */
-    private function setMoneyRenderCallback(): void
+    private function setMoneyFormatterCallback(): void
     {
         Money::setRenderCallback(function (Money $money) {
             $currency = $this->getCurrencyBy($money->getCurrency());
