@@ -3,9 +3,10 @@
 namespace Cyrtolat\Money;
 
 use Closure;
+use Cyrtolat\Money\Exceptions\CurrencyMismatchException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use Cyrtolat\Money\Exceptions\MoneyMismatchException;
+use Cyrtolat\Money\Exceptions\MoneyException;
 use Illuminate\Contracts\Support\Renderable;
 
 final class Money implements Arrayable, Jsonable, Renderable
@@ -91,6 +92,19 @@ final class Money implements Arrayable, Jsonable, Renderable
     }
 
     /**
+     * Checking another money currency.
+     *
+     * @param Money $money
+     * @throws CurrencyMismatchException
+     */
+    private function validateCurrency(Money $money): void
+    {
+        if (! $this->hasSameCurrency($money)) {
+            throw CurrencyMismatchException::hasNotSameCurrency();
+        }
+    }
+
+    /**
      * Returns true if the given Money has the same amount.
      *
      * @param Money $money Money instance for comparison
@@ -117,13 +131,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money Money instance for comparison
      * @return bool True if amounts and currencies are identical
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function equals(Money $money): bool
     {
-        if (! $this->hasSameCurrency($money)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($money);
 
         if (! $this->hasSameAmount($money)) {
             return false;
@@ -152,13 +164,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $addend Money instance to add
      * @return Money New Money instance
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function plus(Money $addend): Money
     {
-        if (! $this->hasSameCurrency($addend)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($addend);
 
         $result = $this->amount + $addend->amount;
 
@@ -171,13 +181,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $subtrahend Money instance to subtract
      * @return Money New Money instance
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function minus(Money $subtrahend): Money
     {
-        if (! $this->hasSameCurrency($subtrahend)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($subtrahend);
 
         $result = $this->amount - $subtrahend->amount;
 
@@ -219,13 +227,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than a given
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function gt(Money $money): bool
     {
-        if (! $this->hasSameCurrency($money)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($money);
 
         return $this->amount > $money->amount;
     }
@@ -235,13 +241,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than or equal to a given
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function gte(Money $money): bool
     {
-        if (! $this->hasSameCurrency($money)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($money);
 
         return $this->amount >= $money->amount;
     }
@@ -251,13 +255,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare.
      * @return bool True if is less than a given
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function lt(Money $money): bool
     {
-        if (! $this->hasSameCurrency($money)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($money);
 
         return $this->amount < $money->amount;
     }
@@ -267,13 +269,11 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is less than or equal to a given
-     * @throws MoneyMismatchException
+     * @throws MoneyException
      */
     public function lte(Money $money): bool
     {
-        if (! $this->hasSameCurrency($money)) {
-            throw MoneyMismatchException::hasNotSameCurrency();
-        }
+        $this->validateCurrency($money);
 
         return $this->amount <= $money->amount;
     }

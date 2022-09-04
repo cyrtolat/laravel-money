@@ -2,6 +2,7 @@
 
 namespace Cyrtolat\Money;
 
+use Cyrtolat\Money\Exceptions\CurrencyValidationException;
 use InvalidArgumentException;
 
 final class Currency implements \jsonSerializable
@@ -61,18 +62,15 @@ final class Currency implements \jsonSerializable
         string $entity
     ) {
         if (! preg_match('/\A[A-Z]{3,4}\z/', $alphabeticCode)) {
-            throw new \InvalidArgumentException(
-                "The alphabetic code should consist of 3 or 4 capital letters.");
+            CurrencyValidationException::invalidAlphabeticCode();
         }
 
         if (! preg_match('/\A[0-9]+\z/', $numericCode)) {
-            throw new \InvalidArgumentException(
-                "The numeric code should consist only of digits.");
+            CurrencyValidationException::invalidNumericCode();
         }
 
         if ($minorUnit < 0) {
-            throw new InvalidArgumentException(
-                "The minor unit must be greater than zero.");
+            CurrencyValidationException::invalidMinorUnit();
         }
 
         $this->alphabeticCode   = $alphabeticCode;

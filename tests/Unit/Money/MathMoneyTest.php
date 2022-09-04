@@ -2,7 +2,7 @@
 
 namespace Cyrtolat\Money\Tests\Unit\Money;
 
-use Cyrtolat\Money\Exceptions\MoneyMismatchException;
+use Cyrtolat\Money\Exceptions\MoneyException;
 use Cyrtolat\Money\Money;
 
 class MathMoneyTest extends MoneyTest
@@ -25,7 +25,7 @@ class MathMoneyTest extends MoneyTest
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'USD');
 
-        $this->expectException(MoneyMismatchException::class);
+        $this->expectException(MoneyException::class);
 
         $money->plus($other);
     }
@@ -48,7 +48,7 @@ class MathMoneyTest extends MoneyTest
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'USD');
 
-        $this->expectException(MoneyMismatchException::class);
+        $this->expectException(MoneyException::class);
 
         $money->minus($other);
     }

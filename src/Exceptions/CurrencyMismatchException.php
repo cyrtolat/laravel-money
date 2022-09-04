@@ -2,7 +2,7 @@
 
 namespace Cyrtolat\Money\Exceptions;
 
-class MoneyMismatchException extends MoneyException
+class CurrencyMismatchException extends MoneyException
 {
     /**
      * Thrown when the currencies not identical.
