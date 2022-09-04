@@ -13,7 +13,6 @@ final class AmountHelper
      * @param integer $amount An integer minor-style amount
      * @param Currency $currency Currency instance with minor unit
      * @return float Major-style decimal amount
-     * @static
      */
     public static function calcMajorAmount(int $amount, Currency $currency): float
     {
@@ -28,7 +27,6 @@ final class AmountHelper
      * @param Currency $currency Currency instance with minor unit
      * @param integer $roundingMode An optional RoundingMode constant
      * @return integer Minor-style integer amount
-     * @static
      */
     public static function calcMinorAmount(float $amount, Currency $currency, int $roundingMode = PHP_ROUND_HALF_UP): int
     {
