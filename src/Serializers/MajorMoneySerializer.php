@@ -13,17 +13,21 @@ final class MajorMoneySerializer implements MoneySerializer
      */
     public function toArray(Money $money, Currency $currency): array
     {
-        $amount = $money->getAmount();
-        $degree = $currency->getMinorUnit();
-
         return [
-            'amount' => $this->getMajorAmount($amount, $degree),
+            'amount' => $this->getMajorAmount($money, $currency),
             'currency' => $money->getCurrency()
         ];
     }
 
-    private function getMajorAmount(int $amount, int $degree): float
+    /**
+     * Todo desc..
+     *
+     * @param Money $money
+     * @param Currency $currency
+     * @return float
+     */
+    private function getMajorAmount(Money $money, Currency $currency): float
     {
-        return $amount / pow(10, $degree);
+        return $money->getAmount() / pow(10, $currency->getMinorUnit());
     }
 }

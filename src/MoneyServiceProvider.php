@@ -2,13 +2,7 @@
 
 namespace Cyrtolat\Money;
 
-use Cyrtolat\Money\Contracts\CurrencyStorage;
-use Cyrtolat\Money\Contracts\MoneyFormatter;
-use Cyrtolat\Money\Contracts\MoneySerializer;
-use Cyrtolat\Money\Formatters\DefaultMoneyFormatter;
-use Cyrtolat\Money\Serializers\MajorMoneySerializer;
 use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Storages\DefaultMoneyStorage;
 use Illuminate\Support\ServiceProvider;
 
 class MoneyServiceProvider extends ServiceProvider

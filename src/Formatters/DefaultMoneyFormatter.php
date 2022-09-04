@@ -31,15 +31,25 @@ final class DefaultMoneyFormatter implements MoneyFormatter
      */
     public function format(Money $money, Currency $currency): string
     {
-        $minorUnit = $currency->getMinorUnit();
-        $amount = $money->getAmount() / pow(10, $minorUnit);
+        $majorAmount = $this->getMajorAmount($money, $currency);
 
-        $this->formatter->setAttribute(
-            NumberFormatter::MIN_FRACTION_DIGITS, $minorUnit);
+        $this->formatter->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $currency->getMinorUnit());
 
         return sprintf("%s %s",
-            $this->formatter->format($amount),
+            $this->formatter->format($majorAmount),
             $currency->getAlphabeticCode()
         );
+    }
+
+    /**
+     * Todo desc..
+     *
+     * @param Money $money
+     * @param Currency $currency
+     * @return float
+     */
+    private function getMajorAmount(Money $money, Currency $currency): float
+    {
+        return $money->getAmount() / pow(10, $currency->getMinorUnit());
     }
 }
