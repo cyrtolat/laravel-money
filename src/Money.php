@@ -26,11 +26,11 @@ final class Money implements Arrayable, Jsonable, Renderable
     private string $currency;
 
     /**
-     * Formatter callback
+     * Formatting callback
      *
      * @var null|Closure
      */
-    private static ?Closure $renderCallback;
+    private static ?Closure $formatterCallback;
 
     /**
      * Serialization callback
@@ -72,13 +72,13 @@ final class Money implements Arrayable, Jsonable, Renderable
     }
 
     /**
-     * Sets the render callback.
+     * Sets the formatter callback.
      *
      * @param  Closure  $callback
      */
-    public static function setRenderCallback(Closure $callback): void
+    public static function setFormatterCallback(Closure $callback): void
     {
-        self::$renderCallback = $callback;
+        self::$formatterCallback = $callback;
     }
 
     /**
@@ -306,8 +306,8 @@ final class Money implements Arrayable, Jsonable, Renderable
      */
     public function render()
     {
-        if (isset(self::$renderCallback)) {
-            return call_user_func(self::$renderCallback, $this);
+        if (isset(self::$formatterCallback)) {
+            return call_user_func(self::$formatterCallback, $this);
         }
 
         return sprintf('%s %s',
