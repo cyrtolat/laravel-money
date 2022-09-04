@@ -4,6 +4,7 @@ namespace Cyrtolat\Money\Storages;
 
 use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Exceptions\CurrencyValidationException;
 use RuntimeException;
 
 final class DefaultCurrencyStorage implements CurrencyStorage
@@ -87,6 +88,7 @@ final class DefaultCurrencyStorage implements CurrencyStorage
      *
      * @param array $data The array with currency params.
      * @return Currency
+     * @throws CurrencyValidationException
      */
     private function createCurrency(array $data): Currency
     {

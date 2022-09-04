@@ -10,7 +10,7 @@ use NumberFormatter;
 
 /**
  * Formats a monetary object according to the style
- * adopted in the region using intl extension.
+ * localized in the region using intl extension.
  */
 class LocalizedMoneyFormatter implements MoneyFormatter
 {

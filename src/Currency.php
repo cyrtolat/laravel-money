@@ -50,10 +50,11 @@ final class Currency implements \jsonSerializable
     /**
      * The class constructor.
      *
-     * @param string   $alphabeticCode  The currency alphabetic code.
-     * @param string   $numericCode     The currency numeric code.
-     * @param integer  $minorUnit       The number of fraction digits.
-     * @param string   $entity          The currency's name.
+     * @param string $alphabeticCode The currency alphabetic code.
+     * @param string $numericCode The currency numeric code.
+     * @param integer $minorUnit The number of fraction digits.
+     * @param string $entity The currency's name.
+     * @throws CurrencyValidationException
      */
     public function __construct(
         string $alphabeticCode,
@@ -62,15 +63,15 @@ final class Currency implements \jsonSerializable
         string $entity
     ) {
         if (! preg_match('/\A[A-Z]{3,4}\z/', $alphabeticCode)) {
-            CurrencyValidationException::invalidAlphabeticCode();
+            throw CurrencyValidationException::invalidAlphabeticCode();
         }
 
         if (! preg_match('/\A[0-9]+\z/', $numericCode)) {
-            CurrencyValidationException::invalidNumericCode();
+            throw CurrencyValidationException::invalidNumericCode();
         }
 
         if ($minorUnit < 0) {
-            CurrencyValidationException::invalidMinorUnit();
+            throw CurrencyValidationException::invalidMinorUnit();
         }
 
         $this->alphabeticCode   = $alphabeticCode;

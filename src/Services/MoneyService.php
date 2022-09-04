@@ -34,15 +34,15 @@ final class MoneyService
      */
     public function __construct(array $config)
     {
-        $this->currencyStorage = $this->resolve(
+        $this->currencyStorage = $this->resolveConfigClass(
             $config['storage'], CurrencyStorage::class
         );
 
-        $this->moneySerializer = $this->resolve(
+        $this->moneySerializer = $this->resolveConfigClass(
             $config['serializer'], MoneySerializer::class
         );
 
-        $this->moneyFormatter = $this->resolve(
+        $this->moneyFormatter = $this->resolveConfigClass(
             $config['formatter'], MoneyFormatter::class
         );
 
@@ -155,7 +155,7 @@ final class MoneyService
      * @param string $contract
      * @return mixed
      */
-    private function resolve(string $class, string $contract): mixed
+    private function resolveConfigClass(string $class, string $contract): mixed
     {
         if (! class_exists($class) || ! is_subclass_of($class, $contract)) {
             throw new \RuntimeException("Class $class doesn't implement $contract interface.");

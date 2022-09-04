@@ -3,7 +3,6 @@
 namespace Cyrtolat\Money\Tests\Unit\Money;
 
 use Cyrtolat\Money\Exceptions\MoneyException;
-use Cyrtolat\Money\Exceptions\MoneyException;
 use Cyrtolat\Money\Money;
 
 class CompMoneyTest extends MoneyTest
