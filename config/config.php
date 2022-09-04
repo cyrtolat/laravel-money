@@ -22,7 +22,7 @@ return [
      |
      */
 
-    'storage' => \Cyrtolat\Money\Storages\DefaultMoneyStorage::class,
+    'storage' => \Cyrtolat\Money\Storages\DefaultCurrencyStorage::class,
 
     /*
      |--------------------------------------------------------------------------

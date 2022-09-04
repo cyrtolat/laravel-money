@@ -27,14 +27,14 @@ final class Money implements Arrayable, Jsonable, Renderable
     /**
      * Formatter callback
      *
-     * @var Closure
+     * @var null|Closure
      */
     private static ?Closure $renderCallback;
 
     /**
      * Serialization callback
      *
-     * @var Closure
+     * @var null|Closure
      */
     private static ?Closure $serializeCallback;
 
@@ -93,62 +93,40 @@ final class Money implements Arrayable, Jsonable, Renderable
     /**
      * Returns true if the given Money has the same amount.
      *
-     * @param Money $money Required Money instance for comparison
-     * @param Money ...$other An optional group of other monies to compare
-     * @return bool True if all given monies has same amount
+     * @param Money $money Money instance for comparison
+     * @return bool True if amounts are identical
      */
-    public function hasSameAmount(Money $money, Money ...$other): bool
+    public function hasSameAmount(Money $money): bool
     {
-        array_push($other, $money);
-
-        foreach ($other as $money) {
-            if ($this->amount != $money->amount) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->amount == $money->amount;
     }
 
     /**
      * Returns true if the given Money has the same currency.
      *
-     * @param Money $money Required Money instance for comparison
-     * @param Money ...$other An optional group of other monies to compare
-     * @return bool True if all given monies has same currency
+     * @param Money $money Money instance for comparison
+     * @return bool True if currencies are identical
      */
-    public function hasSameCurrency(Money $money, Money ...$other): bool
+    public function hasSameCurrency(Money $money): bool
     {
-        array_push($other, $money);
-
-        foreach ($other as $money) {
-            if ($this->currency != $money->currency) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->currency == $money->currency;
     }
 
     /**
      * Returns true if the given Money equal to this.
      *
-     * @param Money $money Required Money instance for comparison
-     * @param Money ...$other An optional group of other monies to compare
-     * @return bool True if all given monies equal to this
+     * @param Money $money Money instance for comparison
+     * @return bool True if amounts and currencies are identical
      * @throws MoneyMismatchException
      */
-    public function equals(Money $money, Money ...$other): bool
+    public function equals(Money $money): bool
     {
-        array_push($other, $money);
+        if (! $this->hasSameCurrency($money)) {
+            throw MoneyMismatchException::hasNotSameCurrency();
+        }
 
-        foreach ($other as $money) {
-            if (! $this->hasSameCurrency($money)) {
-                throw MoneyMismatchException::hasNotSameCurrency();
-            }
-            if (! $this->hasSameAmount($money)) {
-                return false;
-            }
+        if (! $this->hasSameAmount($money)) {
+            return false;
         }
 
         return true;
@@ -170,50 +148,38 @@ final class Money implements Arrayable, Jsonable, Renderable
 
     /**
      * Returns a new Money instance that represents
-     * the sum of this Money object and addend values.
+     * the sum of this Money object and addend value.
      *
-     * @param Money $addend Required Money instance to add
-     * @param Money ...$addends An optional group of other monies to add
+     * @param Money $addend Money instance to add
      * @return Money New Money instance
      * @throws MoneyMismatchException
      */
-    public function plus(Money $addend, Money ...$addends): Money
+    public function plus(Money $addend): Money
     {
-        array_push($addends, $addend);
-        $result = $this->amount;
-
-        foreach ($addends as $addend) {
-            if (! $this->hasSameCurrency($addend)) {
-                throw MoneyMismatchException::hasNotSameCurrency();
-            }
-
-            $result += $addend->amount;
+        if (! $this->hasSameCurrency($addend)) {
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
+
+        $result = $this->amount + $addend->amount;
 
         return new Money($result, $this->currency);
     }
 
     /**
      * Returns a new Money instance that represents
-     * the difference of this Money and subtrahend values.
+     * the difference of this Money and subtrahend value.
      *
-     * @param Money $subtrahend Required Money instance to subtract
-     * @param Money ...$subtrahends An optional group of other monies to subtract
+     * @param Money $subtrahend Money instance to subtract
      * @return Money New Money instance
      * @throws MoneyMismatchException
      */
-    public function minus(Money $subtrahend, Money ...$subtrahends): Money
+    public function minus(Money $subtrahend): Money
     {
-        array_push($subtrahends, $subtrahend);
-        $result = $this->amount;
-
-        foreach ($subtrahends as $subtrahend) {
-            if (! $this->hasSameCurrency($subtrahend)) {
-                throw MoneyMismatchException::hasNotSameCurrency();
-            }
-
-            $result -= $subtrahend->amount;
+        if (! $this->hasSameCurrency($subtrahend)) {
+            throw MoneyMismatchException::hasNotSameCurrency();
         }
+
+        $result = $this->amount - $subtrahend->amount;
 
         return new Money($result, $this->currency);
     }

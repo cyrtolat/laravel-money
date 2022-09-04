@@ -34,8 +34,8 @@ $money->toJson();
 $money->render();
 
 // Базовая математика
-$money = $money->plus($money, $money, $money);
-$money = $money->minus($money, $money, $money);
+$money = $money->plus($money);
+$money = $money->minus($money);
 $money = $money->multiplyBy(5);
 $money = $money->divideBy(2);
 $money = $money->round();
@@ -51,10 +51,6 @@ $money->lte($money); // <=
 
 
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## License
 

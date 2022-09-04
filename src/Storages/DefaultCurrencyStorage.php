@@ -6,7 +6,7 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Currency;
 use RuntimeException;
 
-final class DefaultMoneyStorage implements CurrencyStorage
+final class DefaultCurrencyStorage implements CurrencyStorage
 {
     /**
      * The ISO currencies by symbol code data.

@@ -134,6 +134,50 @@ final class Currency implements \jsonSerializable
     }
 
     /**
+     * Returns true if the given Currency has the same alphabetic code.
+     *
+     * @param Currency $currency Currency instance for comparison
+     * @return bool True if alphabetic codes are identical
+     */
+    public function hasSameAlphabeticCode(Currency $currency): bool
+    {
+        return $this->alphabeticCode == $currency->alphabeticCode;
+    }
+
+    /**
+     * Returns true if the given Currency has the same numeric code.
+     *
+     * @param Currency $currency Currency instance for comparison
+     * @return bool True if numeric codes are identical
+     */
+    public function hasSameNumericCode(Currency $currency): bool
+    {
+        return $this->numericCode == $currency->numericCode;
+    }
+
+    /**
+     * Returns true if the given Currency has the same minor unit.
+     *
+     * @param Currency $currency Currency instance for comparison
+     * @return bool True if minor units are identical
+     */
+    public function hasSameMinorUnit(Currency $currency): bool
+    {
+        return $this->minorUnit == $currency->minorUnit;
+    }
+
+    /**
+     * Returns true if the given Currency has the same entity.
+     *
+     * @param Currency $currency Currency instance for comparison
+     * @return bool True if entities are identical
+     */
+    public function hasSameEntity(Currency $currency): bool
+    {
+        return $this->entity == $currency->entity;
+    }
+
+    /**
      * Returns true if the given currency equals to this.
      *
      * @param mixed $currency The Currency instance or code
@@ -141,7 +185,7 @@ final class Currency implements \jsonSerializable
      */
     public function equals(mixed $currency): bool
     {
-        if (is_string($currency)) {
+        if (is_string($currency) == true) {
             return $this->alphabeticCode == $currency;
         }
 
@@ -150,18 +194,10 @@ final class Currency implements \jsonSerializable
                 "The given value has wrong format or type.");
         }
 
-        return $this->alphabeticCode == $currency->alphabeticCode;
-    }
-
-    /**
-     * Returns a simple string representation
-     * of this Money instance.
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->alphabeticCode;
+        return $this->alphabeticCode == $currency->alphabeticCode
+            && $this->numericCode == $currency->numericCode
+            && $this->minorUnit == $currency->minorUnit
+            && $this->entity == $currency->entity;
     }
 
     /**
