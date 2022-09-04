@@ -7,7 +7,6 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#Usage)
-- [Changelog](#changelog)
 - [License](#license)
 
 ## Installation
