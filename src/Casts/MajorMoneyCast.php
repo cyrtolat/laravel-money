@@ -30,7 +30,7 @@ class MajorMoneyCast implements CastsAttributes
     protected MoneyService $moneyService;
 
     /**
-     * Instantiate the class.
+     * The class constructor.
      *
      * @param string|null $currency
      * @throws MoneyCastException
