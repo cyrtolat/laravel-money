@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Money extends Facade
 {
-    /**
-     * {@inheritDoc}
-     */
     protected static function getFacadeAccessor(): string
     {
         return MoneyService::class;

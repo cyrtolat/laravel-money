@@ -6,9 +6,14 @@ use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 
+/**
+ * Serializes a Money instance into a value in a minor currency style.
+ */
 final class MinorMoneySerializer implements MoneySerializer
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function toArray(Money $money, Currency $currency): array
     {
         return [

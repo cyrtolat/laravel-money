@@ -72,7 +72,7 @@ final class Money implements Arrayable, Jsonable, Renderable
     }
 
     /**
-     * Set the render callback.
+     * Sets the render callback.
      *
      * @param  Closure  $callback
      */
@@ -82,7 +82,7 @@ final class Money implements Arrayable, Jsonable, Renderable
     }
 
     /**
-     * Set the serializer callback.
+     * Sets the serializer callback.
      *
      * @param  Closure  $callback
      */

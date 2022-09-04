@@ -11,6 +11,6 @@ class MoneyServiceException extends MoneyException
      */
     public static function unknownCurrencyCode(string $code): self
     {
-        return new static("Currency with the code \"$code\" is not provided.");
+        return new static("Currency with the code \"$code\" is not found.");
     }
 }

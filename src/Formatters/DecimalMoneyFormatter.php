@@ -3,12 +3,16 @@
 namespace Cyrtolat\Money\Formatters;
 
 use Cyrtolat\Money\Contracts\MoneyFormatter;
+use Cyrtolat\Money\Support\AmountHelper;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Support\AmountHelper;
 use NumberFormatter;
 
-final class DefaultMoneyFormatter implements MoneyFormatter
+/**
+ * Formats the Money object in a major style with a mandatory
+ * fractional part and an alphabetic currency code.
+ */
+final class DecimalMoneyFormatter implements MoneyFormatter
 {
     /**
      * @var NumberFormatter
@@ -20,10 +24,10 @@ final class DefaultMoneyFormatter implements MoneyFormatter
      */
     public function __construct()
     {
-        $locale = config('money.locale', 'en_US');
+        $locale = config('money.locale', 'en');
 
         $this->formatter = new NumberFormatter(
-            $locale, NumberFormatter::DECIMAL,
+            $locale, NumberFormatter::DECIMAL
         );
     }
 
@@ -35,14 +39,13 @@ final class DefaultMoneyFormatter implements MoneyFormatter
         $this->setMinFractionDigits($currency->getMinorUnit());
         $majorAmount = AmountHelper::calcMajorAmount($money->getAmount(), $currency);
 
-        return sprintf("%s %s",
-            $this->formatter->format($majorAmount),
-            $currency->getAlphabeticCode()
-        );
+        $formattedAmount = $this->formatter->format($majorAmount);
+
+        return sprintf("%s %s", $formattedAmount, $currency->getAlphabeticCode());
     }
 
     /**
-     * @param int $minFractionDigits
+     * @param int $value
      */
     private function setMinFractionDigits(int $value): void
     {
