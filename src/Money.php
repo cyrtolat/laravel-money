@@ -3,7 +3,7 @@
 namespace Cyrtolat\Money;
 
 use Closure;
-use Cyrtolat\Money\Exceptions\CurrencyMismatchException;
+use Cyrtolat\Money\Exceptions\MoneyArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Cyrtolat\Money\Exceptions\MoneyException;
@@ -95,12 +95,12 @@ final class Money implements Arrayable, Jsonable, Renderable
      * Checking another money currency.
      *
      * @param Money $money
-     * @throws CurrencyMismatchException
+     * @throws MoneyArgumentException
      */
     private function validateCurrency(Money $money): void
     {
         if (! $this->hasSameCurrency($money)) {
-            throw CurrencyMismatchException::hasNotSameCurrency();
+            throw MoneyArgumentException::hasNotSameCurrency();
         }
     }
 
