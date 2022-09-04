@@ -8,6 +8,7 @@ use Exception;
 
 class CurrencyTest extends TestCase
 {
+    /** @test */
     public function test_alphabetic_code_constructor_validation()
     {
         try { // The alphabetic code should consist of only of 3 or 4 capital letters
@@ -36,6 +37,7 @@ class CurrencyTest extends TestCase
         } catch (InvalidArgumentException) { $this->assertTrue(true); }
     }
 
+    /** @test */
     public function test_numeric_code_constructor_validation()
     {
         try { // The numeric code should consist of only digits or be a zero

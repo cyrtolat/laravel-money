@@ -7,7 +7,6 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#Usage)
-- [Testing](#testing)
 - [Changelog](#changelog)
 - [License](#license)
 
@@ -51,14 +50,6 @@ $money->lt($money); // <
 $money->lte($money); // <=
 
 
-```
-
-## Testing
-
-Phpunit is used to test this library. To start testing run the command:
-
-```bash
-$ composer test
 ```
 
 ## Changelog

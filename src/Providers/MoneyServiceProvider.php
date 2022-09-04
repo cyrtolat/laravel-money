@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money;
+namespace Cyrtolat\Money\Providers;
 
 use Cyrtolat\Money\Services\MoneyService;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +14,7 @@ class MoneyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'money');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'money');
 
         $this->app->singleton(MoneyService::class, function () {
             return new MoneyService(config('money'));
@@ -28,6 +28,6 @@ class MoneyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__.'/../config/config.php' => config_path('money.php')]);
+        $this->publishes([__DIR__ . '/../../config/config.php' => config_path('money.php')]);
     }
 }

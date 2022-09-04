@@ -2,7 +2,7 @@
 
 namespace Cyrtolat\Money\Tests;
 
-use Cyrtolat\Money\MoneyServiceProvider;
+use Cyrtolat\Money\Providers\MoneyServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

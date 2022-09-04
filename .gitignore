@@ -1,5 +1,9 @@
-.idea
-.phpunit.result.cache
+.idea/
+vendor/
+
+*.bak
+*.cache
+*.clover
+*.orig
+
 composer.lock
-phpunit.xml
-vendor
