@@ -4,7 +4,7 @@ namespace Cyrtolat\Money\Casts;
 
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\MoneyService;
+use Cyrtolat\Money\Services\MoneyService;
 use Cyrtolat\Money\Exceptions\MoneyCastException;
 use Cyrtolat\Money\Exceptions\MoneyServiceException;
 use Illuminate\Contracts\Container\BindingResolutionException;
