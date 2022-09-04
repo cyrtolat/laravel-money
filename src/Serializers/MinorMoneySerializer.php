@@ -7,7 +7,7 @@ use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 
 /**
- * Serializes a Money instance into a value in a minor currency style.
+ * Serializes a Money instance into an amount in a minor currency style.
  */
 final class MinorMoneySerializer implements MoneySerializer
 {
