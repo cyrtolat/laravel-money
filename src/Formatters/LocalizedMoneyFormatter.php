@@ -3,8 +3,8 @@
 namespace Cyrtolat\Money\Formatters;
 
 use Cyrtolat\Money\Contracts\MoneyFormatter;
-use Cyrtolat\Money\Support\AmountHelper;
 use Cyrtolat\Money\Currency;
+use Cyrtolat\Money\Helper;
 use NumberFormatter;
 
 /**
@@ -35,7 +35,7 @@ class LocalizedMoneyFormatter implements MoneyFormatter
      */
     public function format(int $amount, Currency $currency): string
     {
-        $majorAmount = AmountHelper::calcMajorAmount($amount, $currency);
+        $majorAmount = Helper::calcMajorAmount($amount, $currency);
 
         return $this->formatter->formatCurrency($majorAmount, $currency->getAlphabeticCode());
     }

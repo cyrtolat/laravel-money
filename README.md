@@ -1,7 +1,8 @@
 # Laravel Money
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
+[![Stable Version](https://img.shields.io/github/v/release/cyrtolat/laravel-money?label=stable&style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
 [![License](https://img.shields.io/github/license/cyrtolat/laravel-money?style=flat-square)](https://packagist.org/packages/cyrtolat/laravel-money)
+[![For Laravel](https://img.shields.io/badge/Laravel-8.x%20%7C%209.x-orange.svg?style=flat-square)](https://img.shields.io/badge/Laravel-8.x%20%7C%209.x-orange.svg?style=flat-square)
 
 ## Contents
 - [Installation](#installation)

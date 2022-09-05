@@ -7,6 +7,8 @@
     "keywords": [
         "laravel",
         "money",
+        "monies",
+        "payments",
         "currency"
     ],
     "authors": [
@@ -17,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.0|^8.1",
         "ext-intl": "*",
         "ext-json": "*",
         "illuminate/support": "^8.0|^9.0",

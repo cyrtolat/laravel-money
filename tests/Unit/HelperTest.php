@@ -1,12 +1,12 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Support;
+namespace Cyrtolat\Money\Tests\Unit;
 
+use Cyrtolat\Money\Helper;
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Support\AmountHelper;
 use Cyrtolat\Money\Tests\TestCase;
 
-class AmountHelperTest extends TestCase
+class HelperTest extends TestCase
 {
     /** @var Currency */
     protected Currency $currency;
@@ -19,7 +19,7 @@ class AmountHelperTest extends TestCase
     /** @test */
     public function test_calcMajorAmount()
     {
-        $result = AmountHelper::calcMajorAmount(150, $this->currency);
+        $result = Helper::calcMajorAmount(150, $this->currency);
 
         $this->assertEquals(1.50, $result);
     }
@@ -27,7 +27,7 @@ class AmountHelperTest extends TestCase
     /** @test */
     public function test_calcMinorAmount()
     {
-        $result = AmountHelper::calcMinorAmount(1.532, $this->currency);
+        $result = Helper::calcMinorAmount(1.532, $this->currency);
 
         $this->assertEquals(153, $result);
     }

@@ -8,7 +8,7 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\MoneyServiceException;
-use Cyrtolat\Money\Support\AmountHelper;
+use Cyrtolat\Money\Helper;
 
 final class MoneyService
 {
@@ -73,7 +73,7 @@ final class MoneyService
             $currency = $this->getCurrencyBy($currency);
         }
 
-        $amount = AmountHelper::calcMinorAmount($amount, $currency, $roundingMode);
+        $amount = Helper::calcMinorAmount($amount, $currency, $roundingMode);
 
         return new Money($amount, $currency->getAlphabeticCode());
     }

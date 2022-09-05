@@ -1,10 +1,8 @@
 <?php
 
-namespace Cyrtolat\Money\Support;
+namespace Cyrtolat\Money;
 
-use Cyrtolat\Money\Currency;
-
-final class AmountHelper
+final class Helper
 {
     /**
      * Return the major-style amount according to
