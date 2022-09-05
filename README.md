@@ -25,7 +25,7 @@ use \Cyrtolat\Money\Facades\Money;
 $money = Money::of(150.23, 'RUB'); // 150.23 RUB
 $money = Money::ofMinor(15023, 'RUB'); // 150.23 RUB
 
-$currency = Money::getCurrencyBy('RUB');
+$currency = Money::getCurrencyOf('RUB');
 $money = Money::of(150.23, $currency);
 $money = Money::ofMinor(15023, $currency);
 
