@@ -3,7 +3,7 @@
 namespace Cyrtolat\Money\Tests\Unit\Currency;
 
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Exceptions\CurrencyValidationException;
+use InvalidArgumentException;
 
 class BasicCurrencyTest extends CurrencyTest
 {
@@ -27,17 +27,17 @@ class BasicCurrencyTest extends CurrencyTest
         try { // The alphabetic code should consist of only of 3 or 4 capital letters
             new Currency("Rubles", "643", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
 
         try { // The alphabetic code should consist of only of 3 or 4 capital letters
             new Currency("RUBs", "643", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
 
         try { // The alphabetic code should consist of only of 3 or 4 capital letters
             new Currency("", "643", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
     }
 
     /** @test */
@@ -46,17 +46,17 @@ class BasicCurrencyTest extends CurrencyTest
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "-643", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
 
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "b43", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
 
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "", 2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
     }
 
     /** @test */
@@ -65,7 +65,7 @@ class BasicCurrencyTest extends CurrencyTest
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "643", -2, "Russian Ruble");
             $this->fail('Exception was not thrown.'); // Fail because instance constructed
-        } catch (CurrencyValidationException) { $this->assertTrue(true); }
+        } catch (InvalidArgumentException) { $this->assertTrue(true); }
     }
 
     /** @test */
