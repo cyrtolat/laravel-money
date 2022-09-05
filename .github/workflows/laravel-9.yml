@@ -1,0 +1,17 @@
+name: "Laravel 9"
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+      - name: Install deps
+        run: composer require --dev laravel/framework:^9.0
+      - name: Execute tests
+        run: sudo vendor/bin/phpunit
