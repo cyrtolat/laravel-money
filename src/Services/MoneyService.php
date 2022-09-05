@@ -118,7 +118,7 @@ final class MoneyService
     {
         Money::setFormatterCallback(function (Money $money) {
             $currency = $this->getCurrencyBy($money->getCurrency());
-            return $this->moneyFormatter->format($money, $currency);
+            return $this->moneyFormatter->format($money->getAmount(), $currency);
         });
     }
 
@@ -131,7 +131,7 @@ final class MoneyService
     {
         Money::setSerializeCallback(function (Money $money) {
             $currency = $this->getCurrencyBy($money->getCurrency());
-            return $this->moneySerializer->toArray($money, $currency);
+            return $this->moneySerializer->toArray($money->getAmount(), $currency);
         });
     }
 

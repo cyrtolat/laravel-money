@@ -3,16 +3,15 @@
 namespace Cyrtolat\Money\Contracts;
 
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Money;
 
 interface MoneySerializer
 {
     /**
-     * Returns an array representation of an instance of Money class.
+     * Returns an array representation of monetary amount.
      *
-     * @param Money $money The Money instance to serialize
+     * @param integer $amount Monetary amount to serialize
      * @param Currency $currency The Currency instance
      * @return array
      */
-    public function toArray(Money $money, Currency $currency): array;
+    public function toArray(int $amount, Currency $currency): array;
 }

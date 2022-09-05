@@ -279,6 +279,16 @@ final class Money implements Arrayable, Jsonable, Renderable
     }
 
     /**
+     * Implicit conversion of Money to a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function toArray()
@@ -313,6 +323,4 @@ final class Money implements Arrayable, Jsonable, Renderable
         return sprintf('%s %s',
             $this->amount, $this->currency);
     }
-
-
 }

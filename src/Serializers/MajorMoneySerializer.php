@@ -5,7 +5,6 @@ namespace Cyrtolat\Money\Serializers;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Support\AmountHelper;
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Money;
 
 /**
  * Serializes a Money instance in a major style.
@@ -15,11 +14,11 @@ final class MajorMoneySerializer implements MoneySerializer
     /**
      * {@inheritdoc}
      */
-    public function toArray(Money $money, Currency $currency): array
+    public function toArray(int $amount, Currency $currency): array
     {
         return [
-            'amount' => AmountHelper::calcMajorAmount($money->getAmount(), $currency),
-            'currency' => $money->getCurrency()
+            'amount' => AmountHelper::calcMajorAmount($amount, $currency),
+            'currency' => $currency->getAlphabeticCode()
         ];
     }
 }

@@ -7,18 +7,24 @@ return [
      | Money Locale
      |--------------------------------------------------------------------------
      |
-     | Todo desc..
+     | A string containing the BCP 47 language tag. It defines the style of
+     | formatting monetary values according to the selected locale and is used
+     | inside formatters by the Intl.NumberFormat objects.
      |
      */
 
-    'locale' => config('app.locale', 'en'),
+    'locale' => 'en_US',
 
     /*
      |--------------------------------------------------------------------------
      | Currency Storage
      |--------------------------------------------------------------------------
      |
-     | Todo desc..
+     | A string containing the implementation of a CurrencyStorage contract.
+     | It is a repository that contains all the currency data of your application.
+     | By default, it includes all the currencies of the ISO-4217 standard, as well
+     | as some existing cryptocurrencies. If your application requires currencies
+     | that it does not have, then you can write your own storage to use it instead.
      |
      */
 
@@ -29,7 +35,10 @@ return [
      | Money Serializer
      |--------------------------------------------------------------------------
      |
-     | Todo desc..
+     | A string containing the implementation of a CurrencySerializer contract.
+     | This is a class that is responsible for converting Money objects into
+     | arrays and JSON strings in your application's HTTP responses. They are
+     | not related to how Money will be converted for storage in the DB.
      |
      */
 
@@ -40,7 +49,10 @@ return [
      | Money Formatter
      |--------------------------------------------------------------------------
      |
-     | Todo desc..
+     | A string containing the implementation of a CurrencyFormatter contract.
+     | This is the class that is responsible for rendering Money objects into
+     | strings. Formatters are not associated with HTTP responses and perform
+     | their own function.
      |
      */
 

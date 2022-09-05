@@ -3,16 +3,15 @@
 namespace Cyrtolat\Money\Contracts;
 
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Money;
 
 interface MoneyFormatter
 {
     /**
-     * Formats a Money instance as a string.
+     * Returns a string representation of monetary amount.
      *
-     * @param Money $money
-     * @param Currency $currency
+     * @param integer $amount Monetary amount to format
+     * @param Currency $currency Currency instance
      * @return string
      */
-    public function format(Money $money, Currency $currency): string;
+    public function format(int $amount, Currency $currency): string;
 }
