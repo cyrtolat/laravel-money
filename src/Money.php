@@ -313,4 +313,6 @@ final class Money implements Arrayable, Jsonable, Renderable
         return sprintf('%s %s',
             $this->amount, $this->currency);
     }
+
+
 }
