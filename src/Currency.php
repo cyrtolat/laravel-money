@@ -2,7 +2,6 @@
 
 namespace Cyrtolat\Money;
 
-use Cyrtolat\Money\Exceptions\CurrencyValidationException;
 use InvalidArgumentException;
 use jsonSerializable;
 
@@ -55,7 +54,6 @@ final class Currency implements jsonSerializable
      * @param string $numericCode The currency numeric code.
      * @param integer $minorUnit The number of fraction digits.
      * @param string $entity The currency's name.
-     * @throws CurrencyValidationException
      */
     public function __construct(
         string $alphabeticCode,
@@ -64,15 +62,18 @@ final class Currency implements jsonSerializable
         string $entity
     ) {
         if (! preg_match('/\A[A-Z]{3,4}\z/', $alphabeticCode)) {
-            throw CurrencyValidationException::invalidAlphabeticCode();
+            throw new InvalidArgumentException(
+                "The alphabetic code should consist of 3 or 4 capital letters.");
         }
 
         if (! preg_match('/\A[0-9]+\z/', $numericCode)) {
-            throw CurrencyValidationException::invalidNumericCode();
+            throw new InvalidArgumentException(
+                "The numeric code should consist only of digits.");
         }
 
         if ($minorUnit < 0) {
-            throw CurrencyValidationException::invalidMinorUnit();
+            throw new InvalidArgumentException(
+                "The minor unit must be greater than zero.");
         }
 
         $this->alphabeticCode   = $alphabeticCode;
