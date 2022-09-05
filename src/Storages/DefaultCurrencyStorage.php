@@ -35,7 +35,7 @@ final class DefaultCurrencyStorage implements CurrencyStorage
      */
     public function __construct()
     {
-        $this->uploadResources();
+        $this->uploadCurrenciesData();
     }
 
     /**
@@ -63,7 +63,7 @@ final class DefaultCurrencyStorage implements CurrencyStorage
      *
      * @return void
      */
-    private function uploadResources(): void
+    private function uploadCurrenciesData(): void
     {
         $isoCurrenciesPath = __DIR__ . "../../../library/iso-currencies.php";
         $cryptocurrenciesPath = __DIR__ . "../../../library/cryptocurrencies.php";

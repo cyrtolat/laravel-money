@@ -13,16 +13,22 @@ use Cyrtolat\Money\Support\AmountHelper;
 final class MoneyService
 {
     /**
+     * Repository with application's currency data.
+     *
      * @var CurrencyStorage
      */
     private CurrencyStorage $currencyStorage;
 
     /**
+     * Entity that serializes Money object into array.
+     *
      * @var MoneySerializer
      */
     private MoneySerializer $moneySerializer;
 
     /**
+     * Entity that render Money object into a string.
+     *
      * @var MoneyFormatter
      */
     private MoneyFormatter $moneyFormatter;
@@ -51,7 +57,7 @@ final class MoneyService
     }
 
     /**
-     * Returns new Money instance by the given a major amount and currency.
+     * Returns new Money instance by the given a major monetary amount.
      *
      * @param float $amount The monetary amount in a major decimal value
      * @param mixed $currency The Currency class instance or alphabetic code
@@ -73,7 +79,7 @@ final class MoneyService
     }
 
     /**
-     * Returns new Money instance by the given a minor amount and currency.
+     * Returns new Money instance by the given a minor monetary amount.
      *
      * @param integer $amount The monetary amount in minor integer value
      * @param mixed $currency The Currency class instance or alphabetic code
@@ -110,7 +116,7 @@ final class MoneyService
     }
 
     /**
-     * Todo desc..
+     * Sets to all Money objects format callback.
      *
      * @return void
      */
@@ -123,7 +129,7 @@ final class MoneyService
     }
 
     /**
-     * Todo desc..
+     * Sets to all Money serialize format callback.
      *
      * @return void
      */
@@ -136,7 +142,8 @@ final class MoneyService
     }
 
     /**
-     * Todo desc..
+     * Checks the currency argument and throw an exception if the
+     * type of which isn't a Currency class or string.
      *
      * @param mixed $currency
      */
@@ -149,11 +156,12 @@ final class MoneyService
     }
 
     /**
-     * Todo desc..
+     * Checks the existence of the given class, whether it implements
+     * the given contract class and returns a new instance of it.
      *
-     * @param string $class
-     * @param string $contract
-     * @return mixed
+     * @param string $class Full class name
+     * @param string $contract Full contract name
+     * @return mixed New instance of the given class
      */
     private function resolveConfigClass(string $class, string $contract): mixed
     {

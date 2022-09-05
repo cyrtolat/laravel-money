@@ -8,7 +8,7 @@ use Cyrtolat\Money\Currency;
 use NumberFormatter;
 
 /**
- * Formats a monetary object according to the style
+ * Formats a monetary amount according to the style
  * localized in the region using intl extension.
  */
 class LocalizedMoneyFormatter implements MoneyFormatter
@@ -23,7 +23,7 @@ class LocalizedMoneyFormatter implements MoneyFormatter
      */
     public function __construct()
     {
-        $locale = config('money.locale', 'en');
+        $locale = config('money.locale', 'eu_US');
 
         $this->formatter = new NumberFormatter(
             $locale, NumberFormatter::CURRENCY
