@@ -23,8 +23,16 @@ class CompCurrencyTest extends CurrencyTest
             new Currency('RUB', '643', 2, 'Russian Ruble')
         ));
 
-        $this->assertFalse($currency->equals(
-            new Currency('RUB', '810', 2, 'Old Russian Ruble')
+        $this->assertFalse($currency->equals( // Wrong numeric code
+            new Currency('RUB', '810', 2, 'Russian Ruble')
+        ));
+
+        $this->assertFalse($currency->equals( // Wrong minor unit
+            new Currency('RUB', '643', 4, 'Russian Ruble')
+        ));
+
+        $this->assertFalse($currency->equals( // Wrong entity
+            new Currency('RUB', '643', 2, 'Old Russian Ruble')
         ));
     }
 }
