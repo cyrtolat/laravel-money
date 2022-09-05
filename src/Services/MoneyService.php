@@ -70,7 +70,7 @@ final class MoneyService
         $this->validateCurrencyType($currency);
 
         if (! $currency instanceof Currency) {
-            $currency = $this->getCurrencyBy($currency);
+            $currency = $this->getCurrencyOf($currency);
         }
 
         $amount = Helper::calcMinorAmount($amount, $currency, $roundingMode);
@@ -91,7 +91,7 @@ final class MoneyService
         $this->validateCurrencyType($currency);
 
         if (! $currency instanceof Currency) {
-            $currency = $this->getCurrencyBy($currency);
+            $currency = $this->getCurrencyOf($currency);
         }
 
         return new Money($amount, $currency->getAlphabeticCode());
@@ -104,7 +104,7 @@ final class MoneyService
      * @return Currency New Currency class instance
      * @throws MoneyServiceException
      */
-    public function getCurrencyBy(string $code): Currency
+    public function getCurrencyOf(string $code): Currency
     {
         $currency = $this->currencyStorage->find($code);
 
@@ -123,7 +123,7 @@ final class MoneyService
     private function setMoneyFormatterCallback(): void
     {
         Money::setFormatterCallback(function (Money $money) {
-            $currency = $this->getCurrencyBy($money->getCurrency());
+            $currency = $this->getCurrencyOf($money->getCurrency());
             return $this->moneyFormatter->format($money->getAmount(), $currency);
         });
     }
@@ -136,7 +136,7 @@ final class MoneyService
     private function setMoneySerializeCallback(): void
     {
         Money::setSerializeCallback(function (Money $money) {
-            $currency = $this->getCurrencyBy($money->getCurrency());
+            $currency = $this->getCurrencyOf($money->getCurrency());
             return $this->moneySerializer->toArray($money->getAmount(), $currency);
         });
     }

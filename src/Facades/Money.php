@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static \Cyrtolat\Money\Money of(float $amount, string|\Cyrtolat\Money\Currency $currency, int $roundingMode = PHP_ROUND_HALF_UP)
  * @method static \Cyrtolat\Money\Money ofMinor(int $amount, string|\Cyrtolat\Money\Currency $currency)
- * @method static \Cyrtolat\Money\Currency getCurrencyBy(string $code)
+ * @method static \Cyrtolat\Money\Currency getCurrencyOf(string $code)
  *
  * @see \Cyrtolat\Money\MoneyService
  */
