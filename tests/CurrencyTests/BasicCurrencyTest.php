@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Currency;
+namespace Cyrtolat\Money\Tests\CurrencyTests;
 
 use Cyrtolat\Money\Currency;
 use InvalidArgumentException;

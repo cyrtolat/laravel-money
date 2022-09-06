@@ -22,8 +22,7 @@
         "php": "^8.0|^8.1",
         "ext-intl": "*",
         "ext-json": "*",
-        "illuminate/support": "^8.0|^9.0",
-        "illuminate/database": "^8.0|^9.0"
+        "illuminate/support": "^8.0|^9.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.5",

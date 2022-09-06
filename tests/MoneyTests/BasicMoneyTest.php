@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Money;
+namespace Cyrtolat\Money\Tests\MoneyTests;
 
 use Cyrtolat\Money\Money;
 

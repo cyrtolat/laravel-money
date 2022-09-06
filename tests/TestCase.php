@@ -17,14 +17,4 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [MoneyServiceProvider::class];
     }
-
-    /**
-     * Set up the environment.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        $app['config']->set('money.locale', 'en_US');
-    }
 }

@@ -159,11 +159,11 @@ final class MoneyService
      * Checks the existence of the given class, whether it implements
      * the given contract class and returns a new instance of it.
      *
-     * @param string $class Full class name
+     * @param mixed $class Full class name
      * @param string $contract Full contract name
      * @return mixed New instance of the given class
      */
-    private function resolveConfigClass(string $class, string $contract): mixed
+    private function resolveConfigClass(mixed $class, string $contract): mixed
     {
         if (! class_exists($class) || ! is_subclass_of($class, $contract)) {
             throw new \RuntimeException("Class $class doesn't implement $contract interface.");
