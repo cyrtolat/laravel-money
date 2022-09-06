@@ -3,16 +3,20 @@
 namespace Cyrtolat\Money;
 
 use Closure;
-use Cyrtolat\Money\Exceptions\MoneyArgumentException;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Cyrtolat\Money\Exceptions\MoneyException;
-use Illuminate\Contracts\Support\Renderable;
+use Cyrtolat\Money\Exceptions\MoneyArgumentException;
 
 final class Money implements Arrayable, Jsonable, Renderable
 {
     /**
      * The monetary amount.
+     *
+     * An integer value of the number of monetary units.
+     * For currencies with non-zero minor units, the value
+     * is specified in them.
      *
      * @var integer
      */
@@ -21,19 +25,29 @@ final class Money implements Arrayable, Jsonable, Renderable
     /**
      * The monetary currency.
      *
+     * An alphabetic code for ISO currencies or any other
+     * string for non-ISO currencies that would contain
+     * the entity of the currency.
+     *
      * @var string
      */
     private string $currency;
 
     /**
-     * Formatting callback
+     * Formatter callback.
+     *
+     * А closure function that formats this Money
+     * object into a string from outside this class.
      *
      * @var null|Closure
      */
     private static ?Closure $formatterCallback;
 
     /**
-     * Serialization callback
+     * Serializer callback.
+     *
+     * А closure function that formats this Money
+     * object into an array from outside this class.
      *
      * @var null|Closure
      */
