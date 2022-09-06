@@ -5,7 +5,7 @@ namespace Cyrtolat\Money\Tests\FakeEntities;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Currency;
 
-class FakeMoneyFormatter implements MoneyFormatter
+class TestMoneyFormatter implements MoneyFormatter
 {
     public function format(int $amount, Currency $currency): string
     {

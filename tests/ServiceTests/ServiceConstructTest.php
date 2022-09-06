@@ -3,9 +3,9 @@
 namespace Cyrtolat\Money\Tests\ServiceTests;
 
 use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Tests\FakeEntities\FakeCurrencyStorage;
-use Cyrtolat\Money\Tests\FakeEntities\FakeMoneyFormatter;
-use Cyrtolat\Money\Tests\FakeEntities\FakeMoneySerializer;
+use Cyrtolat\Money\Tests\FakeEntities\TestCurrencyStorage;
+use Cyrtolat\Money\Tests\FakeEntities\TestMoneyFormatter;
+use Cyrtolat\Money\Tests\FakeEntities\TestMoneySerializer;
 
 class ServiceConstructTest extends MoneyServiceTest
 {
@@ -39,9 +39,9 @@ class ServiceConstructTest extends MoneyServiceTest
         $this->expectException(\RuntimeException::class);
 
         new MoneyService([
-            'storage' => FakeMoneySerializer::class,
-            'formatter' => FakeCurrencyStorage::class,
-            'serializer' => FakeMoneyFormatter::class
+            'storage' => TestMoneySerializer::class,
+            'formatter' => TestCurrencyStorage::class,
+            'serializer' => TestMoneyFormatter::class
         ]);
     }
 }

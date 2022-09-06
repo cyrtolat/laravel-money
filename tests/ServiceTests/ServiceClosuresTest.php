@@ -7,9 +7,9 @@ use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Tests\FakeEntities\FakeCurrencyStorage;
-use Cyrtolat\Money\Tests\FakeEntities\FakeMoneyFormatter;
-use Cyrtolat\Money\Tests\FakeEntities\FakeMoneySerializer;
+use Cyrtolat\Money\Tests\FakeEntities\TestCurrencyStorage;
+use Cyrtolat\Money\Tests\FakeEntities\TestMoneyFormatter;
+use Cyrtolat\Money\Tests\FakeEntities\TestMoneySerializer;
 
 class ServiceClosuresTest extends MoneyServiceTest
 {
@@ -17,9 +17,9 @@ class ServiceClosuresTest extends MoneyServiceTest
     public function test_formatter_callback()
     {
         $moneyService = new MoneyService([
-            'storage' => FakeCurrencyStorage::class,
+            'storage' => TestCurrencyStorage::class,
             'formatter' => FirstMoneyFormatter::class,
-            'serializer' => FakeMoneySerializer::class
+            'serializer' => TestMoneySerializer::class
         ]);
 
         $money = new Money(150, 'RUB');
@@ -27,9 +27,9 @@ class ServiceClosuresTest extends MoneyServiceTest
         $this->assertSame('first value', $money->render());
 
         $moneyService = new MoneyService([
-            'storage' => FakeCurrencyStorage::class,
+            'storage' => TestCurrencyStorage::class,
             'formatter' => SecondMoneyFormatter::class,
-            'serializer' => FakeMoneySerializer::class
+            'serializer' => TestMoneySerializer::class
         ]);
 
         $money = new Money(150, 'RUB');
@@ -41,8 +41,8 @@ class ServiceClosuresTest extends MoneyServiceTest
     public function test_serializer_callback()
     {
         $moneyService = new MoneyService([
-            'storage' => FakeCurrencyStorage::class,
-            'formatter' => FakeMoneyFormatter::class,
+            'storage' => TestCurrencyStorage::class,
+            'formatter' => TestMoneyFormatter::class,
             'serializer' => FirstMoneySerializer::class
         ]);
 
@@ -51,8 +51,8 @@ class ServiceClosuresTest extends MoneyServiceTest
         $this->assertSame(['first value'], $money->toArray());
 
         $moneyService = new MoneyService([
-            'storage' => FakeCurrencyStorage::class,
-            'formatter' => FakeMoneyFormatter::class,
+            'storage' => TestCurrencyStorage::class,
+            'formatter' => TestMoneyFormatter::class,
             'serializer' => SecondMoneySerializer::class
         ]);
 
