@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Dependencies;
+namespace Cyrtolat\Money\Tests\FakeEntities;
 
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Currency;

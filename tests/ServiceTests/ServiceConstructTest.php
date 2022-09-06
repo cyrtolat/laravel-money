@@ -3,9 +3,9 @@
 namespace Cyrtolat\Money\Tests\ServiceTests;
 
 use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Tests\Dependencies\FakeCurrencyStorage;
-use Cyrtolat\Money\Tests\Dependencies\FakeMoneyFormatter;
-use Cyrtolat\Money\Tests\Dependencies\FakeMoneySerializer;
+use Cyrtolat\Money\Tests\FakeEntities\FakeCurrencyStorage;
+use Cyrtolat\Money\Tests\FakeEntities\FakeMoneyFormatter;
+use Cyrtolat\Money\Tests\FakeEntities\FakeMoneySerializer;
 
 class ServiceConstructTest extends MoneyServiceTest
 {

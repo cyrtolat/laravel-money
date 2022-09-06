@@ -7,9 +7,9 @@ use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Tests\Dependencies\FakeCurrencyStorage;
-use Cyrtolat\Money\Tests\Dependencies\FakeMoneyFormatter;
-use Cyrtolat\Money\Tests\Dependencies\FakeMoneySerializer;
+use Cyrtolat\Money\Tests\FakeEntities\FakeCurrencyStorage;
+use Cyrtolat\Money\Tests\FakeEntities\FakeMoneyFormatter;
+use Cyrtolat\Money\Tests\FakeEntities\FakeMoneySerializer;
 
 class ServiceClosuresTest extends MoneyServiceTest
 {
