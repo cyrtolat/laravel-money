@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Formatters;
+namespace Cyrtolat\Money\Tests\Formatters;
 
 use Cyrtolat\Money\Tests\TestCase;
 

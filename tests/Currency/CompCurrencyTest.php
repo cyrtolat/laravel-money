@@ -1,13 +1,13 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Currency;
+namespace Cyrtolat\Money\Tests\Currency;
 
 use Cyrtolat\Money\Currency;
 
 class CompCurrencyTest extends CurrencyTest
 {
     /** @test */
-    public function test_equals_by_string_alphabetic_code()
+    public function test_equals_by_currency_code()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 

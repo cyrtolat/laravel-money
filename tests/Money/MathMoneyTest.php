@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Money;
+namespace Cyrtolat\Money\Tests\Money;
 
 use Cyrtolat\Money\Exceptions\MoneyException;
 use Cyrtolat\Money\Money;
@@ -8,7 +8,7 @@ use Cyrtolat\Money\Money;
 class MathMoneyTest extends MoneyTest
 {
     /** @test */
-    public function test_plus()
+    public function test_plus_method()
     {
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'RUB');
@@ -20,7 +20,7 @@ class MathMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_plus_exception()
+    public function test_plus_method_exception()
     {
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'USD');
@@ -31,7 +31,7 @@ class MathMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_minus()
+    public function test_minus_method()
     {
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'RUB');
@@ -43,7 +43,7 @@ class MathMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_minus_exception()
+    public function test_minus_method_exception()
     {
         $money = new Money(150, 'RUB');
         $other = new Money(50, 'USD');
@@ -54,7 +54,7 @@ class MathMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_multiplyBy()
+    public function test_multiplyBy_method()
     {
         $money = new Money(100, 'RUB');
 
@@ -72,7 +72,7 @@ class MathMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_divideBy()
+    public function test_divideBy_method()
     {
         $money = new Money(100, 'RUB');
 

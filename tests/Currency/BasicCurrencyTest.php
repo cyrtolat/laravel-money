@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Currency;
+namespace Cyrtolat\Money\Tests\Currency;
 
 use Cyrtolat\Money\Currency;
 use InvalidArgumentException;
@@ -22,7 +22,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_alphabeticCode_validation()
+    public function test_alphabetic_code_validation()
     {
         try { // The alphabetic code should consist of only of 3 or 4 capital letters
             new Currency("Rubles", "643", 2, "Russian Ruble");
@@ -41,7 +41,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_numericCode_validation()
+    public function test_numeric_code_validation()
     {
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "-643", 2, "Russian Ruble");
@@ -60,7 +60,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_minorUnit_validation()
+    public function test_minor_unit_validation()
     {
         try { // The numeric code should consist of only digits or be a zero
             new Currency("Rubles", "643", -2, "Russian Ruble");
@@ -69,7 +69,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_getAlphabeticCode()
+    public function test_getAlphabeticCode_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -77,7 +77,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_getNumericCode()
+    public function test_getNumericCode_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -85,7 +85,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_getMinorUnit()
+    public function test_getMinorUnit_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -93,7 +93,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_getEntity()
+    public function test_getEntity_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -101,7 +101,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_hasSameCurrency()
+    public function test_hasSameCurrency_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -115,7 +115,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_hasSameNumericCode()
+    public function test_hasSameNumericCode_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -129,7 +129,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_hasSameMinorUnit()
+    public function test_hasSameMinorUnit_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
@@ -143,7 +143,7 @@ class BasicCurrencyTest extends CurrencyTest
     }
 
     /** @test */
-    public function test_hasSameEntity()
+    public function test_hasSameEntity_method()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 

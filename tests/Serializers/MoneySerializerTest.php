@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Serializers;
+namespace Cyrtolat\Money\Tests\Serializers;
 
 use Cyrtolat\Money\Tests\TestCase;
 

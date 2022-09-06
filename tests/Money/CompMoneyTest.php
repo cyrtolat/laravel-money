@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Money;
+namespace Cyrtolat\Money\Tests\Money;
 
 use Cyrtolat\Money\Exceptions\MoneyException;
 use Cyrtolat\Money\Money;
@@ -8,7 +8,7 @@ use Cyrtolat\Money\Money;
 class CompMoneyTest extends MoneyTest
 {
     /** @test */
-    public function test_equals()
+    public function test_equals_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -22,7 +22,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_equals_exception()
+    public function test_equals_method_exception()
     {
         $money = new Money(150, 'RUB');
 
@@ -32,7 +32,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_gt()
+    public function test_gt_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -50,7 +50,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_gt_exception()
+    public function test_gt_method_exception()
     {
         $money = new Money(150, 'RUB');
 
@@ -60,7 +60,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_gte()
+    public function test_gte_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -78,7 +78,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_gte_exception()
+    public function test_gte_method_exception()
     {
         $money = new Money(150, 'RUB');
 
@@ -88,7 +88,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_lt()
+    public function test_lt_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -106,7 +106,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_lt_exception()
+    public function test_lt_method_exception()
     {
         $money = new Money(150, 'RUB');
 
@@ -116,7 +116,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_lte()
+    public function test_lte_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -134,7 +134,7 @@ class CompMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_lte_exception()
+    public function test_lte_method_exception()
     {
         $money = new Money(150, 'RUB');
 

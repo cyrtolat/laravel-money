@@ -1,13 +1,13 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\Unit\Money;
+namespace Cyrtolat\Money\Tests\Money;
 
 use Cyrtolat\Money\Money;
 
 class BasicMoneyTest extends MoneyTest
 {
     /** @test */
-    public function test_getAmount()
+    public function test_getAmount_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -16,7 +16,7 @@ class BasicMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_getCurrency()
+    public function test_getCurrency_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -24,7 +24,7 @@ class BasicMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_hasSameAmount()
+    public function test_hasSameAmount_method()
     {
         $money = new Money(150, 'RUB');
 
@@ -38,7 +38,7 @@ class BasicMoneyTest extends MoneyTest
     }
 
     /** @test */
-    public function test_hasSameCurrency()
+    public function test_hasSameCurrency_method()
     {
         $money = new Money(150, 'RUB');
 
