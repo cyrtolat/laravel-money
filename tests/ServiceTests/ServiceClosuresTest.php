@@ -2,14 +2,12 @@
 
 namespace Cyrtolat\Money\Tests\ServiceTests;
 
+use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
+use Cyrtolat\Money\Services\MoneyService;
 use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Money;
-use Cyrtolat\Money\Services\MoneyService;
-use Cyrtolat\Money\Tests\FakeEntities\TestCurrencyStorage;
-use Cyrtolat\Money\Tests\FakeEntities\TestMoneyFormatter;
-use Cyrtolat\Money\Tests\FakeEntities\TestMoneySerializer;
 
 class ServiceClosuresTest extends MoneyServiceTest
 {
@@ -19,7 +17,7 @@ class ServiceClosuresTest extends MoneyServiceTest
         $moneyService = new MoneyService([
             'storage' => TestCurrencyStorage::class,
             'formatter' => FirstMoneyFormatter::class,
-            'serializer' => TestMoneySerializer::class
+            'serializer' => FirstMoneySerializer::class
         ]);
 
         $money = new Money(150, 'RUB');
@@ -29,7 +27,7 @@ class ServiceClosuresTest extends MoneyServiceTest
         $moneyService = new MoneyService([
             'storage' => TestCurrencyStorage::class,
             'formatter' => SecondMoneyFormatter::class,
-            'serializer' => TestMoneySerializer::class
+            'serializer' => FirstMoneySerializer::class
         ]);
 
         $money = new Money(150, 'RUB');
@@ -42,7 +40,7 @@ class ServiceClosuresTest extends MoneyServiceTest
     {
         $moneyService = new MoneyService([
             'storage' => TestCurrencyStorage::class,
-            'formatter' => TestMoneyFormatter::class,
+            'formatter' => FirstMoneyFormatter::class,
             'serializer' => FirstMoneySerializer::class
         ]);
 
@@ -52,7 +50,7 @@ class ServiceClosuresTest extends MoneyServiceTest
 
         $moneyService = new MoneyService([
             'storage' => TestCurrencyStorage::class,
-            'formatter' => TestMoneyFormatter::class,
+            'formatter' => FirstMoneyFormatter::class,
             'serializer' => SecondMoneySerializer::class
         ]);
 
@@ -63,6 +61,24 @@ class ServiceClosuresTest extends MoneyServiceTest
 }
 
 // Some fake dependencies
+
+class TestCurrencyStorage implements CurrencyStorage
+{
+    public function find(string $alphabeticCode): ?Currency
+    {
+        $currencies = [
+            'RUB' => new Currency('RUB', '643', 2, 'Russia Ruble'),
+            'USD' => new Currency('USD', '840', 2, 'US Dollar'),
+            'EUR' => new Currency('EUR', '978', 2, 'Euro')
+        ];
+
+        if (isset($currencies[$alphabeticCode])) {
+            return clone $currencies[$alphabeticCode];
+        }
+
+        return null;
+    }
+}
 
 class FirstMoneyFormatter implements MoneyFormatter
 {

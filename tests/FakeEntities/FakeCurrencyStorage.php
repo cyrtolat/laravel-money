@@ -5,7 +5,7 @@ namespace Cyrtolat\Money\Tests\FakeEntities;
 use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Currency;
 
-class TestCurrencyStorage implements CurrencyStorage
+class FakeCurrencyStorage implements CurrencyStorage
 {
     /** @var array|Currency[] */
     protected array $currencies;

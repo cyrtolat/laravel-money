@@ -115,12 +115,12 @@ abstract class TypedMoneyCast implements CastsAttributes
     protected function getCurrencyObject(array $attributes): Currency
     {
         if (isset($attributes[$this->currency])) {
-            return $this->moneyService->getCurrencyBy(
+            return $this->moneyService->getCurrencyOf(
                 $attributes[$this->currency]
             );
         }
 
-        return $this->moneyService->getCurrencyBy($this->currency);
+        return $this->moneyService->getCurrencyOf($this->currency);
     }
 
     /**

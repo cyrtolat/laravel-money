@@ -5,7 +5,7 @@ namespace Cyrtolat\Money\Tests\FakeEntities;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Currency;
 
-class TestMoneySerializer implements MoneySerializer
+class FakeMoneySerializer implements MoneySerializer
 {
     public function toArray(int $amount, Currency $currency): array
     {
