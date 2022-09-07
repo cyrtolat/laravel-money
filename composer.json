@@ -1,31 +1,34 @@
 {
     "name": "cyrtolat/laravel-money",
-    "description": "A library of Money and Currency for the Laravel framework",
+    "description": "Money value-objects for the Laravel framework",
     "homepage": "https://github.com/cyrtolat/laravel-money",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "laravel",
         "money",
+        "monies",
+        "payments",
         "currency"
     ],
-    "type": "library",
-    "license": "MIT",
-    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Vladislav Tolkechev",
-            "email": "cyrtolat@gmail.com"
+            "email": "cyrtolat@gmail.com",
+            "homepage": "https://github.com/cyrtolat"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0|^8.1",
         "ext-intl": "*",
         "ext-json": "*",
-        "illuminate/support": "^7.0|^8.0|^9.0",
-        "illuminate/database": "^7.0|^8.0|^9.0"
+        "illuminate/support": "^8.0|^9.0",
+        "illuminate/database": "^8.0|^9.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "orchestra/testbench": "^7.5"
+        "mockery/mockery": "^1.5",
+        "phpunit/phpunit": "^8.0|^9.0",
+        "orchestra/testbench": "^6.0|^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -38,13 +41,15 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "phpunit"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Cyrtolat\\Money\\MoneyServiceProvider"
+                "Cyrtolat\\Money\\Providers\\MoneyServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

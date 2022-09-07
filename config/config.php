@@ -7,43 +7,55 @@ return [
      | Money Locale
      |--------------------------------------------------------------------------
      |
-     | The money locale determines the default locale that will be used by the
-     | formatting of instances of Money class to string. In particular, some
-     | formatters use this value. You are free to set it any of the locales
-     | which will be supported by the package.
+     | A string containing the BCP 47 language tag. It defines the style of
+     | formatting monetary values according to the selected locale and is used
+     | inside formatters by the Intl.NumberFormat objects.
      |
      */
 
-    'locale' => config('app.locale', 'en_US'),
+    'locale' => 'en_US',
 
     /*
      |--------------------------------------------------------------------------
-     | Money Serializer class
+     | Currency Storage
      |--------------------------------------------------------------------------
      |
-     | The money serializer class determine how the instance of Money class will
-     | be converted to array and json. This is necessary, for example, in the
-     | API Resources classes. Specify here the class of one of the ready-made
-     | serializers or write your own. But remember that a custom serializer
-     | must implement MoneySerializerContract of this package.
+     | A string containing the implementation of a CurrencyStorage contract.
+     | It is a repository that contains all the currency data of your application.
+     | By default, it includes all the currencies of the ISO-4217 standard, as well
+     | as some existing cryptocurrencies. If your application requires currencies
+     | that it does not have, then you can write your own storage to use it instead.
      |
      */
 
-    'serializer' => \Cyrtolat\Money\Serializers\MoneyIntegerSerializer::class,
+    'storage' => \Cyrtolat\Money\Storages\DefaultCurrencyStorage::class,
 
     /*
      |--------------------------------------------------------------------------
-     | Money Formatter class
+     | Money Serializer
      |--------------------------------------------------------------------------
      |
-     | The Money formatter class determine how an instance of the Money class
-     | will be converted to a string. Explicitly using the appropriate method and
-     | implicitly using the php magic method. Specify here the class of one of
-     | the ready-made formatters or write your own. But remember that a custom
-     | formatter must implement MoneyFormatterContract of this package.
+     | A string containing the implementation of a CurrencySerializer contract.
+     | This is a class that is responsible for converting Money objects into
+     | arrays and JSON strings in your application's HTTP responses. They are
+     | not related to how Money will be converted for storage in the DB.
      |
      */
 
-    'formatter' => \Cyrtolat\Money\Formatters\MoneyDecimalFormatter::class,
+    'serializer' => \Cyrtolat\Money\Serializers\MajorMoneySerializer::class,
+
+    /*
+     |--------------------------------------------------------------------------
+     | Money Formatter
+     |--------------------------------------------------------------------------
+     |
+     | A string containing the implementation of a CurrencyFormatter contract.
+     | This is the class that is responsible for rendering Money objects into
+     | strings. Formatters are not associated with HTTP responses and perform
+     | their own function.
+     |
+     */
+
+    'formatter' => \Cyrtolat\Money\Formatters\DecimalMoneyFormatter::class,
 
 ];
