@@ -4,6 +4,7 @@ namespace Cyrtolat\Money\Serializers;
 
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Currency;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Serializes a monetary amount in a minor style.

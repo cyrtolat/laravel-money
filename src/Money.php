@@ -7,7 +7,6 @@ use InvalidArgumentException;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use Cyrtolat\Money\Exceptions\MoneyException;
 
 final class Money implements Arrayable, Jsonable, Renderable
 {

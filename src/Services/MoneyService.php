@@ -10,6 +10,7 @@ use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\CurrencyNotFound;
 use Cyrtolat\Money\Helper;
 use InvalidArgumentException;
+use RuntimeException;
 
 final class MoneyService
 {
@@ -167,7 +168,7 @@ final class MoneyService
     private function resolveConfigClass(mixed $class, string $contract): mixed
     {
         if (! class_exists($class) || ! is_subclass_of($class, $contract)) {
-            throw new \RuntimeException("Class $class doesn't implement $contract interface.");
+            throw new RuntimeException("Class $class doesn't implement $contract interface.");
         }
 
         return new $class;

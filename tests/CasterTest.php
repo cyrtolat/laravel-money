@@ -2,7 +2,9 @@
 
 namespace Cyrtolat\Money\Tests;
 
+use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Services\MoneyService;
+use Cyrtolat\Money\Exceptions\CurrencyMismatch;
 use Cyrtolat\Money\Tests\Entities\FakeCurrencyStorage;
 use Cyrtolat\Money\Tests\Entities\FakeMoneyFormatter;
 use Cyrtolat\Money\Tests\Entities\FakeMoneySerializer;
@@ -113,6 +115,14 @@ class CasterTest extends TestCase
             $product->integer_price = 'Lorem ipsum';
             $this->fail('Exception was not thrown.');
         } catch (\InvalidArgumentException) {
+            $this->assertTrue(true);
+        }
+
+        # when currency is not like in cast
+        try {
+            $product->decimal_price_rub = new Money(150, 'USD');
+            $this->fail('Exception was not thrown.');
+        } catch (CurrencyMismatch) {
             $this->assertTrue(true);
         }
     }

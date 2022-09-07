@@ -2,6 +2,7 @@
 
 namespace Cyrtolat\Money\Casts;
 
+use Cyrtolat\Money\Exceptions\CurrencyMismatch;
 use Cyrtolat\Money\Helper;
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Services\MoneyService;
@@ -65,6 +66,10 @@ class ImmutableMoneyCast implements CastsAttributes
         if (! $value instanceof Money) {
             throw new InvalidArgumentException(
                 "The given value should to be a Money instance.");
+        }
+
+        if ($value->getCurrency() != $this->currency) {
+            throw CurrencyMismatch::create($value->getCurrency(), $this->currency);
         }
 
         if ($this->is_decimal) {
