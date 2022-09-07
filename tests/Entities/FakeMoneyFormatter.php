@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyrtolat\Money\Tests\FakeEntities;
+namespace Cyrtolat\Money\Tests\Entities;
 
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Currency;
@@ -9,8 +9,8 @@ class FakeMoneyFormatter implements MoneyFormatter
 {
     public function format(int $amount, Currency $currency): string
     {
-        $subunit = pow(10, $currency->getMinorUnit());
+        $majorAmount = $amount / pow(10, $currency->getMinorUnit());
 
-        return sprintf('%s %s', $amount / $subunit, $currency->getAlphabeticCode());
+        return sprintf('%s %s', $majorAmount, $currency->getAlphabeticCode());
     }
 }

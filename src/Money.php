@@ -3,11 +3,11 @@
 namespace Cyrtolat\Money;
 
 use Closure;
+use InvalidArgumentException;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Cyrtolat\Money\Exceptions\MoneyException;
-use Cyrtolat\Money\Exceptions\MoneyArgumentException;
 
 final class Money implements Arrayable, Jsonable, Renderable
 {
@@ -109,12 +109,12 @@ final class Money implements Arrayable, Jsonable, Renderable
      * Checking another money currency.
      *
      * @param Money $money
-     * @throws MoneyArgumentException
      */
     private function validateCurrency(Money $money): void
     {
         if (! $this->hasSameCurrency($money)) {
-            throw MoneyArgumentException::hasNotSameCurrency();
+            throw new InvalidArgumentException(
+                "Currencies must be identical.");
         }
     }
 
@@ -145,7 +145,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money Money instance for comparison
      * @return bool True if amounts and currencies are identical
-     * @throws MoneyException
      */
     public function equals(Money $money): bool
     {
@@ -178,7 +177,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $addend Money instance to add
      * @return Money New Money instance
-     * @throws MoneyException
      */
     public function plus(Money $addend): Money
     {
@@ -195,7 +193,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $subtrahend Money instance to subtract
      * @return Money New Money instance
-     * @throws MoneyException
      */
     public function minus(Money $subtrahend): Money
     {
@@ -241,7 +238,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than a given
-     * @throws MoneyException
      */
     public function gt(Money $money): bool
     {
@@ -255,7 +251,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is greater than or equal to a given
-     * @throws MoneyException
      */
     public function gte(Money $money): bool
     {
@@ -269,7 +264,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare.
      * @return bool True if is less than a given
-     * @throws MoneyException
      */
     public function lt(Money $money): bool
     {
@@ -283,7 +277,6 @@ final class Money implements Arrayable, Jsonable, Renderable
      *
      * @param Money $money The money with which compare
      * @return bool True if is less than or equal to a given
-     * @throws MoneyException
      */
     public function lte(Money $money): bool
     {

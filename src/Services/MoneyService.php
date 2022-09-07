@@ -7,8 +7,9 @@ use Cyrtolat\Money\Currency;
 use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
-use Cyrtolat\Money\Exceptions\MoneyServiceException;
+use Cyrtolat\Money\Exceptions\CurrencyNotFound;
 use Cyrtolat\Money\Helper;
+use InvalidArgumentException;
 
 final class MoneyService
 {
@@ -63,7 +64,7 @@ final class MoneyService
      * @param mixed $currency The Currency class instance or alphabetic code
      * @param integer $roundingMode An optional RoundingMode constant
      * @return Money New Money class instance
-     * @throws MoneyServiceException
+     * @throws CurrencyNotFound
      */
     public function of(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
     {
@@ -84,7 +85,7 @@ final class MoneyService
      * @param integer $amount The monetary amount in minor integer value
      * @param mixed $currency The Currency class instance or alphabetic code
      * @return Money New Money class instance
-     * @throws MoneyServiceException
+     * @throws CurrencyNotFound
      */
     public function ofMinor(int $amount, mixed $currency): Money
     {
@@ -102,7 +103,7 @@ final class MoneyService
      *
      * @param string $code The alphabetic currency code
      * @return Currency New Currency class instance
-     * @throws MoneyServiceException
+     * @throws CurrencyNotFound
      */
     public function getCurrencyOf(string $code): Currency
     {
@@ -112,7 +113,7 @@ final class MoneyService
             return $currency;
         }
 
-        throw MoneyServiceException::unknownCurrencyCode($code);
+        throw CurrencyNotFound::create($code);
     }
 
     /**
@@ -150,7 +151,7 @@ final class MoneyService
     private function validateCurrencyType(mixed $currency): void
     {
         if (! $currency instanceof Currency && ! is_string($currency)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "The currency prop should be a string or a Currency instance.");
         }
     }
