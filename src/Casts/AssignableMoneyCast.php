@@ -5,7 +5,6 @@ namespace Cyrtolat\Money\Casts;
 use Cyrtolat\Money\Helper;
 use Cyrtolat\Money\Money;
 use Cyrtolat\Money\Services\MoneyService;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use InvalidArgumentException;
 
