@@ -24,9 +24,16 @@ trait HasMoney
         }
 
         $caster = $this->resolveCasterClass($column);
+        $result = $caster->set($this, $column, $money, $this->attributes);
 
-        $value = $caster->set($this, $column, $money, $this->attributes);
+        foreach ($result as $attr => $value) {
+            if ($attr == $column) {
+                $builder = $builder->where($attr, $operator, $value);
+            } else {
+                $builder = $builder->where($attr, '=', $value);
+            }
+        }
 
-        return $builder->where($column, $operator, $value[$column]);
+        return $builder;
     }
 }
