@@ -15,15 +15,34 @@ class TraitTest extends TestCase
     /** @test */
     public function where_money_scope()
     {
-        DB::table('products')->insert(['decimal_price_rub' => 0.00]);   // 0.00 RUB
-        DB::table('products')->insert(['decimal_price_rub' => 100.23]); // 100.23 RUB
-        DB::table('products')->insert(['decimal_price_rub' => 200.23]); // 200.23 RUB
-        DB::table('products')->insert(['decimal_price_rub' => 300.23]); // 300.23 RUB
+        DB::table('products')->insert([
+            'decimal_price_rub' => 0.00,
+            'decimal_price' => 0.00,
+            'currency' => 'RUB'
+        ]);
+
+        DB::table('products')->insert([
+            'decimal_price_rub' => 100.23,
+            'decimal_price' => 100.23,
+            'currency' => 'RUB'
+        ]);
+
+        DB::table('products')->insert([
+            'decimal_price_rub' => 200.23,
+            'decimal_price' => 200.23,
+            'currency' => 'RUB'
+        ]);
+
+        DB::table('products')->insert([
+            'decimal_price_rub' => 300.23,
+            'decimal_price' => 300.23,
+            'currency' => 'RUB'
+        ]);
 
         $result = Product::whereMoney('decimal_price_rub', '>', new Money(20000, 'RUB'))->count();
         $this->assertEquals(2, $result);
 
-        $result = Product::whereMoney('decimal_price_rub', '=', new Money(20023, 'RUB'))->count();
+        $result = Product::whereMoney('decimal_price', '=', new Money(20023, 'RUB'))->count();
         $this->assertEquals(1, $result);
 
         $result = Product::whereMoney('decimal_price_rub', '=', new Money(4986, 'RUB'))->count();
