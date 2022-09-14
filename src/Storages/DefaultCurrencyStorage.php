@@ -9,7 +9,14 @@ use RuntimeException;
 final class DefaultCurrencyStorage implements CurrencyStorage
 {
     /**
-     * The ISO currencies by symbol code data.
+     * The ISO currencies by numeric code.
+     *
+     * @var array<string, string>
+     */
+    private array $isoByNumericData = [];
+
+    /**
+     * The ISO currencies by alphabetic code data.
      *
      * @var array<string, array>
      */
@@ -40,18 +47,22 @@ final class DefaultCurrencyStorage implements CurrencyStorage
     /**
      * {@inheritDoc}
      */
-    public function find(string $alphabeticCode): ?Currency
+    public function find(string $code): ?Currency
     {
-        if (isset ($this->cachedCurrencyInstances[$alphabeticCode])) {
-            return clone $this->cachedCurrencyInstances[$alphabeticCode];
+        if (isset ($this->isoByNumericData[$code])) {
+            return $this->find($this->isoByNumericData[$code]);
         }
 
-        if (isset ($this->isoCurrenciesData[$alphabeticCode])) {
-            return $this->createCurrency($this->isoCurrenciesData[$alphabeticCode]);
+        if (isset ($this->cachedCurrencyInstances[$code])) {
+            return clone $this->cachedCurrencyInstances[$code];
         }
 
-        if (isset ($this->cryptocurrenciesData[$alphabeticCode])) {
-            return $this->createCurrency($this->cryptocurrenciesData[$alphabeticCode]);
+        if (isset ($this->isoCurrenciesData[$code])) {
+            return $this->createCurrency($this->isoCurrenciesData[$code]);
+        }
+
+        if (isset ($this->cryptocurrenciesData[$code])) {
+            return $this->createCurrency($this->cryptocurrenciesData[$code]);
         }
 
         return null;
@@ -64,8 +75,14 @@ final class DefaultCurrencyStorage implements CurrencyStorage
      */
     private function uploadCurrenciesData(): void
     {
+        $isoByNumericPath = __DIR__ . "/../../library/iso-by-numeric.php";
         $isoCurrenciesPath = __DIR__ . "/../../library/iso-currencies.php";
         $cryptocurrenciesPath = __DIR__ . "/../../library/cryptocurrencies.php";
+
+        if (! is_file($isoByNumericPath)) {
+            throw new RuntimeException(
+                "Failed to load ISO by numeric data.");
+        }
 
         if (! is_file($isoCurrenciesPath)) {
             throw new RuntimeException(
@@ -77,6 +94,7 @@ final class DefaultCurrencyStorage implements CurrencyStorage
                 "Failed to load cryptocurrencies data.");
         }
 
+        $this->isoByNumericData = require $isoByNumericPath;
         $this->isoCurrenciesData = require $isoCurrenciesPath;
         $this->cryptocurrenciesData = require $cryptocurrenciesPath;
     }
@@ -102,5 +120,10 @@ final class DefaultCurrencyStorage implements CurrencyStorage
         ]);
 
         return $currency;
+    }
+
+    private function cacheCurrency(Currency $currency, string $code): void
+    {
+
     }
 }
