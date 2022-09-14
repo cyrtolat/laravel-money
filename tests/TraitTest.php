@@ -45,6 +45,9 @@ class TraitTest extends TestCase
         $result = Product::whereMoney('decimal_price', '=', new Money(20023, 'RUB'))->count();
         $this->assertEquals(1, $result);
 
+        $result = Product::whereMoney('decimal_price', '=', new Money(20023, 'USD'))->count();
+        $this->assertEquals(0, $result);
+
         $result = Product::whereMoney('decimal_price_rub', '=', new Money(4986, 'RUB'))->count();
         $this->assertEquals(0, $result);
 
