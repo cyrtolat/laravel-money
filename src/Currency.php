@@ -206,6 +206,11 @@ final class Currency implements jsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->alphabeticCode;
+        return json_encode([
+            'alphabetic_code' => $this->alphabeticCode,
+            'numeric_code' => $this->numericCode,
+            'minor_unit' => $this->minorUnit,
+            'entity' => $this->entity
+        ]);
     }
 }
