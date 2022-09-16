@@ -2,10 +2,12 @@
 
 namespace Cyrtolat\Money;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Renderable;
 use InvalidArgumentException;
-use jsonSerializable;
 
-final class Currency implements jsonSerializable
+final class Currency implements Arrayable, Jsonable, Renderable
 {
     /**
      * The currency alphabetic code.
@@ -204,13 +206,29 @@ final class Currency implements jsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize()
+    public function toArray()
     {
-        return json_encode([
+        return [
             'alphabetic_code' => $this->alphabeticCode,
             'numeric_code' => $this->numericCode,
             'minor_unit' => $this->minorUnit,
             'entity' => $this->entity
-        ]);
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+        return $this->alphabeticCode;
     }
 }
