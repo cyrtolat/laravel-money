@@ -68,8 +68,6 @@ final class MoneyService
      */
     public function of(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
     {
-        $this->validateCurrencyType($currency);
-
         if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyOf($currency);
         }
@@ -89,8 +87,6 @@ final class MoneyService
      */
     public function ofMinor(int $amount, mixed $currency): Money
     {
-        $this->validateCurrencyType($currency);
-
         if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyOf($currency);
         }
@@ -140,20 +136,6 @@ final class MoneyService
             $currency = $this->getCurrencyOf($money->getCurrency());
             return $this->moneySerializer->toArray($money->getAmount(), $currency);
         });
-    }
-
-    /**
-     * Checks the currency argument and throw an exception if the
-     * type of which isn't a Currency class or string.
-     *
-     * @param mixed $currency
-     */
-    private function validateCurrencyType(mixed $currency): void
-    {
-        if (! $currency instanceof Currency && ! is_string($currency)) {
-            throw new InvalidArgumentException(
-                "The currency prop should be a string or a Currency instance.");
-        }
     }
 
     /**
