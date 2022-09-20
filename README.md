@@ -12,7 +12,6 @@ The docs and translation in development..
 
 ## Contents
 
-[comment]: <> (- [Preface]&#40;#preface&#41;)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#Usage)
