@@ -4,6 +4,20 @@ return [
 
     /*
      |--------------------------------------------------------------------------
+     | Default Currency
+     |--------------------------------------------------------------------------
+     |
+     | The default currency. Some applications work with only one currency, so it
+     | is advisable for them to set it once in one place. This value is used in
+     | some helper functions. Be careful that the specified currency is contained
+     | in your currency storage.
+     |
+     */
+
+    'currency' => 'USD',
+
+    /*
+     |--------------------------------------------------------------------------
      | Money Locale
      |--------------------------------------------------------------------------
      |
@@ -28,7 +42,7 @@ return [
      |
      */
 
-    'storage' => \Cyrtolat\Money\Storages\DefaultCurrencyStorage::class,
+    'storage' => \Cyrtolat\Money\Storages\IsoCurrencyStorage::class,
 
     /*
      |--------------------------------------------------------------------------
