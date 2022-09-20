@@ -4,7 +4,6 @@ namespace Cyrtolat\Money\Formatters;
 
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Currency;
-use Cyrtolat\Money\Helper;
 use NumberFormatter;
 
 /**
@@ -36,7 +35,7 @@ final class DecimalMoneyFormatter implements MoneyFormatter
     public function format(int $amount, Currency $currency): string
     {
         $this->setMinFractionDigits($currency->getMinorUnit());
-        $majorAmount = Helper::calcMajorAmount($amount, $currency);
+        $majorAmount = calcMajorAmount($amount, $currency);
 
         $formattedAmount = $this->formatter->format($majorAmount);
 

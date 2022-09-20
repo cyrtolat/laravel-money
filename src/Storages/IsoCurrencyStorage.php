@@ -6,7 +6,7 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Currency;
 use RuntimeException;
 
-final class DefaultCurrencyStorage implements CurrencyStorage
+final class IsoCurrencyStorage implements CurrencyStorage
 {
     /**
      * The ISO currencies by numeric code.
@@ -120,10 +120,5 @@ final class DefaultCurrencyStorage implements CurrencyStorage
         ]);
 
         return $currency;
-    }
-
-    private function cacheCurrency(Currency $currency, string $code): void
-    {
-
     }
 }

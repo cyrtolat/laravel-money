@@ -14,11 +14,15 @@ class MoneyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'money');
+        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'money');
 
         $this->app->singleton(MoneyService::class, function () {
             return new MoneyService(config('money'));
         });
+
+        foreach (glob(__DIR__.'/../Helpers' . '/*.php') as $file) {
+            require_once $file;
+        }
     }
 
     /**

@@ -229,11 +229,6 @@ final class Currency implements Arrayable, Jsonable, Renderable
      */
     public function render()
     {
-        return json_encode([
-            'alphabetic_code' => $this->alphabeticCode,
-            'numeric_code' => $this->numericCode,
-            'minor_unit' => $this->minorUnit,
-            'entity' => $this->entity
-        ]);
+        return $this->alphabeticCode;
     }
 }

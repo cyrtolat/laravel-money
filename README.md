@@ -6,17 +6,17 @@
 
 The docs and translation in development..
 
-## Preface
+[comment]: <> (## Preface)
 
-Данный пакет предназначен для приложений, в доменной модели которых деньги являются объект-значениями. Его основная задача состоит в том, чтобы избавить разработчика от необходимости адаптировать известные библиотеки денег под архитектуру Ларавель. Этот пакет изначально строится на ней.   
+[comment]: <> (Данный пакет предназначен для приложений, в доменной модели которых деньги являются объект-значениями. Его основная задача состоит в том, чтобы избавить разработчика от необходимости адаптировать известные библиотеки денег под архитектуру Ларавель. Этот пакет изначально строится на ней.   )
 
 ## Contents
-- [Preface](#preface)
+
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#Usage)
-  - [Money creating](#money-creating)
-  - [Math and comparing](#math-and-comparing)
+  - [Basic](#basic)
+  - [Helpers](#helpers)
   - [Formatting](#formatting)
   - [Serialization](#serialization)
 - [License](#license)
@@ -39,122 +39,157 @@ composer require cyrtolat/laravel-money
 }
 ```
 
-## Configuration
+[comment]: <> (## Configuration)
 
-Конфигурация пакета начинается с публикации файла с дефолтными настройками. Делается это следующей командой: 
+[comment]: <> (Конфигурация пакета начинается с публикации файла с дефолтными настройками. Делается это следующей командой: )
 
-```bash
-php artisan vendor:publish --provider="Cyrtolat\Money\Providers\MoneyServiceProvider"
-```
+[comment]: <> (```bash)
 
-После её выполнения, файл `money.php` будет добавлен в папку `/configs` вашего приложения. Открыв его, вы увидите 4 настройки. Подробно о них:
+[comment]: <> (php artisan vendor:publish --provider="Cyrtolat\Money\Providers\MoneyServiceProvider")
 
-### Money Locale
+[comment]: <> (```)
 
-```php
-'locale' => 'en_US'
-```
+[comment]: <> (После её выполнения, файл `money.php` будет добавлен в папку `/configs` вашего приложения. Открыв его, вы увидите 4 настройки. Подробно о них:)
 
-Параметр `locale` - это языковой тег BCP 47. Он определяет стиль форматирования денежных значений в строки в соответствии с выбранной локализацией и используется внутри объектов Intl.NumberFormat.
+[comment]: <> (### Money Locale)
 
-### Currency Storage
+[comment]: <> (```php)
 
-```php
-'storage' => \Cyrtolat\Money\Storages\DefaultCurrencyStorage::class
-```
+[comment]: <> ('locale' => 'en_US')
 
-Параметр `storage` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\CurrencyStorage`. Это репозиторий, которых хранит в себе все доступные в приложении валюты. По умолчанию определено дефолтное хранилище, в котором лежат данные ISO валют и некоторых известных криптовалют. В большинстве случаев его будет достаточно, но если Вам требуется работать с валютой, которой нет в этом хранилище, то вы можете реализовать своё.
+[comment]: <> (```)
 
-### Currency Serializer
+[comment]: <> (Параметр `locale` - это языковой тег BCP 47. Он определяет стиль форматирования денежных значений в строки в соответствии с выбранной локализацией и используется внутри объектов Intl.NumberFormat.)
 
-```php
-'serializer' => \Cyrtolat\Money\Serializers\MajorMoneySerializer::class
-```
+[comment]: <> (### Currency Storage)
 
-Аналогично предыдущему параметру, `serializer` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\MoneySerializer`. Этот класс отвечает за то каким образом Ларавель будет преобразовывать ваши объекты Money в массивы и строки JSON. "Из коробки" доступно несколько сериализаторов. Подробнее о них в [этом](#serialization) разделе.
+[comment]: <> (```php)
 
-### Currency Formatter
+[comment]: <> ('storage' => \Cyrtolat\Money\Storages\IsoCurrencyStorage::class)
 
-```php
-'formatter' => \Cyrtolat\Money\Formatters\DecimalMoneyFormatter::class
-```
+[comment]: <> (```)
 
-Последний параметр `formatter` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\MoneyFormatter`. Этот класс отвечает за рендеринг объектов Money в строки. Изначально доступно несколько форматторов. Подробнее о них Подробнее о них в [здесь](#formatting).
+[comment]: <> (Параметр `storage` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\CurrencyStorage`. Это репозиторий, которых хранит в себе все доступные в приложении валюты. По умолчанию определено дефолтное хранилище, в котором лежат данные ISO валют и некоторых известных криптовалют. В большинстве случаев его будет достаточно, но если Вам требуется работать с валютой, которой нет в этом хранилище, то вы можете реализовать своё.)
 
-## Usage
+[comment]: <> (### Currency Serializer)
 
-### Money Creating
+[comment]: <> (```php)
 
-Создание экземпляров Money предлагается через фасад сервиса `\Cyrtolat\Money\Service\MoneyService`. Выглядит следующим образом:
+[comment]: <> ('serializer' => \Cyrtolat\Money\Serializers\MajorMoneySerializer::class)
 
-```php
-use \Cyrtolat\Money\Facades\Money;
+[comment]: <> (```)
 
-# указание значения в "минорном" и "мажорном" стилях
-$money = Money::of(150.23, 'RUB'); // 150.23 RUB
-$money = Money::ofMinor(15023, 'RUB'); // 150.23 RUB
+[comment]: <> (Аналогично предыдущему параметру, `serializer` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\MoneySerializer`. Этот класс отвечает за то каким образом Ларавель будет преобразовывать ваши объекты Money в массивы и строки JSON. "Из коробки" доступно несколько сериализаторов. Подробнее о них в [этом]&#40;#serialization&#41; разделе.)
 
-# также можно передавать и объект Currency вместо кода
-$currency = Money::getCurrencyOf('RUB');
+[comment]: <> (### Currency Formatter)
 
-$money = Money::of(150.23, $currency);
-$money = Money::ofMinor(15023, $currency);
-```
+[comment]: <> (```php)
 
->Помните про хранилище валют? Если попытаться через сервис создать деньги с валютой, которой нет в хранилище, то будет ошибка.
+[comment]: <> ('formatter' => \Cyrtolat\Money\Formatters\DecimalMoneyFormatter::class)
 
-### Math and comparing
+[comment]: <> (```)
 
-Объекты Money между собой можно сравнивать, складывать и вычитать. Как это делается показано далее:
+[comment]: <> (Последний параметр `formatter` хранит в себе класс-реализацию интерфейса `Cyrtolat\Contracts\MoneyFormatter`. Этот класс отвечает за рендеринг объектов Money в строки. Изначально доступно несколько форматторов. Подробнее о них Подробнее о них в [здесь]&#40;#formatting&#41;.)
 
-```php
-use \Cyrtolat\Money\Facades\Money;
+[comment]: <> (## Usage)
 
-$money_1 = Money::of(150.23, 'RUB'); // 150.23 RUB
-$money_2 = Money::of(320.88, 'RUB'); // 320.88 RUB
+[comment]: <> (### Money Creating)
 
-$money = $money_1->plus($money_2); // $money_1 + $money_2
-$money = $money_1->minus($money_2); // $money_1 - $money_2
-$money = $money_1->multiplyBy(2.3); // $money_1 * 2.3
-$money = $money_1->divideBy(4); // $money_1 / 4
-$money = $money_1->round(); // 150.00 RUB
+[comment]: <> (Создание экземпляров Money предлагается через фасад сервиса `\Cyrtolat\Money\Service\MoneyService`. Выглядит следующим образом:)
 
-$bool = $money_1->gt($money_2); // $money_1 > $money_2
-$bool = $money_1->gte($money_2); // $money_1 >= $money_2
-$bool = $money_1->lt($money_2); // $money_1 < $money_2
-$bool = $money_1->lte($money_2); // $money_1 <= $money_2
-$bool = $money_1->equals($money_2); // $money_1 == $money_2
+[comment]: <> (```php)
 
-$bool = $money_1->hasSameAmount($money_2); // false
-$bool = $money_1->hasSameCurrency($money_2); // true
-```
+[comment]: <> (use \Cyrtolat\Money\Facades\Money;)
 
-Объекты денег иммутабельны. Все операции возвращают новый экземпляр. Также не забывайте, что нужно нельзя складывать, вычитать, делить и умножать объекты денег с разными валютами. Это же касается и операций сравнения. Лишь последние два метода не выкинут исключение, если вы передадите в них деньги с отличной от исходного объекта валютой.
+[comment]: <> (# указание значения в "минорном" и "мажорном" стилях)
 
-### Formatting
+[comment]: <> ($money = Money::of&#40;150.23, 'RUB'&#41;; // 150.23 RUB)
 
-Как уже было сказано, за форматирование денег отвечает класс форматтера. Единожды выставив его в конфигах, Вам больше не нужно заботиться о логике форматирования. Пакет сделает это за Вас. Привести объект Money в строчный тип можно следующим образом:
+[comment]: <> ($money = Money::ofMinor&#40;15023, 'RUB'&#41;; // 150.23 RUB)
 
-```php
-use \Cyrtolat\Money\Facades\Money;
+[comment]: <> (# также можно передавать и объект Currency вместо кода)
 
-$money = Money::of(150.23, 'RUB');
+[comment]: <> ($currency = Money::getCurrencyOf&#40;'RUB'&#41;;)
 
-# I have: 150.23 RUB
-echo "I have: " . $money->render();
-echo "I have: " . $money;
-```
+[comment]: <> ($money = Money::of&#40;150.23, $currency&#41;;)
 
-"Из коробки" доступно несколько форматтеров.
+[comment]: <> ($money = Money::ofMinor&#40;15023, $currency&#41;;)
 
-форматтер | пример
-:-------:|:-------:
-`Cyrtolat\Money\Formatters\DecimalMoneyFormatter` | 150.23 RUB
-`Cyrtolat\Money\Formatters\LocalizedMoneyFormatter` | 150.23 ₽
+[comment]: <> (```)
 
-### Serialization
+[comment]: <> (>Помните про хранилище валют? Если попытаться через сервис создать деньги с валютой, которой нет в хранилище, то будет ошибка.)
 
-Сериализация денег - одна из наиболее важных функций этого пакета. 
+[comment]: <> (### Math and comparing)
+
+[comment]: <> (Объекты Money между собой можно сравнивать, складывать и вычитать. Как это делается показано далее:)
+
+[comment]: <> (```php)
+
+[comment]: <> (use \Cyrtolat\Money\Facades\Money;)
+
+[comment]: <> ($money_1 = Money::of&#40;150.23, 'RUB'&#41;; // 150.23 RUB)
+
+[comment]: <> ($money_2 = Money::of&#40;320.88, 'RUB'&#41;; // 320.88 RUB)
+
+[comment]: <> ($money = $money_1->plus&#40;$money_2&#41;; // $money_1 + $money_2)
+
+[comment]: <> ($money = $money_1->minus&#40;$money_2&#41;; // $money_1 - $money_2)
+
+[comment]: <> ($money = $money_1->multiplyBy&#40;2.3&#41;; // $money_1 * 2.3)
+
+[comment]: <> ($money = $money_1->divideBy&#40;4&#41;; // $money_1 / 4)
+
+[comment]: <> ($money = $money_1->round&#40;&#41;; // 150.00 RUB)
+
+[comment]: <> ($bool = $money_1->gt&#40;$money_2&#41;; // $money_1 > $money_2)
+
+[comment]: <> ($bool = $money_1->gte&#40;$money_2&#41;; // $money_1 >= $money_2)
+
+[comment]: <> ($bool = $money_1->lt&#40;$money_2&#41;; // $money_1 < $money_2)
+
+[comment]: <> ($bool = $money_1->lte&#40;$money_2&#41;; // $money_1 <= $money_2)
+
+[comment]: <> ($bool = $money_1->equals&#40;$money_2&#41;; // $money_1 == $money_2)
+
+[comment]: <> ($bool = $money_1->hasSameAmount&#40;$money_2&#41;; // false)
+
+[comment]: <> ($bool = $money_1->hasSameCurrency&#40;$money_2&#41;; // true)
+
+[comment]: <> (```)
+
+[comment]: <> (Объекты денег иммутабельны. Все операции возвращают новый экземпляр. Также не забывайте, что нужно нельзя складывать, вычитать, делить и умножать объекты денег с разными валютами. Это же касается и операций сравнения. Лишь последние два метода не выкинут исключение, если вы передадите в них деньги с отличной от исходного объекта валютой.)
+
+[comment]: <> (### Formatting)
+
+[comment]: <> (Как уже было сказано, за форматирование денег отвечает класс форматтера. Единожды выставив его в конфигах, Вам больше не нужно заботиться о логике форматирования. Пакет сделает это за Вас. Привести объект Money в строчный тип можно следующим образом:)
+
+[comment]: <> (```php)
+
+[comment]: <> (use \Cyrtolat\Money\Facades\Money;)
+
+[comment]: <> ($money = Money::of&#40;150.23, 'RUB'&#41;;)
+
+[comment]: <> (# I have: 150.23 RUB)
+
+[comment]: <> (echo "I have: " . $money->render&#40;&#41;;)
+
+[comment]: <> (echo "I have: " . $money;)
+
+[comment]: <> (```)
+
+[comment]: <> ("Из коробки" доступно несколько форматтеров.)
+
+[comment]: <> (форматтер | пример)
+
+[comment]: <> (:-------:|:-------:)
+
+[comment]: <> (`Cyrtolat\Money\Formatters\DecimalMoneyFormatter` | 150.23 RUB)
+
+[comment]: <> (`Cyrtolat\Money\Formatters\LocalizedMoneyFormatter` | 150.23 ₽)
+
+[comment]: <> (### Serialization)
+
+[comment]: <> (Сериализация денег - одна из наиболее важных функций этого пакета. )
 
 ## License
 

@@ -8,7 +8,6 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\CurrencyNotFound;
-use Cyrtolat\Money\Helper;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -73,7 +72,7 @@ final class MoneyService
             $currency = $this->getCurrencyOf($currency);
         }
 
-        $amount = Helper::calcMinorAmount($amount, $currency, $roundingMode);
+        $amount = calcMinorAmount($amount, $currency, $roundingMode);
 
         return new Money($amount, $currency->getAlphabeticCode());
     }
