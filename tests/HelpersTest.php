@@ -35,14 +35,29 @@ class HelpersTest extends TestCase
     {
         $money = $this->service->of(1.50, 'EUR');
 
-        $this->assertTrue($money->hasSameAmount(money(150)));
-        $this->assertTrue($money->hasSameCurrency(money(150)));
+        $this->assertTrue($money->hasSameAmount(money(1.50)));
+        $this->assertTrue($money->hasSameCurrency(money(1.50)));
 
         $money = $this->service->of(1.50, 'RUB');
 
-        $this->assertTrue($money->hasSameAmount(money(150)));
-        $this->assertFalse($money->hasSameCurrency(money(150)));
-        $this->assertTrue($money->hasSameCurrency(money(150, 'RUB')));
+        $this->assertTrue($money->hasSameAmount(money(1.50)));
+        $this->assertFalse($money->hasSameCurrency(money(1.50)));
+        $this->assertTrue($money->hasSameCurrency(money(1.50, 'RUB')));
+    }
+
+    /** @test */
+    public function moneyOfMinor()
+    {
+        $money = $this->service->of(1.50, 'EUR');
+
+        $this->assertTrue($money->hasSameAmount(moneyOfMinor(150)));
+        $this->assertTrue($money->hasSameCurrency(moneyOfMinor(150)));
+
+        $money = $this->service->of(1.50, 'RUB');
+
+        $this->assertTrue($money->hasSameAmount(moneyOfMinor(150)));
+        $this->assertFalse($money->hasSameCurrency(moneyOfMinor(150)));
+        $this->assertTrue($money->hasSameCurrency(moneyOfMinor(150, 'RUB')));
     }
 
     /** @test */

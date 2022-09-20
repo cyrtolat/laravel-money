@@ -7,12 +7,31 @@ if (! function_exists('money')) {
     /**
      * Returns new Money by the given values.
      *
+     * @param float $amount A decimal sum in a major monetary style
+     * @param mixed|null $currency Currency alphabetic or numeric code
+     *                             or null to take default currency
+     * @return Money New Money class instance
+     */
+    function money(float $amount, mixed $currency = null): Money
+    {
+        if (is_null($currency)) {
+            $currency = config('money.currency');
+        }
+
+        return \Cyrtolat\Money\Facades\Money::of($amount, $currency);
+    }
+}
+
+if (! function_exists('moneyOfMinor')) {
+    /**
+     * Returns new Money by the given values.
+     *
      * @param int $amount An integer sum in minor monetary style
      * @param mixed|null $currency Currency alphabetic or numeric code
      *                             or null to take default currency
      * @return Money New Money class instance
      */
-    function money(int $amount, mixed $currency = null): Money
+    function moneyOfMinor(int $amount, mixed $currency = null): Money
     {
         if (is_null($currency)) {
             $currency = config('money.currency');
