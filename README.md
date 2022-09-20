@@ -39,17 +39,17 @@ composer require cyrtolat/laravel-money
 }
 ```
 
-[comment]: <> (## Configuration)
+## Configuration
 
-[comment]: <> (Конфигурация пакета начинается с публикации файла с дефолтными настройками. Делается это следующей командой: )
+Конфигурация пакета начинается с публикации файла с дефолтными настройками. Делается это следующей командой: 
 
-[comment]: <> (```bash)
+```bash
 
-[comment]: <> (php artisan vendor:publish --provider="Cyrtolat\Money\Providers\MoneyServiceProvider")
+php artisan vendor:publish --provider="Cyrtolat\Money\Providers\MoneyServiceProvider"
 
-[comment]: <> (```)
+```
 
-[comment]: <> (После её выполнения, файл `money.php` будет добавлен в папку `/configs` вашего приложения. Открыв его, вы увидите 4 настройки. Подробно о них:)
+После её выполнения, файл `money.php` будет добавлен в папку `/configs` вашего приложения. Открыв его, вы увидите 4 настройки. Подробно о них:
 
 [comment]: <> (### Money Locale)
 
