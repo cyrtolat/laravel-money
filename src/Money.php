@@ -3,12 +3,13 @@
 namespace Cyrtolat\Money;
 
 use Closure;
+use JsonSerializable;
 use InvalidArgumentException;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-final class Money implements Arrayable, Jsonable, Renderable
+final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
 {
     /**
      * The monetary amount.
@@ -327,5 +328,13 @@ final class Money implements Arrayable, Jsonable, Renderable
         }
 
         return sprintf('%s %s', $this->amount, $this->currency);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }
