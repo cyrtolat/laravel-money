@@ -12,8 +12,8 @@ class MoneyTest extends TestCase
     {
         $money = new Money(150, 'RUB');
 
-        $this->assertSame(150, $money->getAmount());
-        $this->assertNotSame(1.50, $money->getAmount());
+        $this->assertSame(150, $money->amount);
+        $this->assertNotSame(1.50, $money->amount);
     }
 
     /** @test */
@@ -21,7 +21,7 @@ class MoneyTest extends TestCase
     {
         $money = new Money(150, 'RUB');
 
-        $this->assertSame('RUB', $money->getCurrency());
+        $this->assertSame('RUB', $money->currency);
     }
 
     /** @test */
@@ -240,16 +240,16 @@ class MoneyTest extends TestCase
         $money = new Money(100, 'RUB');
 
         $result = $money->multiplyBy(2.335, PHP_ROUND_HALF_UP);
-        $this->assertEquals(234, $result->getAmount());
+        $this->assertEquals(234, $result->amount);
 
         $result = $money->multiplyBy(2.335, PHP_ROUND_HALF_DOWN);
-        $this->assertEquals(233, $result->getAmount());
+        $this->assertEquals(233, $result->amount);
 
         $result = $money->multiplyBy(2.335, PHP_ROUND_HALF_EVEN);
-        $this->assertEquals(234, $result->getAmount());
+        $this->assertEquals(234, $result->amount);
 
         $result = $money->multiplyBy(2.335, PHP_ROUND_HALF_ODD);
-        $this->assertEquals(233, $result->getAmount());
+        $this->assertEquals(233, $result->amount);
     }
 
     /** @test */
@@ -258,16 +258,16 @@ class MoneyTest extends TestCase
         $money = new Money(100, 'RUB');
 
         $result = $money->divideBy(1.6, PHP_ROUND_HALF_UP);
-        $this->assertEquals(63, $result->getAmount());
+        $this->assertEquals(63, $result->amount);
 
         $result = $money->divideBy(1.6, PHP_ROUND_HALF_DOWN);
-        $this->assertEquals(62, $result->getAmount());
+        $this->assertEquals(62, $result->amount);
 
         $result = $money->divideBy(1.6, PHP_ROUND_HALF_EVEN);
-        $this->assertEquals(62, $result->getAmount());
+        $this->assertEquals(62, $result->amount);
 
         $result = $money->divideBy(1.6, PHP_ROUND_HALF_ODD);
-        $this->assertEquals(63, $result->getAmount());
+        $this->assertEquals(63, $result->amount);
     }
 
     /** @test */
@@ -276,12 +276,12 @@ class MoneyTest extends TestCase
         $money = new Money(1111, 'RUB');
 
         $result = $money->round(0, PHP_ROUND_HALF_UP);
-        $this->assertEquals(1111, $result->getAmount());
+        $this->assertEquals(1111, $result->amount);
 
         $result = $money->round(1, PHP_ROUND_HALF_UP);
-        $this->assertEquals(1110, $result->getAmount());
+        $this->assertEquals(1110, $result->amount);
 
         $result = $money->round(2, PHP_ROUND_HALF_UP);
-        $this->assertEquals(1100, $result->getAmount());
+        $this->assertEquals(1100, $result->amount);
     }
 }

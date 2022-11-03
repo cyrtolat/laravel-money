@@ -34,12 +34,12 @@ final class DecimalMoneyFormatter implements MoneyFormatter
      */
     public function format(int $amount, Currency $currency): string
     {
-        $this->setMinFractionDigits($currency->getMinorUnit());
+        $this->setMinFractionDigits($currency->minorUnit);
         $majorAmount = calcMajorAmount($amount, $currency);
 
         $formattedAmount = $this->formatter->format($majorAmount);
 
-        return sprintf("%s %s", $formattedAmount, $currency->getAlphabeticCode());
+        return sprintf("%s %s", $formattedAmount, $currency->alphabeticCode);
     }
 
     /**

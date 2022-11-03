@@ -8,7 +8,6 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\CurrencyNotFound;
-use InvalidArgumentException;
 use RuntimeException;
 
 final class MoneyService
@@ -74,7 +73,7 @@ final class MoneyService
 
         $amount = calcMinorAmount($amount, $currency, $roundingMode);
 
-        return new Money($amount, $currency->getAlphabeticCode());
+        return new Money($amount, $currency->alphabeticCode);
     }
 
     /**
@@ -91,7 +90,7 @@ final class MoneyService
             $currency = $this->getCurrencyOf($currency);
         }
 
-        return new Money($amount, $currency->getAlphabeticCode());
+        return new Money($amount, $currency->alphabeticCode);
     }
 
     /**
@@ -120,8 +119,8 @@ final class MoneyService
     private function setMoneyFormatterCallback(): void
     {
         Money::setFormatterCallback(function (Money $money) {
-            $currency = $this->getCurrencyOf($money->getCurrency());
-            return $this->moneyFormatter->format($money->getAmount(), $currency);
+            $currency = $this->getCurrencyOf($money->currency);
+            return $this->moneyFormatter->format($money->amount, $currency);
         });
     }
 
@@ -133,8 +132,8 @@ final class MoneyService
     private function setMoneySerializeCallback(): void
     {
         Money::setSerializeCallback(function (Money $money) {
-            $currency = $this->getCurrencyOf($money->getCurrency());
-            return $this->moneySerializer->toArray($money->getAmount(), $currency);
+            $currency = $this->getCurrencyOf($money->currency);
+            return $this->moneySerializer->toArray($money->amount, $currency);
         });
     }
 

@@ -9,8 +9,8 @@ class FakeMoneyFormatter implements MoneyFormatter
 {
     public function format(int $amount, Currency $currency): string
     {
-        $majorAmount = $amount / pow(10, $currency->getMinorUnit());
+        $majorAmount = $amount / pow(10, $currency->minorUnit);
 
-        return sprintf('%s %s', $majorAmount, $currency->getAlphabeticCode());
+        return sprintf('%s %s', $majorAmount, $currency->alphabeticCode);
     }
 }

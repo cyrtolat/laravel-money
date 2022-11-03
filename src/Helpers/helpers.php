@@ -69,7 +69,7 @@ if (! function_exists('calcMajorAmount')) {
      */
     function calcMajorAmount(int $amount, Currency $currency): float
     {
-        return $amount / pow(10, $currency->getMinorUnit());
+        return $amount / pow(10, $currency->minorUnit);
     }
 }
 
@@ -85,6 +85,7 @@ if (! function_exists('calcMinorAmount')) {
      */
     function calcMinorAmount(float $amount, Currency $currency, int $roundingMode = PHP_ROUND_HALF_UP): int
     {
-        return round($amount * pow(10, $currency->getMinorUnit()), 0, $roundingMode);
+        return round($amount * pow(10, $currency->minorUnit), 0, $roundingMode);
     }
 }
+

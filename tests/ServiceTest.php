@@ -128,8 +128,8 @@ class ServiceTest extends TestCase
 
         $result = $moneyService->of(150.23, 'RUB');
 
-        $this->assertTrue($result->getAmount() == 15023);
-        $this->assertTrue($result->getCurrency() == 'RUB');
+        $this->assertTrue($result->amount == 15023);
+        $this->assertTrue($result->currency == 'RUB');
 
         $this->expectException(CurrencyNotFound::class);
 
@@ -147,8 +147,8 @@ class ServiceTest extends TestCase
 
         $result = $moneyService->ofMinor(15023, 'RUB');
 
-        $this->assertTrue($result->getAmount() == 15023);
-        $this->assertTrue($result->getCurrency() == 'RUB');
+        $this->assertTrue($result->amount == 15023);
+        $this->assertTrue($result->currency == 'RUB');
 
         $this->expectException(CurrencyNotFound::class);
 

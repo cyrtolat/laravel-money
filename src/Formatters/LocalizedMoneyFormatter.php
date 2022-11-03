@@ -36,6 +36,7 @@ class LocalizedMoneyFormatter implements MoneyFormatter
     {
         $majorAmount = calcMajorAmount($amount, $currency);
 
-        return $this->formatter->formatCurrency($majorAmount, $currency->getAlphabeticCode());
+        return $this->formatter->formatCurrency(
+            $majorAmount, $currency->alphabeticCode);
     }
 }

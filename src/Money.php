@@ -9,6 +9,10 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
+/**
+ * @property-read integer $amount
+ * @property-read string $currency
+ */
 final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
 {
     /**
@@ -66,23 +70,25 @@ final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
     }
 
     /**
-     * Returns the monetary amount.
+     * Implicit getting hidden properties.
      *
-     * @return integer
+     * @param $property
+     * @return mixed
      */
-    public function getAmount(): int
+    public function __get($property)
     {
-        return $this->amount;
+        return property_exists($this, $property)
+            ? $this->$property : null;
     }
 
     /**
-     * Returns the monetary currency.
+     * Implicit conversion of Money to a string.
      *
      * @return string
      */
-    public function getCurrency(): string
+    public function __toString()
     {
-        return $this->currency;
+        return $this->render();
     }
 
     /**
@@ -283,16 +289,6 @@ final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
         $this->validateCurrency($money);
 
         return $this->amount <= $money->amount;
-    }
-
-    /**
-     * Implicit conversion of Money to a string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
     }
 
     /**

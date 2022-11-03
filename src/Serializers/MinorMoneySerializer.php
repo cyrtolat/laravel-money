@@ -17,7 +17,7 @@ final class MinorMoneySerializer implements MoneySerializer
     {
         return [
             'amount' => $amount,
-            'currency' => $currency->getAlphabeticCode()
+            'currency' => $currency->alphabeticCode
         ];
     }
 }
