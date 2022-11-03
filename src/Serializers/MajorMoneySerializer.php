@@ -17,7 +17,7 @@ final class MajorMoneySerializer implements MoneySerializer
     {
         return [
             'amount' => calcMajorAmount($amount, $currency),
-            'currency' => $currency->getAlphabeticCode()
+            'currency' => $currency->alphabeticCode
         ];
     }
 }

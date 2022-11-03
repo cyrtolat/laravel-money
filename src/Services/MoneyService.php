@@ -8,7 +8,6 @@ use Cyrtolat\Money\Contracts\CurrencyStorage;
 use Cyrtolat\Money\Contracts\MoneyFormatter;
 use Cyrtolat\Money\Contracts\MoneySerializer;
 use Cyrtolat\Money\Exceptions\CurrencyNotFound;
-use InvalidArgumentException;
 use RuntimeException;
 
 final class MoneyService
@@ -68,15 +67,13 @@ final class MoneyService
      */
     public function of(float $amount, mixed $currency, int $roundingMode = PHP_ROUND_HALF_UP): Money
     {
-        $this->validateCurrencyType($currency);
-
         if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyOf($currency);
         }
 
         $amount = calcMinorAmount($amount, $currency, $roundingMode);
 
-        return new Money($amount, $currency->getAlphabeticCode());
+        return new Money($amount, $currency->alphabeticCode);
     }
 
     /**
@@ -89,13 +86,11 @@ final class MoneyService
      */
     public function ofMinor(int $amount, mixed $currency): Money
     {
-        $this->validateCurrencyType($currency);
-
         if (! $currency instanceof Currency) {
             $currency = $this->getCurrencyOf($currency);
         }
 
-        return new Money($amount, $currency->getAlphabeticCode());
+        return new Money($amount, $currency->alphabeticCode);
     }
 
     /**
@@ -124,8 +119,8 @@ final class MoneyService
     private function setMoneyFormatterCallback(): void
     {
         Money::setFormatterCallback(function (Money $money) {
-            $currency = $this->getCurrencyOf($money->getCurrency());
-            return $this->moneyFormatter->format($money->getAmount(), $currency);
+            $currency = $this->getCurrencyOf($money->currency);
+            return $this->moneyFormatter->format($money->amount, $currency);
         });
     }
 
@@ -137,23 +132,9 @@ final class MoneyService
     private function setMoneySerializeCallback(): void
     {
         Money::setSerializeCallback(function (Money $money) {
-            $currency = $this->getCurrencyOf($money->getCurrency());
-            return $this->moneySerializer->toArray($money->getAmount(), $currency);
+            $currency = $this->getCurrencyOf($money->currency);
+            return $this->moneySerializer->toArray($money->amount, $currency);
         });
-    }
-
-    /**
-     * Checks the currency argument and throw an exception if the
-     * type of which isn't a Currency class or string.
-     *
-     * @param mixed $currency
-     */
-    private function validateCurrencyType(mixed $currency): void
-    {
-        if (! $currency instanceof Currency && ! is_string($currency)) {
-            throw new InvalidArgumentException(
-                "The currency prop should be a string or a Currency instance.");
-        }
     }
 
     /**

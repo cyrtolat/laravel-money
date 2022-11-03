@@ -7,6 +7,12 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use InvalidArgumentException;
 
+/**
+ * @property-read string $alphabeticCode
+ * @property-read string $numericCode
+ * @property-read integer $minorUnit
+ * @property-read string $entity
+ */
 final class Currency implements Arrayable, Jsonable, Renderable
 {
     /**
@@ -85,55 +91,15 @@ final class Currency implements Arrayable, Jsonable, Renderable
     }
 
     /**
-     * Returns the currency alphabetic code.
+     * Implicit getting hidden properties.
      *
-     * The 3-letter uppercase ISO 4217 currency code.
-     * For non ISO currencies no constraints are defined.
-     *
-     * @return string
+     * @param $property
+     * @return mixed
      */
-    public function getAlphabeticCode(): string
+    public function __get($property)
     {
-        return $this->alphabeticCode;
-    }
-
-    /**
-     * Returns the currency numeric code.
-     *
-     * The 3-digit ISO 4217 digital currency code.
-     * For non ISO currencies no constraints are defined.
-     *
-     * @return string
-     */
-    public function getNumericCode(): string
-    {
-        return $this->numericCode;
-    }
-
-    /**
-     * Returns the minor unit.
-     *
-     * It determines the accuracy of the currency or
-     * the decimal ratio of one major unit of currency in minor units.
-     *
-     * @return integer
-     */
-    public function getMinorUnit(): int
-    {
-        return $this->minorUnit;
-    }
-
-    /**
-     * Returns the currency entity.
-     *
-     * For ISO currencies this will be the official name of the currency.
-     * For non ISO currencies no constraints are defined.
-     *
-     * @return string
-     */
-    public function getEntity(): string
-    {
-        return $this->entity;
+        return property_exists($this, $property)
+            ? $this->$property : null;
     }
 
     /**

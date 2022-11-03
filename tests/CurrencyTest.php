@@ -73,7 +73,7 @@ class CurrencyTest extends TestCase
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
-        $this->assertSame('RUB', $currency->getAlphabeticCode());
+        $this->assertSame('RUB', $currency->alphabeticCode);
     }
 
     /** @test */
@@ -81,7 +81,7 @@ class CurrencyTest extends TestCase
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
-        $this->assertSame('643', $currency->getNumericCode());
+        $this->assertSame('643', $currency->numericCode);
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class CurrencyTest extends TestCase
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
-        $this->assertSame(2, $currency->getMinorUnit());
+        $this->assertSame(2, $currency->minorUnit);
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class CurrencyTest extends TestCase
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
 
-        $this->assertSame('Russian Ruble', $currency->getEntity());
+        $this->assertSame('Russian Ruble', $currency->entity);
     }
 
     /** @test */
