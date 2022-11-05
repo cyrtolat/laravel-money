@@ -25,34 +25,6 @@ class MoneyTest extends TestCase
     }
 
     /** @test */
-    public function hasSameAmount_method()
-    {
-        $money = new Money(150, 'RUB');
-
-        $this->assertTrue($money->hasSameAmount(
-            new Money(150, 'RUB')
-        ));
-
-        $this->assertFalse($money->hasSameAmount(
-            new Money(1.50, 'RUB')
-        ));
-    }
-
-    /** @test */
-    public function hasSameCurrency_method()
-    {
-        $money = new Money(150, 'RUB');
-
-        $this->assertTrue($money->hasSameCurrency(
-            new Money(150, 'RUB')
-        ));
-
-        $this->assertFalse($money->hasSameCurrency(
-            new Money(150, 'USD')
-        ));
-    }
-
-    /** @test */
     public function equals_method()
     {
         $money = new Money(150, 'RUB');
