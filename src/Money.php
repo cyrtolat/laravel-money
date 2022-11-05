@@ -118,32 +118,10 @@ final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
      */
     private function validateCurrency(Money $money): void
     {
-        if (! $this->hasSameCurrency($money)) {
+        if ($this->currency != $money->currency) {
             throw new InvalidArgumentException(
                 "Currencies must be identical.");
         }
-    }
-
-    /**
-     * Returns true if the given Money has the same amount.
-     *
-     * @param Money $money Money instance for comparison
-     * @return bool True if amounts are identical
-     */
-    public function hasSameAmount(Money $money): bool
-    {
-        return $this->amount == $money->amount;
-    }
-
-    /**
-     * Returns true if the given Money has the same currency.
-     *
-     * @param Money $money Money instance for comparison
-     * @return bool True if currencies are identical
-     */
-    public function hasSameCurrency(Money $money): bool
-    {
-        return $this->currency == $money->currency;
     }
 
     /**
@@ -156,11 +134,7 @@ final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
     {
         $this->validateCurrency($money);
 
-        if (! $this->hasSameAmount($money)) {
-            return false;
-        }
-
-        return true;
+        return $this->amount == $money->amount;
     }
 
     /**
