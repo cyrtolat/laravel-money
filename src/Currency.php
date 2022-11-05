@@ -154,8 +154,9 @@ final class Currency implements Arrayable, Jsonable, Renderable
      */
     public function equals(mixed $currency): bool
     {
-        if (is_string($currency) == true) {
-            return $this->alphabeticCode == $currency;
+        if (is_string($currency) || is_integer($currency)) {
+            return $this->alphabeticCode == $currency
+                || $this->numericCode == $currency;
         }
 
         if (! $currency instanceof Currency) {
