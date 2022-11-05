@@ -101,62 +101,6 @@ class CurrencyTest extends TestCase
     }
 
     /** @test */
-    public function hasSameCurrency_method()
-    {
-        $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
-
-        $this->assertTrue($currency->hasSameAlphabeticCode(
-            new Currency('RUB', '810', 2, 'Russian Ruble before denomination')
-        ));
-
-        $this->assertFalse($currency->hasSameAlphabeticCode(
-            new Currency('RUR', '643', 2, 'Russian Ruble')
-        ));
-    }
-
-    /** @test */
-    public function hasSameNumericCode_method()
-    {
-        $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
-
-        $this->assertTrue($currency->hasSameNumericCode(
-            new Currency('RUR', '643', 2, 'Russian Ruble')
-        ));
-
-        $this->assertFalse($currency->hasSameNumericCode(
-            new Currency('RUB', '810', 2, 'Russian Ruble before denomination')
-        ));
-    }
-
-    /** @test */
-    public function hasSameMinorUnit_method()
-    {
-        $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
-
-        $this->assertTrue($currency->hasSameMinorUnit(
-            new Currency('RUR', '810', 2, 'Russian Ruble before denomination')
-        ));
-
-        $this->assertFalse($currency->hasSameMinorUnit(
-            new Currency('RUB', '643', 3, 'Russian Ruble')
-        ));
-    }
-
-    /** @test */
-    public function hasSameEntity_method()
-    {
-        $currency = new Currency('RUB', '643', 2, 'Russian Ruble');
-
-        $this->assertTrue($currency->hasSameEntity(
-            new Currency('RUR', '810', 2, 'Russian Ruble')
-        ));
-
-        $this->assertFalse($currency->hasSameEntity(
-            new Currency('RUR', '810', 2, 'Russian Ruble before denomination')
-        ));
-    }
-
-    /** @test */
     public function equals_method_by_code()
     {
         $currency = new Currency('RUB', '643', 2, 'Russian Ruble');

@@ -84,10 +84,10 @@ final class Currency implements Arrayable, Jsonable, Renderable
                 "The minor unit must be greater than zero.");
         }
 
-        $this->alphabeticCode   = $alphabeticCode;
-        $this->numericCode      = $numericCode;
-        $this->minorUnit        = $minorUnit;
-        $this->entity           = $entity;
+        $this->alphabeticCode = $alphabeticCode;
+        $this->numericCode = $numericCode;
+        $this->minorUnit = $minorUnit;
+        $this->entity = $entity;
     }
 
     /**
@@ -100,50 +100,6 @@ final class Currency implements Arrayable, Jsonable, Renderable
     {
         return property_exists($this, $property)
             ? $this->$property : null;
-    }
-
-    /**
-     * Returns true if the given Currency has the same alphabetic code.
-     *
-     * @param Currency $currency Currency instance for comparison
-     * @return bool True if alphabetic codes are identical
-     */
-    public function hasSameAlphabeticCode(Currency $currency): bool
-    {
-        return $this->alphabeticCode == $currency->alphabeticCode;
-    }
-
-    /**
-     * Returns true if the given Currency has the same numeric code.
-     *
-     * @param Currency $currency Currency instance for comparison
-     * @return bool True if numeric codes are identical
-     */
-    public function hasSameNumericCode(Currency $currency): bool
-    {
-        return $this->numericCode == $currency->numericCode;
-    }
-
-    /**
-     * Returns true if the given Currency has the same minor unit.
-     *
-     * @param Currency $currency Currency instance for comparison
-     * @return bool True if minor units are identical
-     */
-    public function hasSameMinorUnit(Currency $currency): bool
-    {
-        return $this->minorUnit == $currency->minorUnit;
-    }
-
-    /**
-     * Returns true if the given Currency has the same entity.
-     *
-     * @param Currency $currency Currency instance for comparison
-     * @return bool True if entities are identical
-     */
-    public function hasSameEntity(Currency $currency): bool
-    {
-        return $this->entity == $currency->entity;
     }
 
     /**
