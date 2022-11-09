@@ -303,7 +303,7 @@ final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }
