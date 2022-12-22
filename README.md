@@ -34,7 +34,7 @@ composer require cyrtolat/laravel-money
 ```json
 {
     "require": {
-        "cyrtolat/laravel-money": "^2.0"
+        "cyrtolat/laravel-money": "^2.5"
     }
 }
 ```
