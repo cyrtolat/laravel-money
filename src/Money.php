@@ -13,7 +13,7 @@ use Illuminate\Contracts\Support\Jsonable;
  * @property-read integer $amount
  * @property-read string $currency
  */
-final class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
+class Money implements Arrayable, Jsonable, Renderable, JsonSerializable
 {
     /**
      * The monetary amount.
