@@ -13,7 +13,7 @@ use InvalidArgumentException;
  * @property-read integer $minorUnit
  * @property-read string $entity
  */
-final class Currency implements Arrayable, Jsonable, Renderable
+class Currency implements Arrayable, Jsonable, Renderable
 {
     /**
      * The currency alphabetic code.
